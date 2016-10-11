@@ -7,15 +7,15 @@ body {
 }
 
 h1, h2, h3, h4 {
-  color: #E9601A;
+  color: #2B1AE9;
 }
 
 a {
-  color: #6F6F6F;
+  color: #4A2828;
   text-decoration: underline;
 }
 
 div#datetime {
-  font-size: 80%;
-  text-align: right;
+  font-size: 70%;
+  text-align: left;
 }
