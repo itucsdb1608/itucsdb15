@@ -1,17 +1,16 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
+This is the base project for the term projects of the Database Management Systems course at the Istanbul Technical University, Computer Engineering Department.
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative](http://opensource.org/).
+Project name is BeeLink.
 
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
+The term projects are Python web applications that use a PostgreSQL database. Projects must use the Flask framework. The necessary libraries for Project are already included in this project.
 
-Finally, consider defining some sprints and work items in Track & Plan to give 
-interested developers a sense of your cadence and upcoming enhancements.
+If you will use another database, you have to add it to your project files and the classpath.
+
+This project can be directly imported into Eclipse.
+Team members:
+
+Mert ARI
+Tuncay DEMİRBAŞ
+Furkan ARTUNÇ
+Emre KÖSE
+Hayati Enes BASAT
