@@ -27,7 +27,7 @@ def signed_in():
     if request.method == 'GET':
         return render_template('profile/index.html')
     else:
-        return redirect(url_for('app.signed_in'))
+        return redirect(url_for('signed_in'))
 
 @app.route('/profile')
 def profile():
