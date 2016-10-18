@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>BeeLink - Dünya ile bağlantı kur | BeeLink'le</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="{{url_for('static',filename='homepage/js/ie/html5shiv.js')}}"></script><![endif]-->
+		<link rel="stylesheet" href="{{url_for('static',filename='profile/future-imperfect/assets/css/main.css')}}" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="{{url_for('static',filename='homepage/assets/css/ie8.css')}}" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="#">BeeLink</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="{{url_for('site.signed_in')}}">Anasayfa</a></li>
+								<li><a href="{{url_for('site.profile')}}">Profil</a></li>
+								<li><a href="#">Ağım</a></li>
+								<li><a href="#">İşler</a></li>
+								<li><a href="#">İlgi Alanları</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Arama" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bell" href="#menu">Bildirim</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Arkadaşlık -->
+					<section id="menu">
+							<section>
+								<ul class="actions vertical">
+									<li><a href="#" class="button big fit">Ağını Genişlet</br><p>Arkadaşlık İstekleri</p></a></li>
+								</ul>
+							</section>
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>Mert ARI</h3>
+											<p>İstanbul Teknik Üniversitesi</p>
+										</a>
+										<a href="#" class="icon fa-check"> Kabul Et</a>
+										<a href="#" class="icon fa-remove"> Reddet</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Eyüp Ergin</h3>
+											<p>Boğaziçi Üniversitesi</p>
+										</a>
+										<a href="#" class="icon fa-check"> Kabul Et</a>
+										<a href="#" class="icon fa-remove"> Reddet</a>
+									</li>
+								</ul>
+
+
+								<ul class="actions vertical">
+									<li><a href="#" class="button big fit">Mesajlar</br>Gelen Kutusu(1)</a></li>
+								</ul>
+
+							</section>
+
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>Hayati Enes BASAT</h3>
+											<p>Kanka Nasılsın, Nerelerdesin, neler yapıyorsun?</p>
+										</a>
+									</li>
+								</ul>
+								<ul class="actions vertical">
+									<li><a href="#" class="button big fit">Bildirimler</br>Etkileşim</a></li>
+								</ul>
+
+							</section>
+
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>Furkan Artunç</h3>
+											<p>"Güzel gören.." ile başlayan paylaşımını Beğendi.</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Ali Kadam</h3>
+											<p>Profil CV 'ni Beğendi.</p>
+										</a>
+									</li>
+								</ul>
+
+							</section>
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+
+
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2><a href="#">Arkadaşlar</a></h2>
+										<p>Ağını Genişlet..</p>
+									</div>
+									<div class="meta">
+										<time class="published" datetime="2015-10-18">Toplam Arkadaş Sayısı</time>
+										<a href="#" class="author"><span class="name">5</span></a>
+									</div>
+								</header>
+
+
+
+
+								<section>
+									<h3>Bağlantılarım</h3>
+									<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>Ad</th>
+													<th>Üniversite</th>
+													<th>Avatar</th>
+													<th>İşlem</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Emre Köse</td>
+													<td>İstanbul Teknik Üniversitesi</td>
+													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
+													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
+												</tr>
+												<tr>
+													<td>Ali Gel</td>
+													<td>Yıldız Teknik Üniversitesi</td>
+													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
+													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
+												</tr>
+												<tr>
+													<td><a href="#" class="losgo">Ahmet Faruk</a></td>
+													<td>İstanbul Üniversitesi</td>
+													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
+													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
+												</tr>
+												<tr>
+													<td>Ömer İnci</td>
+													<td>Nişantaşı Üniversitesi</td>
+													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
+													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
+												</tr>
+												<tr>
+													<td>Kürşat Ozan</td>
+													<td>Biruni Üniversitesi</td>
+													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
+													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
+												</tr>
+											</tbody>
+											<tfoot>
+											</tfoot>
+										</table>
+									</div>
+
+								</section>
+
+							</article>
+
+
+					</div>
+
+				<!-- Sidebar -->
+					<section id="sidebar">
+
+						<!-- Intro -->
+							<section id="intro">
+								<a href="#" class="logo"><img src="{{url_for('static',filename='profile/future-imperfect/images/logo.jpg')}}" alt="" /></a>
+								<header>
+									<h2>BeeLink Platformu</h2>
+									<p>Senin Yaşamın, Senin Kariyerin..</a></p>
+								</header>
+
+							</section>
+				<h3>Tanıyor Olabileceğin KİŞİLER</h3>
+						<!-- Posts List -->
+							<section>
+								<ul class="posts">
+									<li>
+										<article>
+											<header>
+												<h3><a href="#">Emre Köse</a></h3>
+												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
+											</header>
+											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic08.jpg')}}" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="#">Ahmet Kaçmaz</a></h3>
+												<time class="published" datetime="2015-10-20">Marmara Üniversitesi</time>
+											</header>
+											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic09.jpg')}}" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="#">Furkan Artunç</a></h3>
+												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
+											</header>
+											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic10.jpg')}}" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="#">İbrahim Dolapçı</a></h3>
+												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
+											</header>
+											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic11.jpg')}}" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="#">Eyüp Ergin</a></h3>
+												<time class="published" datetime="2015-10-20">Boğaziçi Üniversitesi</time>
+											</header>
+											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic12.jpg')}}" alt="" /></a>
+										</article>
+									</li>
+								</ul>
+							</section>
+
+
+						<!-- Footer -->
+							<section id="footer">
+								<ul class="icons">
+									<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+									<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+								<p class="copyright">&copy; 2016, BeeLink. Tüm Hakları Saklıdır.<a href="http://itucsdb1608.mybluemix.net/">BeeLink Teams</a>.</p>
+							</section>
+
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.dropotron.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.scrollgress.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/skel.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/util.js')}}"></script>
+			<!--[if lte IE 8]><script src="{{url_for('static',filename='js/respond.min.js')}}"></script><![endif]-->
+			<script src="{{url_for('static',filename='homepage/assets/js/main.js')}}"></script>
+
+	</body>
+</html>
