@@ -13,10 +13,10 @@
 
 			<!-- Header -->
 				<header id="header">
-					<h1><a href="{{url_for('app.home_page')}}">BeeLink</a> by itucsdb1608</h1>
+					<h1><a href="{{url_for('home_page')}}">BeeLink</a> by itucsdb1608</h1>
 					<nav id="nav">
 						<ul>
-							<li><a href="{{url_for('app.home_page')}}">Anasayfa</a></li>
+							<li><a href="{{url_for('home_page')}}">Anasayfa</a></li>
 							<li>
 								<a href="#" class="icon fa-angle-down">Hakkımızda</a>
 								<ul>
@@ -32,7 +32,7 @@
 									</li>
 								</ul>
 							</li>
-							<li><a href="{{url_for('app.sign_in')}}" class="button">Giriş Yap</a></li>
+							<li><a href="{{url_for('sign_in')}}" class="button">Giriş Yap</a></li>
 						</ul>
 					</nav>
 				</header>
@@ -44,7 +44,7 @@
 						<p>BeeLink Dünyasına Hoş Geldiniz..</p>
 					</header>
 					<div class="box">
-						<form method="post" action="{{url_for('app.signed_in')}}">
+						<form method="post" action="{{url_for('signed_in')}}">
 							<div class="row uniform 50%">
 								<div class="12u">
 									<input type="text" name="subject" id="subject" value="" placeholder="Kullanıcı Adınız" />
