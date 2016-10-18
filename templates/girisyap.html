@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>BeeLink - Dünya ile bağlantı kur | BeeLink'le</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="{{url_for('static',filename='homepage/js/ie/html5shiv.js')}}"></script><![endif]-->
+		<link rel="stylesheet" href="{{url_for('static',filename='homepage/assets/css/main.css')}}" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="{{url_for('static',filename='homepage/assets/css/ie8.css')}}" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1><a href="{{url_for('site.home_page')}}">BeeLink</a> by itucsdb1608</h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="{{url_for('site.home_page')}}">Anasayfa</a></li>
+							<li>
+								<a href="#" class="icon fa-angle-down">Hakkımızda</a>
+								<ul>
+									<li><a href="generic.html">BeeLink nedir</a></li>
+									<li><a href="contact.html">Değerlendirme</a></li>
+									<li><a href="elements.html">İletişim</a></li>
+									<li>
+										<a href="#">Galeri</a>
+										<ul>
+											<li><a href="#">Resim</a></li>
+											<li><a href="#">Video</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><a href="{{url_for('site.sign_in')}}" class="button">Giriş Yap</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container 75%">
+					<header>
+						<h2>Giriş Yap, BeeLink'le..</h2>
+						<p>BeeLink Dünyasına Hoş Geldiniz..</p>
+					</header>
+					<div class="box">
+						<form method="post" action="{{url_for('site.signed_in')}}">
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="text" name="subject" id="subject" value="" placeholder="Kullanıcı Adınız" />
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="text" name="subject" id="subject" value="" placeholder="Parolanız" />
+								</div>
+							</div>
+							<div class="row uniform">
+								<div class="12u">
+									<ul class="actions align-center">
+										<li><input type="submit" value="Giriş Yap" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; 2016, BeeLink. Tüm Hakları Saklıdır.</li><li>Design: <a href="http://itucsdb1608.mybluemix.net/">BeeLink Teams</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.dropotron.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.scrollgress.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/skel.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/util.js')}}"></script>
+			<!--[if lte IE 8]><script src="{{url_for('static',filename='js/respond.min.js')}}"></script><![endif]-->
+			<script src="{{url_for('static',filename='homepage/assets/js/main.js')}}"></script>
+
+	</body>
+</html>
