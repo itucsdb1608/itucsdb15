@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import Blueprint, render_template
 
+from handlers import site
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object('settings')
