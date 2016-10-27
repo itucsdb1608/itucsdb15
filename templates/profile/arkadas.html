@@ -1,118 +1,7 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>BeeLink - Dünya ile bağlantı kur | BeeLink'le</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="{{url_for('static',filename='homepage/js/ie/html5shiv.js')}}"></script><![endif]-->
-		<link rel="stylesheet" href="{{url_for('static',filename='profile/future-imperfect/assets/css/main.css')}}" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="{{url_for('static',filename='homepage/assets/css/ie8.css')}}" /><![endif]-->
-	</head>
-	<body>
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Header -->
-					<header id="header">
-						<h1><a href="#">BeeLink</a></h1>
-						<nav class="links">
-							<ul>
-								<li><a href="{{url_for('signed_in')}}">Anasayfa</a></li>
-								<li><a href="{{url_for('profile')}}">Profil</a></li>
-								<li><a href="#">Ağım</a></li>
-								<li><a href="#">İşler</a></li>
-								<li><a href="#">İlgi Alanları</a></li>
-							</ul>
-						</nav>
-						<nav class="main">
-							<ul>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Arama" />
-									</form>
-								</li>
-								<li class="menu">
-									<a class="fa-bell" href="#menu">Bildirim</a>
-								</li>
-							</ul>
-						</nav>
-					</header>
-
-				<!-- Arkadaşlık -->
-					<section id="menu">
-							<section>
-								<ul class="actions vertical">
-									<li><a href="#" class="button big fit">Ağını Genişlet</br><p>Arkadaşlık İstekleri</p></a></li>
-								</ul>
-							</section>
-							<section>
-								<ul class="links">
-									<li>
-										<a href="#">
-											<h3>Mert ARI</h3>
-											<p>İstanbul Teknik Üniversitesi</p>
-										</a>
-										<a href="#" class="icon fa-check"> Kabul Et</a>
-										<a href="#" class="icon fa-remove"> Reddet</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Eyüp Ergin</h3>
-											<p>Boğaziçi Üniversitesi</p>
-										</a>
-										<a href="#" class="icon fa-check"> Kabul Et</a>
-										<a href="#" class="icon fa-remove"> Reddet</a>
-									</li>
-								</ul>
-
-
-								<ul class="actions vertical">
-									<li><a href="#" class="button big fit">Mesajlar</br>Gelen Kutusu(1)</a></li>
-								</ul>
-
-							</section>
-
-							<section>
-								<ul class="links">
-									<li>
-										<a href="#">
-											<h3>Hayati Enes BASAT</h3>
-											<p>Kanka Nasılsın, Nerelerdesin, neler yapıyorsun?</p>
-										</a>
-									</li>
-								</ul>
-								<ul class="actions vertical">
-									<li><a href="#" class="button big fit">Bildirimler</br>Etkileşim</a></li>
-								</ul>
-
-							</section>
-
-							<section>
-								<ul class="links">
-									<li>
-										<a href="#">
-											<h3>Furkan Artunç</h3>
-											<p>"Güzel gören.." ile başlayan paylaşımını Beğendi.</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Ali Kadam</h3>
-											<p>Profil CV 'ni Beğendi.</p>
-										</a>
-									</li>
-								</ul>
-
-							</section>
-					</section>
-
+{% extends "profile/base.html" %}
+{% block title %}Ağım{% endblock %}
 				<!-- Main -->
-					<div id="main">
-
-
+{% block content %}
 
 							<article class="post">
 								<header>
@@ -182,11 +71,10 @@
 
 							</article>
 
-
-					</div>
+{% endblock %}
+{% block menu %}
 
 				<!-- Sidebar -->
-					<section id="sidebar">
 
 						<!-- Intro -->
 							<section id="intro">
@@ -249,31 +137,5 @@
 								</ul>
 							</section>
 
-
+{% endblock %}
 						<!-- Footer -->
-							<section id="footer">
-								<ul class="icons">
-									<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
-									<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
-								</ul>
-								<p class="copyright">&copy; 2016, BeeLink. Tüm Hakları Saklıdır.<a href="http://itucsdb1608.mybluemix.net/">BeeLink Teams</a>.</p>
-							</section>
-
-					</section>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="{{url_for('static',filename='homepage/assets/js/jquery.min.js')}}"></script>
-			<script src="{{url_for('static',filename='homepage/assets/js/jquery.dropotron.min.js')}}"></script>
-			<script src="{{url_for('static',filename='homepage/assets/js/jquery.scrollgress.min.js')}}"></script>
-			<script src="{{url_for('static',filename='homepage/assets/js/skel.min.js')}}"></script>
-			<script src="{{url_for('static',filename='homepage/assets/js/util.js')}}"></script>
-			<!--[if lte IE 8]><script src="{{url_for('static',filename='js/respond.min.js')}}"></script><![endif]-->
-			<script src="{{url_for('static',filename='homepage/assets/js/main.js')}}"></script>
-
-	</body>
-</html>
