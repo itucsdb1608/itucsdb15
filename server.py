@@ -45,6 +45,14 @@ def friend_requests():
 def admin_login():
         return render_template('admin/login.html')
 
+@app.route('/admin/home',methods=['GET', 'POST'])
+def admin_home():
+    if request.method == 'GET':
+        return redirect(url_for('home_page'))
+    else:
+        return render_template('admin/index.html')
+
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
