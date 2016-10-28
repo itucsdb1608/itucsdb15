@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}İletişim{% endblock %}
+				<!-- Main -->
+{% block content %}
+					<header>
+						<h3>BeeLink Takım Üyeleri</h3>
+						<p><b>Furkan Artunç, Tuncay Demirbaş, Emre Köse, Hayati Enes Basat, Mert Arı</b></p>
+					</header>
+					<section class="box special features">
+						<div class="features">
+							<section>
+								<img src="{{url_for('static',filename='homepage/images/asd1.jpg')}}" alt="" />
+								<h3>Furkan Artunç</h3>
+								<p>İTÜ, Bilgisayar Mühendisliği 3. Sınıf Öğrencisi</p>
+							</section>
+						</div>
+						<div class="features-row">
+							<section>
+								<img src="{{url_for('static',filename='homepage/images/asd5.jpg')}}" alt="" />
+								<h3>Tuncay Demirbaş</h3>
+								<p>İTÜ, Bilgisayar Mühendisliği <br> 4. Sınıf Öğrencisi</p>
+							</section>
+							<section>
+								<img src="{{url_for('static',filename='homepage/images/asd2.jpg')}}" alt="" />
+								<h3>Emre Köse</h3>
+								<p>İTÜ, Bilgisayar Mühendisliği <br> 3. Sınıf Öğrencisi</p>
+							</section>
+						</div>
+						<div class="features-row">
+							<section>
+								<img src="{{url_for('static',filename='homepage/images/asd4.jpg')}}" alt="" />
+								<h3>Mert Arı</h3>
+								<p>İTÜ, Bilgisayar Mühendisliği <br> 4. Sınıf Öğrencisi</p>
+							</section>
+							<section>
+								<img src="{{url_for('static',filename='homepage/images/asd3.jpg')}}" alt="" />
+								<h3>Hayati Enes Basat</h3>
+								<p>İTÜ, Bilgisayar Mühendisliği <br> 3. Sınıf Öğrencisi </p>
+							</section>
+						</div>
+					</section>
+{% endblock %}

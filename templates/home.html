@@ -20,8 +20,8 @@
 							<li>
 								<a href="#" class="icon fa-angle-down">Hakkımızda</a>
 								<ul>
-									<li><a href="#">BeeLink nedir</a></li>
-									<li><a href="#">Değerlendirme</a></li>
+									<li><a href="{{url_for('about')}}">BeeLink Takımı</a></li>
+									<li><a href="{{url_for('about')}}">Değerlendirme</a></li>
 									<li><a href="{{url_for('contact')}}">İletişim</a></li>
 									<li>
 										<a href="#">Galeri</a>
@@ -43,7 +43,7 @@
 					<p>Keşfetmeye Hazır mısın?..Hayatına yeni bir renk kat!</p>
 					<ul class="actions">
 						<li><a href="{{url_for('sign_up')}}" class="button special">Kaydol</a></li>
-						<li><a href="#" class="button">Daha Fazlası..</a></li>
+						<li><a href="{{url_for('about')}}" class="button">Daha Fazlası..</a></li>
 					</ul>
 				</section>
 
@@ -78,7 +78,7 @@
 							<section>
 								<span class="icon major fa-cloud accent4"></span>
 								<h3>Eğlence</h3>
-								<p>Hady'de canın sıkılmaz. Günden güne geliştirdiğimiz araçlar sayesinde keyifli bir ortamda bulunursun.</p>
+								<p>BeeLink'te canın sıkılmaz. Günden güne geliştirdiğimiz araçlar sayesinde keyifli bir ortamda bulunursun.</p>
 							</section>
 							<section>
 								<span class="icon major fa-lock accent5"></span>
@@ -96,7 +96,7 @@
 								<h3>Macere Başlasın..</h3>
 								<p>Hesap oluştur veya BeeLink'e giriş yap. Arkadaşlarınla, akrabalarınla ve tanıdığın diğer kişilerle bağlantı kur. Fotoğraf ve videolar paylaş, mesajlar....</p>
 								<ul class="actions">
-									<li><a href="#" class="button alt">Daha fazlası</a></li>
+									<li><a href="{{url_for('sign_in')}}" class="button alt">Daha fazlası</a></li>
 								</ul>
 							</section>
 
@@ -108,7 +108,7 @@
 								<h3>BeeLink'le</h3>
 								<p>Arkadaşlarınla ve diğer etkileyici kişiler ile iletişim kur. İlgini çeken konulardaki güncellemelerden anında haberdar ol. Ve öne çıkan olayları hemen öğren..</p>
 								<ul class="actions">
-									<li><a href="#" class="button alt">Daha fazlası</a></li>
+									<li><a href="{{url_for('sign_up')}}" class="button alt">Daha fazlası</a></li>
 								</ul>
 							</section>
 

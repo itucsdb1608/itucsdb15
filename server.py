@@ -22,6 +22,10 @@ def sign_in():
 def contact():
     return render_template('iletisim.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/signedin',methods=['GET', 'POST'])
 def signed_in():
     if request.method == 'GET':
