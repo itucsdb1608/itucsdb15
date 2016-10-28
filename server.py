@@ -41,6 +41,10 @@ def messages():
 def friend_requests():
         return render_template('profile/arkadas.html')
 
+@app.route('/admin/login')
+def admin_login():
+        return render_template('admin/login.html')
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
