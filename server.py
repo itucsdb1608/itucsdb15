@@ -3,7 +3,6 @@ import os
 from page_handlers import site
 from flask import Flask
 from connect_db import connect_and_init
-from Onboard.OnboardGtk import app
 
 def create_app():
     app = Flask(__name__)
