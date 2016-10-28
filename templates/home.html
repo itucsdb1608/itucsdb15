@@ -13,16 +13,16 @@
 
 			<!-- Header -->
 				<header id="header" class="alt">
-					<h1><a href="{{url_for('home_page')}}">BeeLink</a> by itucsdb1608</h1>
+					<h1><a href="{{url_for('site.home_page')}}">BeeLink</a> by itucsdb1608</h1>
 					<nav id="nav">
 						<ul>
-							<li><a href="{{url_for('home_page')}}">Anasayfa</a></li>
+							<li><a href="{{url_for('site.home_page')}}">Anasayfa</a></li>
 							<li>
 								<a href="#" class="icon fa-angle-down">Hakkımızda</a>
 								<ul>
-									<li><a href="{{url_for('about')}}">BeeLink Takımı</a></li>
-									<li><a href="{{url_for('about')}}">Değerlendirme</a></li>
-									<li><a href="{{url_for('contact')}}">İletişim</a></li>
+									<li><a href="{{url_for('site.aboutus')}}">BeeLink Takımı</a></li>
+									<li><a href="{{url_for('site.aboutus')}}">Değerlendirme</a></li>
+									<li><a href="{{url_for('site.contact')}}">İletişim</a></li>
 									<li>
 										<a href="#">Galeri</a>
 										<ul>
@@ -32,7 +32,7 @@
 									</li>
 								</ul>
 							</li>
-							<li><a href="{{url_for('sign_in')}}" class="button">Giriş Yap</a></li>
+							<li><a href="{{url_for('site.sign_in')}}" class="button">Giriş Yap</a></li>
 						</ul>
 					</nav>
 				</header>
@@ -42,8 +42,8 @@
 					<h2>BeeLink</h2>
 					<p>Keşfetmeye Hazır mısın?..Hayatına yeni bir renk kat!</p>
 					<ul class="actions">
-						<li><a href="{{url_for('sign_up')}}" class="button special">Kaydol</a></li>
-						<li><a href="{{url_for('about')}}" class="button">Daha Fazlası..</a></li>
+						<li><a href="{{url_for('site.sign_up')}}" class="button special">Kaydol</a></li>
+						<li><a href="{{url_for('site.aboutus')}}" class="button">Daha Fazlası..</a></li>
 					</ul>
 				</section>
 
@@ -96,7 +96,7 @@
 								<h3>Macere Başlasın..</h3>
 								<p>Hesap oluştur veya BeeLink'e giriş yap. Arkadaşlarınla, akrabalarınla ve tanıdığın diğer kişilerle bağlantı kur. Fotoğraf ve videolar paylaş, mesajlar....</p>
 								<ul class="actions">
-									<li><a href="{{url_for('sign_in')}}" class="button alt">Daha fazlası</a></li>
+									<li><a href="{{url_for('site.sign_in')}}" class="button alt">Daha fazlası</a></li>
 								</ul>
 							</section>
 
@@ -108,7 +108,7 @@
 								<h3>BeeLink'le</h3>
 								<p>Arkadaşlarınla ve diğer etkileyici kişiler ile iletişim kur. İlgini çeken konulardaki güncellemelerden anında haberdar ol. Ve öne çıkan olayları hemen öğren..</p>
 								<ul class="actions">
-									<li><a href="{{url_for('sign_up')}}" class="button alt">Daha fazlası</a></li>
+									<li><a href="{{url_for('site.sign_up')}}" class="button alt">Daha fazlası</a></li>
 								</ul>
 							</section>
 

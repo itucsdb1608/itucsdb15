@@ -13,16 +13,16 @@
 
 			<!-- Header -->
 				<header id="header">
-					<h1><a href="{{url_for('home_page')}}">BeeLink</a> by itucsdb1608</h1>
+					<h1><a href="{{url_for('site.home_page')}}">BeeLink</a> by itucsdb1608</h1>
 					<nav id="nav">
 						<ul>
-							<li><a href="{{url_for('home_page')}}">Anasayfa</a></li>
+							<li><a href="{{url_for('site.home_page')}}">Anasayfa</a></li>
 							<li>
 								<a href="#" class="icon fa-angle-down">Hakkımızda</a>
 								<ul>
-									<li><a href="{{url_for('about')}}">BeeLink Takımı</a></li>
-									<li><a href="{{url_for('about')}}">Değerlendirmeler</a></li>
-									<li><a href="{{url_for('contact')}}">İletişim</a></li>
+									<li><a href="{{url_for('site.aboutus')}}">BeeLink Takımı</a></li>
+									<li><a href="{{url_for('site.aboutus')}}">Değerlendirmeler</a></li>
+									<li><a href="{{url_for('site.contact')}}">İletişim</a></li>
 									<li>
 										<a href="#">Galeri</a>
 										<ul>
@@ -32,7 +32,7 @@
 									</li>
 								</ul>
 							</li>
-							<li><a href="{{url_for('sign_in')}}" class="button">Giriş Yap</a></li>
+							<li><a href="{{url_for('site.sign_in')}}" class="button">Giriş Yap</a></li>
 						</ul>
 					</nav>
 				</header>
