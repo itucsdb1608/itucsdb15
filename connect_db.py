@@ -16,7 +16,7 @@ db_connection = None
 def connect_and_init():
     VCAP_SERVICES = os.getenv('VCAP_SERVICES')
     if VCAP_SERVICES is not None:
-        dsn = get_elephantsql_dsn(VCAP_SERVICES)
+        dsn = get_sqldb_dsn(VCAP_SERVICES)
     else:
         dsn = """user='vagrant' password='vagrant'
                                host='localhost' port=5432 dbname='itucsdb'"""
