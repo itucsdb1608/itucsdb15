@@ -52,6 +52,10 @@ def admin_home():
     else:
         return render_template('admin/index.html')
 
+@app.route('/admin/kisisel')
+def admin_kisisel():
+        return render_template('admin/kisisel.html')
+
 
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
