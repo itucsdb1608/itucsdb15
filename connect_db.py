@@ -27,6 +27,16 @@ def connect_and_init():
         cursor.execute("DROP TABLE IF EXISTS MESSAGES")
         cursor.execute("CREATE TABLE IF NOT EXISTS MESSAGES ( message VARCHAR);")
         cursor.execute("INSERT INTO MESSAGES VALUES ('Hello World!')")
+
+        query="DROP TABLE IF EXISTS CHAT_SYSTEM"
+        cursor.execute(query)
+        query="CREATE TABLE IF NOT EXISTS CHAT_SYSTEM(chat_id INTEGER PRIMARY KEY, chat_content VARCHAR(250));"
+        cursor.execute(query)
+        query="INSERT INTO CHAT_SYSTEM VALUES (1,'selam dostlar')"
+        cursor.execute(query)
+        query="INSERT INTO CHAT_SYSTEM VALUES (2,'beelinkledim')"
+        cursor.execute(query)
+
         db_connection.commit()
 
     except dbapi2.DatabaseError as error:
