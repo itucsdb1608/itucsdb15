@@ -37,6 +37,14 @@ def connect_and_init():
         query="INSERT INTO CHAT_SYSTEM VALUES (2,'beelinkledim')"
         cursor.execute(query)
 
+        cursor.execute("DROP TABLE IF EXISTS LOGIN")
+        cursor.execute("CREATE TABLE IF NOT EXISTS LOGIN(username VARCHAR(50) PRIMARY KEY, password VARCHAR(32));")
+        cursor.execute("INSERT INTO LOGIN VALUES ('ebasat', 'aaaa')")
+        cursor.execute("INSERT INTO LOGIN VALUES ('artuncf', 'bbbb')")
+        cursor.execute("INSERT INTO LOGIN VALUES ('cuntay', 'cccc')")
+        cursor.execute("INSERT INTO LOGIN VALUES ('koseemre', 'dddd')")
+        cursor.execute("INSERT INTO LOGIN VALUES ('arime', 'eeee')")
+
         db_connection.commit()
 
     except dbapi2.DatabaseError as error:
