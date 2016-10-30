@@ -66,15 +66,15 @@ def connect_and_init():
         INSERT INTO PROFILE (USER_ID, PHOTO, WEB_SITE, CITY, AGE, UNIVERSITY, JOB) VALUES (3, '2016_3.jpg', 'Kullanmıyorum', 'İstanbul', 21, 'İstanbul Teknik Üniversitesi', 'Öğrenci');"""
 
         cursor.execute(sql)
-        
+
         cursor.execute("DROP TABLE IF EXISTS FRIENDS")
         cursor.execute("CREATE TABLE IF NOT EXISTS FRIENDS(person_id INTEGER PRIMARY KEY, friend_name VARCHAR(50));")
         cursor.execute("INSERT INTO FRIENDS VALUES (1, 'friend1')")
         cursor.execute("INSERT INTO FRIENDS VALUES (2, 'friend2')")
-	cursor.execute("INSERT INTO FRIENDS VALUES (3, 'friend3')")
+        cursor.execute("INSERT INTO FRIENDS VALUES (3, 'friend3')")
 
 
-        
+
         db_connection.commit()
 
     except dbapi2.DatabaseError as error:
