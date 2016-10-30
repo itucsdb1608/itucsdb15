@@ -71,7 +71,7 @@ def connect_and_init():
         cursor.execute("CREATE TABLE IF NOT EXISTS FRIENDS(person_id INTEGER PRIMARY KEY, friend_name VARCHAR(50));")
         cursor.execute("INSERT INTO FRIENDS VALUES (1, 'friend1')")
         cursor.execute("INSERT INTO FRIENDS VALUES (2, 'friend2')")
-	    cursor.execute("INSERT INTO FRIENDS VALUES (3, 'friend3')")
+	cursor.execute("INSERT INTO FRIENDS VALUES (3, 'friend3')")
 
 
         
