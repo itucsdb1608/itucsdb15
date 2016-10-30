@@ -45,6 +45,28 @@ def connect_and_init():
         cursor.execute("INSERT INTO LOGIN VALUES ('koseemre', 'dddd')")
         cursor.execute("INSERT INTO LOGIN VALUES ('arime', 'eeee')")
 
+
+        sql = """DROP TABLE IF EXISTS PROFILE"""
+        cursor.execute(sql)
+
+        sql = """CREATE TABLE PROFILE (
+        PROFILE_ID SERIAL PRIMARY KEY,
+        USER_ID INTEGER NOT NULL,
+        PHOTO VARCHAR(80),
+        WEB_SITE VARCHAR(30) NOT NULL,
+        CITY VARCHAR(25) NOT NULL,
+        AGE INTEGER,
+        UNIVERSITY VARCHAR(55),
+        JOB VARCHAR(35))"""
+
+        cursor.execute(sql)
+
+        sql = """INSERT INTO PROFILE (USER_ID, PHOTO, WEB_SITE, CITY, AGE, UNIVERSITY, JOB) VALUES (1, '2016_1.jpg', 'www.tuncaydemirbas.com', 'İstanbul', 24, 'İstanbul Teknik Üniversitesi', 'Öğrenci');
+        INSERT INTO PROFILE (USER_ID, PHOTO, WEB_SITE, CITY, AGE, UNIVERSITY, JOB) VALUES (2, '2016_2.jpg', 'www.emrekose.com', 'İstanbul', 22, 'İstanbul Teknik Üniversitesi', 'Öğrenci');
+        INSERT INTO PROFILE (USER_ID, PHOTO, WEB_SITE, CITY, AGE, UNIVERSITY, JOB) VALUES (3, '2016_3.jpg', 'Kullanmıyorum', 'İstanbul', 21, 'İstanbul Teknik Üniversitesi', 'Öğrenci');"""
+
+        cursor.execute(sql)
+
         db_connection.commit()
 
     except dbapi2.DatabaseError as error:
