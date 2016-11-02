@@ -6,20 +6,20 @@
 						{% for message in messages%}
 							{% if message %}
 							<article class="post">
-								<label for="subject" class="control-label col-sm-1">Subject: {{message[2]}}</label>
+								<label for="subject" class="control-label col-sm-1">Subject: {{message[1]}}</label>
 								<footer>
 									<ul class="actions">
-										<li> <span class="name">{{message[1]}}</span></li>
+										<li> <span class="name">{{message[2]}}</span></li>
 									<ul class="stats">
-
 										<li><span class="name">{{message[0]}}</span></li>
-										<li><button href="" name="delete" class="btn btn-primary"/>Delete</li>
-										<li><button href="submit" name="update" class="btn btn-primary"/>Update</li>
-
+										
+										<li><a href="{{url_for('site.delete_message')}}" name="delete" class="btn btn-primary"/>Delete</li>
+										<li><a href="{{url_for('site.update_message')}}" name="update" class="btn btn-primary"/>Update</li>
+										
 									</ul>
 								</footer>
 							</article>
-							{% endif %}
+						{% endif %}
 					   {% endfor %}
 					   <li><a href="{{url_for('site.add_message')}}" class="button big next">Share a post! Click Here</a></li>
 {% endblock %}
