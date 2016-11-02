@@ -25,6 +25,7 @@ def init_message_table():
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
+        cursor.execute("DROP TABLE IF EXISTS MESSAGES")
         query = """CREATE TABLE IF NOT EXISTS MESSAGES
                 (
                     USERNAME TEXT  NOT NULL,
@@ -32,6 +33,8 @@ def init_message_table():
                     SUBJECT TEXT NOT NULL
                 )"""
         cursor.execute(query)
+        query="""INSERT INTO MESSAGES VALUES(%s,%s,%s)"""
+        cursor.execute(query,("ExampleUser","Hello Everybody","Hello Message"))
         db_connection.commit()
         db_connection.close()
 
