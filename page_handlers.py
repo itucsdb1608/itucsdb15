@@ -2,9 +2,10 @@ from flask import Blueprint, render_template
 from flask import current_app
 from flask import request
 from flask import redirect, url_for
+from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table
+from message import Message
 
 site = Blueprint('site', __name__)
-
 @site.route('/')
 def home_page():
     return render_template('home.html')
@@ -21,10 +22,23 @@ def sign_in():
 def contact():
     return render_template('iletisim.html')
 
+@site.route('/message/add',methods=['GET','POST'])
+def add_message():
+    if request.method == 'GET':
+        return render_template('profile/add_message.html')
+    else:
+        username = request.form['username']
+        messageSubject = request.form['subject']
+        messageContent = request.form['content']
+        newMessage = Message(username,messageContent,messageSubject)
+        add_message_to_table(newMessage)
+        return redirect(url_for('site.signed_in'))
+
 @site.route('/signedin',methods=['GET', 'POST'])
 def signed_in():
     if request.method == 'GET':
-        return render_template('profile/index.html')
+        messages = get_messages_from_table()
+        return render_template('profile/index.html', messages = messages)
     else:
         return redirect(url_for('site.signed_in'))
 
@@ -58,3 +72,4 @@ def admin_home():
 @site.route('/admin/kisisel')
 def admin_kisisel():
         return render_template('admin/kisisel.html')
+
