@@ -33,13 +33,11 @@ def init_message_table():
                 )"""
         cursor.execute(query)
         db_connection.commit()
+        db_connection.close()
 
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-    finally:
-        if db_connection:
-            db_connection.close()
 
 def add_message_to_table(message):
     try:
@@ -49,13 +47,10 @@ def add_message_to_table(message):
         query = """INSERT INTO MESSAGES(USERNAME,CONTENT,SUBJECT) VALUES (%s,%s,%s) """
         cursor.execute(query,(message.username,message.content,message.subject))
         db_connection.commit()
+        db_connection.close()
 
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-
-    finally:
-        if db_connection:
-            db_connection.close()
 
 def get_messages_from_table():
     try:
@@ -68,6 +63,7 @@ def get_messages_from_table():
         db_connection.commit()
         db_connection.close()
         return fetchedData;
+
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
