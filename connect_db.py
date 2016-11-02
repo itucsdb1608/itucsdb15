@@ -28,8 +28,8 @@ def init_message_table():
         cursor.execute("DROP TABLE IF EXISTS MESSAGES")
         query = """CREATE TABLE IF NOT EXISTS MESSAGES
                 (
-                    USERNAME TEXT  NOT NULL,
-                    CONTENT TEXT PRIMARY KEY NOT NULL,
+                    USERNAME TEXT PRIMARY KEY  NOT NULL,
+                    CONTENT TEXT  NOT NULL,
                     SUBJECT TEXT NOT NULL
                 )"""
         cursor.execute(query)
@@ -77,6 +77,18 @@ def remove_message_from_table(username):
         cursor = db_connection.cursor()
         query = """DELETE FROM MESSAGES WHERE USERNAME = %s"""
         cursor.execute(query,(username))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def update_one_message(content,subject,username):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE MESSAGES SET CONTENT=%s SUBJECT=%s WHERE USERNAME=%s"""
+        cursor.execute(query,(content,subject,username))
         db_connection.commit()
         db_connection.close()
     except dbapi2.DatabaseError as error:
