@@ -2,7 +2,7 @@ import os,json,re
 import psycopg2 as dbapi2
 import message
 
-def get_sqldb_dsn(vcap_services):
+def get_elephantsqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
     parsed = json.loads(vcap_services)
     uri = parsed["elephantsql"][0]["credentials"]["uri"]
