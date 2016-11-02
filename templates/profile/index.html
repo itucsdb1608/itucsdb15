@@ -6,10 +6,10 @@
 						{% for message in messages%}
 							{% if message %}
 							<article class="post">
-								<label for="subject" class="control-label col-sm-1">Subject: {{message[1]}}</label>
+								<label for="subject" class="control-label col-sm-1">Subject: {{message[2]}}</label>
 								<footer>
 									<ul class="actions">
-										<li> <span class="name">{{message[2]}}</span></li>
+										<li> <span class="name">{{message[1]}}</span></li>
 									<ul class="stats">
 										<li><span class="name">{{message[0]}}</span></li>
 										
