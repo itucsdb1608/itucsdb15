@@ -2,12 +2,12 @@ import os
 
 from page_handlers import site
 from flask import Flask
-from connect_db import connect_and_init
+from connect_db import init_message_table
 
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(site)
-    app.connect_and_init = connect_and_init()
+    app.init_message_table = init_message_table()
     return app
 
 def main():
@@ -21,3 +21,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
