@@ -6,75 +6,9 @@
 								<h2>Gelen Kutusu</h2>
 
 
--
 
-						<!-- Post -->
-							<article class="post">
-								<p>Neredesin nasÄ±lsÄ±n ne yapÄ±yorsun</p>
-								<footer>
-									<ul class="actions">
-										<li>
-								<a href="#" class="author">
-								<span class="name">Tuncay DemirbaÅŸ</span>
-								<img src="{{url_for('static',filename='profile/future-imperfect/images/avatar.jpg')}}" alt="" /></a>
-										</li>
-									</ul>
-									<ul class="stats">
-										<li><a href="#">18.10.2016</a></li>
-									</ul>
-								</footer>
-							</article>
 
-						<!-- Post -->
-							<article class="post">
-								<p>okula geliyor musun ? </p>
-								<footer>
-									<ul class="actions">
-										<li>
-								<a href="#" class="author">
-								<span class="name">Ali Kadam</span>
-								<img src="{{url_for('static',filename='profile/future-imperfect/images/avatar2.jpg')}}" alt="" /></a>
-										</li>
-									</ul>
-									<ul class="stats">
-										<li><a href="#">17.10.2016</a></li>
-									</ul>
-								</footer>
-							</article>
 
-						<!-- Post -->
-							<article class="post">
-								<p>gel okula ders Ã§alÄ±ÅŸalÄ±m.. </p>
-								<footer>
-									<ul class="actions">
-										<li>
-								<a href="#" class="author">
-								<span class="name">Tuncay DemirbaÅŸ</span>
-								<img src="{{url_for('static',filename='profile/future-imperfect/images/avatar.jpg')}}" alt="" /></a>
-										</li>
-									</ul>
-									<ul class="stats">
-										<li><a href="#">12.10.2016</a></li>
-									</ul>
-								</footer>
-							</article>
-
-						<!-- Post -->
-							<article class="post">
-								<p>Tamam geliyorum..</p>
-								<footer>
-									<ul class="actions">
-										<li>
-								<a href="#" class="author">
-								<span class="name">Ali Kadam</span>
-								<img src="{{url_for('static',filename='profile/future-imperfect/images/avatar2.jpg')}}" alt="" /></a>
-										</li>
-									</ul>
-									<ul class="stats">
-										<li><a href="#">17.10.2016</a></li>
-									</ul>
-								</footer>
-							</article>
 
 						<!-- Pagination -->
 
@@ -82,32 +16,79 @@
 								<li><a href="" class="disabled button big previous">Previous Page</a></li>
 								<li><a href="#" class="button big next">Next Page</a></li>
 							</ul>
-						<section id ="asdasd">
+						<div class="box">
+													<form  role="form" action="{{ url_for('site.personal_send') }}" id="yeni" method="post">
+														<div class="row uniform 50%">
+															<div class="12u">
+																<input type="text"  id="UserName" name="UserName" placeholder="to UserName">
+															</div>
+														</div>
+														<div class="row uniform 50%">
+															<div class="12u">
+																<input type="text"  id="PersonalContent" name="PersonalContent" placeholder="PersonalContent">
+															</div>
+														</div>
+														<div class="row uniform">
+															<div class="12u">
+																<ul class="actions align-right">
+																	<input type="submit"   name = "submit"  value = "Add">
+																</ul>
+															</div>
+														</div>
+													</form>
+													<h2> Mesaj Listesi </h2>
+													<a  href= "{{ url_for('site.mesaj_listing') }}"  role="button"> Tum Mesaj listesi</a>
+ 										<ul>
+								        {% for mesaj in mesajlar %}
+								            <li>
+								                <div>
+								                    <p>Username: {{ mesaj[0] }}    --->   Mesaj: {{ mesaj[1] }}</p>
+								                    <form  role="form" action="{{ url_for('site.update_message_1') }}" id="yeni" method="post">
+														<div class="row uniform 50%">
+															<div class="12u">
+																<input type="text"  id="UserName" name="UserName" placeholder="to UserName">
+															</div>
+														</div>
+														<div class="row uniform 50%">
+															<div class="12u">
+																<input type="text"  id="PersonalContent" name="PersonalContent" placeholder="PersonalContent">
+															</div>
+														</div>
+														<div class="row uniform">
+															<div class="12u">
+																<ul class="actions align-right">
+																	<input type="submit"   name = "submit"  value = "Update">
+																</ul>
+															</div>
+														</div>
+													</form>
+													<form  role="form" action="{{ url_for('site.delete_personel_message') }}" id="yeni" method="post">
+														<div class="row uniform 50%">
+															<div class="12u">
+																<input type="text"  id="UserName" name="UserName" placeholder="to UserName">
+															</div>
+														</div>
 
-					<div class="box">
-						<form method="post" action="#">
-							<div class="row uniform 50%">
-								<div class="12u">
-									<input type="text" name="subject" id="subject" value="" placeholder="Konu" />
-								</div>
-							</div>
-							<div class="row uniform 50%">
-								<div class="12u">
-									<textarea name="message" id="message" placeholder="MesajÄ±nÄ±zÄ± Giriniz" rows="2"></textarea>
-								</div>
-							</div>
-							<div class="row uniform">
-								<div class="12u">
-									<ul class="actions align-right">
-										<li><input type="submit" value="Mesaj GÃ¶nder" /></li>
-									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
+														<div class="row uniform">
+															<div class="12u">
+																<ul class="actions align-right">
+																	<input type="submit"   name = "submit"  value = "Delete">
+																</ul>
+															</div>
+														</div>
+													</form>
+ 													<br/>
+								                    <br/>
+								                </div>
+								            </li>
+								            <p> ------------------------------  </p>
+								        {% endfor %}
+
+								    </ul>
+
+					            	 </div>
 
 
-						</section>
 
 {% endblock %}
 {% block menu %}
@@ -120,8 +101,8 @@
 								<a href="#" class="logo"><img src="{{url_for('static',filename='profile/future-imperfect/images/logo.jpg')}}" alt="" /></a>
 								<header>
 									<h2>BeeLink PLATFORMU</h2>
-									<p>Senin YaÅŸamÄ±n, Senin Kariyerin..</a></p>
-									<a href="#asdasd" class="button icon fa-save">Mesaj GÃ¶nder</a>
+									<p>Senin Yaþamýn, Senin Kariyerin..</a></p>
+									<a href="#asdasd" class="button icon fa-save">Mesaj Gönder</a>
 								</header>
 
 							</section>
@@ -142,7 +123,7 @@
 									<!-- Mini Post -->
 										<article class="mini-post">
 											<header>
-												<h3><a href="#">Emre KÃ¶se</a></h3>
+												<h3><a href="#">Emre Köse</a></h3>
 												<time class="published" datetime="2015-10-19">October 19, 2016</time>
 												<a href="#" class="author"><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar1.jpg')}}" alt="" /></a>
 											</header>
@@ -151,7 +132,7 @@
 									<!-- Mini Post -->
 										<article class="mini-post">
 											<header>
-												<h3><a href="#">Mert ArÄ±</a></h3>
+												<h3><a href="#">Mert Arý</a></h3>
 												<time class="published" datetime="2015-10-18">October 18, 2016</time>
 												<a href="#" class="author"><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></a>
 											</header>
@@ -162,12 +143,11 @@
 
 						<!-- About -->
 							<section class="blurb">
-								<h2>HakkÄ±mÄ±zda</h2>
-								<p>Profesyonel kimliÄŸinizi yÃ¶netin. Profesyonel aÄŸÄ±nÄ±zÄ± kurun ve aÄŸÄ±nÄ±zla baÄŸlantÄ±ya geÃ§in. Bilgi birikimlerine, iÃ§gÃ¶rÃ¼lere ve fÄ±rsatlara eriÅŸin.</p>
+								<h2>Hakkýmýzda</h2>
+								<p>Profesyonel kimliðinizi yönetin. Profesyonel aðýnýzý kurun ve aðýnýzla baðlantýya geçin. Bilgi birikimlerine, içgörülere ve fýrsatlara eriþin.</p>
 								<ul class="actions">
 									<li><a href="#" class="button">Daha Fazla</a></li>
 								</ul>
 							</section>
 
 {% endblock %}
-						<!-- Footer -->
