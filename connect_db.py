@@ -1,6 +1,7 @@
 import os,json,re
 import psycopg2 as dbapi2
 import message
+import friend
 
 def get_elephantsqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
@@ -178,3 +179,71 @@ def remove_from_login(username):
         db.close()
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
+
+#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari -    emre kose
+def ekle_arkadas(name ,surname):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+        q1 = """CREATE TABLE IF NOT EXISTS FRIENDTABLE
+                    (
+                        NAME TEXT NOT NULL,
+                        SURNAME TEXT NOT NULL,
+                        ID SERIAL NOT NULL PRIMARY KEY
+                    )"""
+        cursor.execute(q1)
+
+        q2 = """INSERT INTO FRIENDTABLE (NAME,SURNAME)  VALUES (%s,%s )"""
+        cursor.execute(q2, (name,surname))
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def duzenle_arkadas(ID, name , surname):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+        q = """UPDATE FRIENDTABLE SET NAME = %s, SURNAME = %s, WHERE ID = %s"""
+        cursor.execute(q, ( name, surname,ID))
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+    except dbapi2.DatabaseError as error:
+            print("Error %s" % error)
+def sil_arkadas(silici):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+        q = """DELETE FROM FRIENDTABLE WHERE ID = %s"""
+        cursor.execute(q, (silici))
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def tum_arkadaslar():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+        query = """SELECT * FROM FRIENDTABLE"""
+        cursor.execute(query)
+        tumu = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+
+        return tumu
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
