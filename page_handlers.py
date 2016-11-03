@@ -80,8 +80,7 @@ def friend():
             id = request.form['FriendID']
             isim = request.form['FriendName']
             soyisim = request.form['FriendSurname']
-
-            duzenle_arkadas(isim,soyisim,id)
+            duzenle_arkadas(id,isim,soyisim);
             return redirect(url_for('site.friend_requests'))
         elif request.form['submit'] == 'Sil':
             id = request.form['FriendID']
