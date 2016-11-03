@@ -138,3 +138,43 @@ def add_to_login(n_person):
 
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
+
+def records_from_login():
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        cursor.execute("""SELECT * FROM LOGIN""")
+        records = cursor.fetchall()
+        db.commit()
+        db.close()
+        return records
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
+def update_to_login(username, u_person):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """ UPDATE LOGIN SET name = %s, surname = %s,
+                    email = %s, password = %s WHERE
+                    user_name = %s
+                    """
+        cursor.execute(operate,(u_person.name, u_person.surname, u_person.email,
+                                u_person.password, username))
+        db.commit()
+        db.close()
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
+def remove_from_login(username):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """DELETE FROM LOGIN WHERE user_name = %s"""
+        cursor.execute(operate, username)
+
+        db.commit()
+        db.close()
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)

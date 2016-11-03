@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}İletişim{% endblock %}
+
+{% block content %}
+	<br />
+	<a>If you delete this user, enter the user name:</a>
+	<div class="box">
+				<form method="post" action="#">
+					<div class="12u">
+							<input type="text" name="username" id="subject" value="" placeholder="User Name" required autofocus>
+					</div>
+					<ul class="actions align-center">
+							<li><button type="submit" name="remove" value="remove"></li>
+					</ul>
+				</form>
+	</div>
+{% endblock %}

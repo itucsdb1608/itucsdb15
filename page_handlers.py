@@ -4,7 +4,7 @@ from flask import request
 from flask import redirect, url_for
 from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
 from message import Message
-from connect_db import add_to_login, Person
+from connect_db import add_to_login, Person, records_from_login, update_to_login, remove_from_login
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -23,9 +23,9 @@ def sign_up():
         password = request.form['password']
         newRecord = Person(name, surname, email, username, password)
         add_to_login(newRecord)
-    return render_template('profile/index.html')
+    return render_template('home.html')
 
-@site.route('/signin')
+@site.route('/signin', methods=['GET','POST'])
 def sign_in():
     return render_template('girisyap.html')
 
@@ -86,7 +86,33 @@ def friend_requests():
 
 @site.route('/aboutus')
 def aboutus():
-    return render_template('about.html')
+    records = records_from_login()
+    return render_template('about.html', records = records)
+
+@site.route('/user/remove', methods=['GET', 'POST'])
+def remove_user():
+    if request.method == 'GET':
+        return render_template('remove.html')
+    else:
+        username = request.form['username']
+        remove_from_login(username)
+        records = records_from_login()
+        return render_template('about.html', records = records)
+
+@site.route('/user/update', methods=['GET', 'POST'])
+def update_user():
+    if request.method == 'GET':
+        return render_template('update.html')
+    else:
+        username = request.form['username']
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        password = request.form['password']
+        updateRecord = Person(name, surname, email, username, password)
+        update_to_login(username, updateRecord)
+        records = records_from_login()
+        return render_template('about.html', records = records)
 
 @site.route('/admin/login')
 def admin_login():
