@@ -4,15 +4,26 @@ from flask import request
 from flask import redirect, url_for
 from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
 from message import Message
+from connect_db import add_to_login, Person
 
 site = Blueprint('site', __name__)
 @site.route('/')
 def home_page():
     return render_template('home.html')
 
-@site.route('/signup')
+@site.route('/signup', methods=['GET','POST'])
 def sign_up():
-    return render_template('giris.html')
+    if request.method == 'GET':
+        return render_template('giris.html')
+    else:
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        username = request.form['username']
+        password = request.form['password']
+        newRecord = Person(name, surname, email, username, password)
+        add_to_login(newRecord)
+    return render_template('profile/index.html')
 
 @site.route('/signin')
 def sign_in():

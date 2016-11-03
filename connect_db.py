@@ -93,3 +93,48 @@ def update_one_message(content,subject,username):
         db_connection.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
+
+
+## Functions for Login Table
+
+class Person:
+    def __init__(self, name, surname, email, username, password):
+        self.name = name
+        self.surname = surname
+        self.email = email
+        self.username = username
+        self.password = password
+
+def create_login():
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        cursor.execute("DROP TABLE IF EXISTS LOGIN")
+        operate = """CREATE TABLE IF NOT EXISTS LOGIN(
+                        name VARCHAR(16),
+                        surname VARCHAR(20),
+                        email VARCHAR(30),
+                        user_name VARCHAR(32) PRIMARY KEY,
+                        password VARCHAR(32)
+                  )"""
+        cursor.execute(operate)
+        db.commit()
+        db.close()
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
+def add_to_login(n_person):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """INSERT INTO LOGIN(name, surname, email, user_name, password)
+                     VALUES (%s,%s,%s,%s,%s)
+                  """
+        cursor.execute(operate,(n_person.name, n_person.surname, n_person.email,
+                                n_person.username, n_person.password))
+        db.commit()
+        db.close()
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)

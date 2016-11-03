@@ -3,11 +3,13 @@ import os
 from page_handlers import site
 from flask import Flask
 from connect_db import init_message_table
+from connect_db import create_login
 
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(site)
     app.init_message_table = init_message_table()
+    app.create_login = create_login()
     return app
 
 def main():
