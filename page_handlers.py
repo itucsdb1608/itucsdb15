@@ -9,6 +9,7 @@ from profile import Profile
 from connect_db import add_to_login, Person, records_from_login, update_to_login, remove_from_login
 from connect_db import ekle_arkadas, sil_arkadas, duzenle_arkadas,tum_arkadaslar
 from friend import Friend
+from connect_db import add_personal_message, tum_mesajlar,update_personal_message,remove_personal_message
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -151,7 +152,7 @@ def profile():
     return render_template('profile/profil.html', profile_blog = profile_blog)
 
 @site.route('/messages')
-def messages():
+def personel_message_request():
     return render_template('profile/mesaj.html')
 
 @site.route('/friends')
@@ -203,3 +204,34 @@ def admin_home():
 def admin_kisisel():
         return render_template('admin/kisisel.html')
 
+@site.route('/messages/add', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
+def personal_send():
+    if request.method == 'GET':
+        return render_template('profile/mesaj.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Add':
+            touser = request.form['UserName']
+            content = request.form['PersonalContent']
+            add_personal_message(touser, content)
+            return redirect(url_for('site.personel_message_request'))
+@site.route('/messages/mesajlar')
+def mesaj_listing(): #yeni
+     tumu = tum_mesajlar()
+     return render_template('profile/mesaj.html', mesajlar = tumu)
+@site.route('/messages/update',methods=['GET','POST'])
+def update_message_1():
+    if request.method == 'GET':
+        return render_template('profile/mesaj.html')
+    else:
+        username = request.form['UserName']
+        content = request.form['PersonalContent']
+        update_personal_message(username,content)
+        return redirect(url_for('site.personel_message_request'))
+@site.route('/messages/delete',methods=['GET','POST'])
+def delete_personel_message():
+    if request.method == 'GET':
+        return render_template('profile/mesaj.html')
+    else:
+        username = request.form['UserName']
+        remove_personal_message(username)
+        return redirect(url_for('site.personel_message_request'))
