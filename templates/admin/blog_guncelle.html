@@ -1,0 +1,34 @@
+{% extends "admin/base.html" %}
+{% block title %}Kişisel Bilgiler{% endblock %}
+				<!-- Main -->
+{% block content %}
+                    <div class="title-block">
+                        <h3 class="title">
+		Profil Blog Güncelle
+	</h3>
+                        <p class="title-description"> BeeLink'lemeye Hazır ol! </p>
+                    </div>
+                    <div class="subtitle-block">
+                        <h3 class="subtitle">
+		Lütfen Eksiksiz Tüm alanları Doldurun..
+	</h3> </div>
+                    <section class="section">
+                        <div class="row sameheight-container">
+                            <div class="col-md-6">
+                                <div class="card card-block sameheight-item">
+                                    <div class="title-block">
+                                        <h3 class="subtitle">
+						Güncellemek istediğiniz Bloğun ID numarasını giriniz..
+					</h3> </div>
+                                    <form role="form" action="" method="post" name="blog_add">
+                                       <div class="form-group"> <label class="control-label">Blog_id</label> <input type="text"  name="blog_id" class="form-control boxed"> </div>
+                                       <div class="form-group"> <label class="control-label">Kullanıcı Adınız</label> <input type="text"  name="username" class="form-control boxed"> </div>
+                                       <div class="form-group"> <label class="control-label">Başlık</label> <input type="text" name="title"  class="form-control boxed"> </div>
+                                        <div class="form-group"> <label class="control-label">İçerik</label> <textarea rows="3" name="content"  class="form-control boxed"></textarea> </div>
+										<div class="form-group"> <button type="submit" name="update" class="btn btn-primary">Güncelle</button> </div>
+									</form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+{% endblock %}

@@ -136,22 +136,22 @@
 										</div>
 									</form>
 								</section>
+								<p>
 
+<div class="12u$"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic02.jpg')}}" alt="" /></span></div>									<h3>BLOGLAMA - <a href="{{url_for('site.blog')}}" class="button icon fa-save">Blog Ekle</a></h3>
+ 						{% for profile in profile_blog%}
+							{% if profile %}
 								<section>
-									<h3>Galeri</h3>
-									<div class="box alt">
-										<div class="row uniform">
-											<div class="12u$"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic02.jpg')}}" alt="" /></span></div>
-											<div class="4u"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/apic04.jpg')}}" alt="" /></span></div>
-											<div class="4u"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/apic05.jpg')}}" alt="" /></span></div>
-											<div class="4u$"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/apic06.jpg')}}" alt="" /></span></div>
-										</div>
-									</div>
-									<h4>BLOGLAMA</h4>
-									<p><span class="image left"><img src="{{url_for('static',filename='profile/future-imperfect/images/apic06.jpg')}}" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-									<p><span class="image right"><img src="{{url_for('static',filename='profile/future-imperfect/images/apic04.jpg')}}" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-								</section>
 
+
+									<p>
+									<h4>{{profile[0]}}- {{profile[2]}} - {{profile[1]}} yazdı</h4>
+									{{profile[3]}}
+									</p>
+
+								</section>
+ 						{% endif %}
+					   {% endfor %}
 							</article>
 
 
