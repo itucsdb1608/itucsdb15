@@ -208,11 +208,9 @@ def duzenle_arkadas(ID, name , surname):
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-
-        q = """UPDATE FRIENDTABLE SET NAME = %s, SURNAME = %s, WHERE ID = %s"""
+        q = """UPDATE FRIENDTABLE SET NAME = %s, SURNAME = %s WHERE ID = %s"""
         cursor.execute(q, ( name, surname,ID))
         db_connection.commit()
-        db_connection.close()
         cursor.close()
     except dbapi2.DatabaseError as error:
             print("Error %s" % error)
