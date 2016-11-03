@@ -1,141 +1,92 @@
 {% extends "profile/base.html" %}
-{% block title %}Ağım{% endblock %}
+{% block title %}friends{% endblock %}
 				<!-- Main -->
 {% block content %}
 
 							<article class="post">
 								<header>
 									<div class="title">
-										<h2><a href="#">Arkadaşlar</a></h2>
-										<p>Ağını Genişlet..</p>
+										<h2><a href="#">Arkadaslar</a></h2>
+										<p>Agini Genislet..</p>
 									</div>
 									<div class="meta">
-										<time class="published" datetime="2015-10-18">Toplam Arkadaş Sayısı</time>
-										<a href="#" class="author"><span class="name">5</span></a>
+										<time class="published" datetime="2015-10-18">Toplam Arkadas Sayasi</time>
+										<a href="#" class="author"><span class="name">x</span></a>
 									</div>
 								</header>
 
 
-
-
 								<section>
-									<h3>Bağlantılarım</h3>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Ad</th>
-													<th>Üniversite</th>
-													<th>Avatar</th>
-													<th>İşlem</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Emre Köse</td>
-													<td>İstanbul Teknik Üniversitesi</td>
-													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
-													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
-												</tr>
-												<tr>
-													<td>Ali Gel</td>
-													<td>Yıldız Teknik Üniversitesi</td>
-													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
-													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
-												</tr>
-												<tr>
-													<td><a href="#" class="losgo">Ahmet Faruk</a></td>
-													<td>İstanbul Üniversitesi</td>
-													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
-													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
-												</tr>
-												<tr>
-													<td>Ömer İnci</td>
-													<td>Nişantaşı Üniversitesi</td>
-													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
-													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
-												</tr>
-												<tr>
-													<td>Kürşat Ozan</td>
-													<td>Biruni Üniversitesi</td>
-													<td><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></td>
-													<td><a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/sil.png')}}" title="Sil" /></a></td>
-												</tr>
-											</tbody>
-											<tfoot>
-											</tfoot>
-										</table>
-									</div>
+								<div>
+									<h2>Arkadas Ekle - Sil - Duzenle</h2>
+									 <form  role="form" action="{{ url_for('site.friend') }}" id="ArkadasEkleme" method="post">
+							            <h3>Arkadas Ekle</h3>
+							            <div>
+							                <label for="FriendName">Name</label>
+							                <input type="text"  id="FriendName" name="FriendName" placeholder="FriendName">
+							            </div>
+							            <div>
+							                <label for="FriendSurname">Surname</label>
+							                <input type="text"  id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
+							            </div>
+											<input type="submit" name = "submit" value = "Ekle" >
+
+							        </form>
+							        <form  role="form" action="{{ url_for('site.friend') }}" id="ArkadasSilme" method="post">
+							             <h3>Arkadas Sil</h3>
+							             <div>
+							                <label for="FriendID">Friend ID</label>
+							                <input type="text"  id="FriendID" name="FriendID" placeholder="FriendID">
+							            </div>
+							            <input type="submit" name = "submit" value = "Sil" >
+							        </form>
+							        <form  role="form" action="{{ url_for('site.friend') }}" id="ArkadasDuzenleme" method="post">
+							            <h3>Arkadas Duzenle</h3>
+							            <div >
+							                <label for="FriendID">arkadas id si</label>
+							                <input type="text" id="FriendID" name="FriendID" placeholder="FriendID">
+							            </div>
+							            <div>
+							                <label for="FriendName"> yeni isim</label>
+							                <input type="text" class="form-control" id="FriendName" name="FriendName" placeholder="FriendName">
+							            </div>
+							            <div >
+							                <label for="FriendSurname">yeni soyisim</label>
+							                <input type="text" class="form-control" id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
+							            </div>
+
+							            <input type="submit" name = "submit" value = "Duzenle" >
+							        </form>
+							         <h2> Arkadas Listesi </h2>
+ 										<ul>
+								        {% for arkadas in arkadaslar %}
+								            <li>
+								                <div>
+								                    <p>name: {{ arkadas[0] }}   |||  surname: {{ arkadas[1] }}  |||  id: {{ arkadas[2] }}</p>
+ 													<br/>
+								                    <br/>
+								                </div>
+								            </li>
+								            <p> ------------------------------  </p>
+								        {% endfor %}
+
+								    </ul>
+
+					            	 </div>
+					            	 <a  href= "{{ url_for('site.friend_listing') }}"  role="button"> Tum arkadas listesi</a>
+
 
 								</section>
 
 							</article>
 
-{% endblock %}
-{% block menu %}
+					{% endblock %}
+					{% block menu %}
 
-				<!-- Sidebar -->
+									<!-- Sidebar -->
 
-						<!-- Intro -->
-							<section id="intro">
-								<a href="#" class="logo"><img src="{{url_for('static',filename='profile/future-imperfect/images/logo.jpg')}}" alt="" /></a>
-								<header>
-									<h2>BeeLink Platformu</h2>
-									<p>Senin Yaşamın, Senin Kariyerin..</a></p>
-								</header>
+											<!-- Intro -->
 
-							</section>
-				<h3>Tanıyor Olabileceğin KİŞİLER</h3>
-						<!-- Posts List -->
-							<section>
-								<ul class="posts">
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Emre Köse</a></h3>
-												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic08.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Ahmet Kaçmaz</a></h3>
-												<time class="published" datetime="2015-10-20">Marmara Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic09.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Furkan Artunç</a></h3>
-												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic10.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">İbrahim Dolapçı</a></h3>
-												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic11.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Eyüp Ergin</a></h3>
-												<time class="published" datetime="2015-10-20">Boğaziçi Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic12.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-								</ul>
-							</section>
 
-{% endblock %}
-						<!-- Footer -->
+					{% endblock %}
+											<!-- Footer -->
