@@ -5,6 +5,8 @@ from flask import redirect, url_for
 from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
 from message import Message
 from connect_db import add_to_login, Person, records_from_login, update_to_login, remove_from_login
+from connect_db import ekle_arkadas, sil_arkadas, duzenle_arkadas,tum_arkadaslar
+from friend import Friend
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -63,6 +65,35 @@ def add_message():
         newMessage = Message(username,messageContent,messageSubject)
         add_message_to_table(newMessage)
         return redirect(url_for('site.signed_in'))
+
+@site.route('/friend/change', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
+def friend():
+    if request.method == 'GET':
+        return render_template('profile/arkadas.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Ekle':
+            isim = request.form['FriendName']
+            soyisim = request.form['FriendSurname']
+            ekle_arkadas(isim, soyisim)
+            return redirect(url_for('site.friend_requests'))
+        elif request.form['submit'] == 'Duzenle':
+            id = request.form['FriendID']
+            isim = request.form['FriendName']
+            soyisim = request.form['FriendSurname']
+
+            duzenle_arkadas(isim,soyisim,id)
+            return redirect(url_for('site.friend_requests'))
+        elif request.form['submit'] == 'Sil':
+            id = request.form['FriendID']
+            sil_arkadas(id)
+            return redirect(url_for('site.friend_requests'))
+
+@site.route('/friend/arkadasListesi')                       #arkadas.html in icinde kullanildi
+def friend_listing():
+     tumu = tum_arkadaslar()
+     return render_template('profile/arkadas.html', arkadaslar = tumu)
+
+
 
 @site.route('/signedin',methods=['GET', 'POST'])
 def signed_in():
