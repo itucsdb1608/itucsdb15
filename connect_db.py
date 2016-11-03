@@ -172,7 +172,7 @@ def remove_from_login(username):
         db = dbapi2.connect(connect())
         cursor = db.cursor()
         operate = """DELETE FROM LOGIN WHERE user_name = %s"""
-        cursor.execute(operate, username)
+        cursor.execute(operate, (username,))
 
         db.commit()
         db.close()
