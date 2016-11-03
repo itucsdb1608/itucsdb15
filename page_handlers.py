@@ -4,6 +4,8 @@ from flask import request
 from flask import redirect, url_for
 from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
 from message import Message
+from connect_db import add_profile_to_table,get_profile_from_table,remove_profile_from_table,update_profile_from_table
+from profile import Profile
 from connect_db import add_to_login, Person, records_from_login, update_to_login, remove_from_login
 from connect_db import ekle_arkadas, sil_arkadas, duzenle_arkadas,tum_arkadaslar
 from friend import Friend
@@ -102,9 +104,51 @@ def signed_in():
     else:
         return redirect(url_for('site.signed_in'))
 
+
+@site.route('/admin/blog/update',methods=['GET','POST'])
+def update_blog():
+    if request.method == 'GET':
+        return render_template('admin/blog_guncelle.html')
+    else:
+        blog_id = request.form['blog_id']
+        username = request.form['username']
+        title = request.form['title']
+        content = request.form['content']
+        update_profile_from_table(username,title,content,blog_id)
+        return redirect(url_for('site.blog'))
+
+@site.route('/admin/blog/delete',methods=['GET','POST'])
+def delete_blog():
+    if request.method == 'GET':
+        return render_template('admin/blog_sil.html')
+    else:
+        blog_id = request.form['blog_id']
+        remove_profile_from_table(blog_id)
+        return redirect(url_for('site.blog'))
+@site.route('/admin/blog/add',methods=['GET','POST'])
+def add_blog():
+    if request.method == 'GET':
+        return render_template('admin/blog_ekle.html')
+    else:
+        username = request.form['username']
+        title = request.form['title']
+        content = request.form['content']
+        newProfile = Profile(username,title,content)
+        add_profile_to_table(newProfile)
+        return redirect(url_for('site.blog'))
+
+@site.route('/admin/blog',methods=['GET', 'POST'])
+def blog():
+    if request.method == 'GET':
+        profile_blog = get_profile_from_table()
+        return render_template('admin/blog.html', profile_blog = profile_blog)
+    else:
+        return redirect(url_for('site.blog'))
+
 @site.route('/profile')
 def profile():
-    return render_template('profile/profil.html')
+    profile_blog = get_profile_from_table()
+    return render_template('profile/profil.html', profile_blog = profile_blog)
 
 @site.route('/messages')
 def messages():

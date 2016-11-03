@@ -1,6 +1,7 @@
 import os,json,re
 import psycopg2 as dbapi2
 import message
+import profile
 import friend
 
 def get_elephantsqldb_dsn(vcap_services):
@@ -96,6 +97,84 @@ def update_one_message(content,subject,username):
         print("Error %s" % error)
 
 
+## Functions for Profile Table
+
+def init_profile_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        cursor.execute("DROP TABLE IF EXISTS PROFILE")
+        query = """CREATE TABLE IF NOT EXISTS PROFILE
+                (
+                    BLOG_ID SERIAL PRIMARY KEY,
+                    USERNAME VARCHAR(80),
+                    TITLE VARCHAR(80),
+                    CONTENT TEXT NOT NULL
+                )"""
+        cursor.execute(query)
+        query="""INSERT INTO PROFILE (USERNAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
+        cursor.execute(query,("Cuntay","Hello Everybody","This is my first Blog"))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def add_profile_to_table(profile):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO PROFILE (USERNAME,TITLE,CONTENT) VALUES (%s,%s,%s) """
+        cursor.execute(query,(profile.username,profile.title,profile.content))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def get_profile_from_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT BLOG_ID,USERNAME,TITLE,CONTENT FROM PROFILE"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def remove_profile_from_table(blog_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM PROFILE WHERE BLOG_ID = %s"""
+        cursor.execute(query,(blog_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def update_profile_from_table (username,title,content,blog_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE PROFILE SET USERNAME=%s, TITLE=%s, CONTENT=%s WHERE BLOG_ID=%s"""
+        cursor.execute(query,(username,title,content,blog_id))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
 ## Functions for Login Table
 
 class Person:
@@ -180,7 +259,7 @@ def remove_from_login(username):
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
-#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari -    emre kose
+#----- arkadas.html sayfasi iï¿½in ekleme , silme , guncelleme fonksiyonlari -    emre kose
 def ekle_arkadas(name ,surname):
     try:
         dsn = connect()
@@ -244,4 +323,4 @@ def tum_arkadaslar():
         return tumu
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
+#----- arkadas.html sayfasi iï¿½in ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
