@@ -76,7 +76,7 @@ def remove_message_from_table(username):
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
         query = """DELETE FROM MESSAGES WHERE USERNAME = %s"""
-        cursor.execute(query,(username))
+        cursor.execute(query,(username,))
         db_connection.commit()
         db_connection.close()
     except dbapi2.DatabaseError as error:
@@ -87,7 +87,7 @@ def update_one_message(content,subject,username):
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """UPDATE MESSAGES SET CONTENT=%s SUBJECT=%s WHERE USERNAME=%s"""
+        query = """UPDATE MESSAGES SET CONTENT=%s, SUBJECT=%s WHERE USERNAME=%s"""
         cursor.execute(query,(content,subject,username))
         db_connection.commit()
         db_connection.close()
