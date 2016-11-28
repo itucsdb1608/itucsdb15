@@ -7,7 +7,7 @@ from message import Message
 from login import Person
 from connect_db import add_profile_to_table,get_profile_from_table,remove_profile_from_table,update_profile_from_table
 from profile import Profile
-from connect_db import add_to_login, records_from_login, update_to_login, remove_from_login
+from connect_db import add_to_login, records_from_login, update_to_login, remove_from_login, search_user_login
 from connect_db import ekle_arkadas, sil_arkadas, duzenle_arkadas,tum_arkadaslar
 from friend import Friend
 from connect_db import add_personal_message, tum_mesajlar,update_personal_message,remove_personal_message
@@ -33,7 +33,17 @@ def sign_up():
 
 @site.route('/signin', methods=['GET','POST'])
 def sign_in():
-    return render_template('girisyap.html')
+    if request.method == 'GET':
+        return render_template('girisyap.html')
+    else:
+        username = request.form['username']
+        password = request.form['password']
+        check = search_user_login(username, password)
+        if check == 1:
+            return redirect(url_for('site.signed_in'))
+        else:
+            return render_template('home.html')
+
 
 @site.route('/contactus')
 def contact():

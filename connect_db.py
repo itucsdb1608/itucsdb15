@@ -255,6 +255,26 @@ def records_from_login():
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
+def search_user_login(username, password):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """SELECT * FROM LOGIN WHERE
+                    user_name = %s AND password = %s
+                    """
+        cursor.execute(operate,(username, password,))
+        record = cursor.fetchone()
+        db.commit()
+        db.close()
+        if record:
+            return 1
+        else:
+            return 0
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
+
 def update_to_login(username, u_person):
     try:
         db = dbapi2.connect(connect())
