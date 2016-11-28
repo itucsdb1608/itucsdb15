@@ -4,22 +4,26 @@
 {% block content %}
 						<!-- Post -->
 						{% for message in messages%}
-							{% if message %}
 							<article class="post">
-								<label for="subject" class="control-label col-sm-1">Subject: {{message[2]}}</label>
+								<label for="subject" class="control-label col-sm-1">Subject:{{message[3]}}</label>
 								<footer>
 									<ul class="actions">
-										<li> <span class="name">{{message[1]}}</span></li>
+										<li> <span class="content">{{message[2]}}</span></li>
+										<li><span class="name">{{message[1]}}</span></li>
 									<ul class="stats">
-										<li><span class="name">{{message[0]}}</span></li>
-										
-										<li><a href="{{url_for('site.delete_message')}}" name="delete" class="btn btn-primary"/>Delete</li>
-										<li><a href="{{url_for('site.update_message')}}" name="update" class="btn btn-primary"/>Update</li>
-										
-									</ul>
+										<form role="form" action="{{url_for('site.delete_message')}}" method="post" name="delete">
+											<li>
+												<button type="submit" value="{{ message[0] }}"  name="delete" class="btn btn-primary">Delete</button>
+											</li>
+										</form>
+										<form role="form" action="{{url_for('site.update_message',messageId=message[0])}}" method="get" name="update">
+											<li>
+												<button type="submit" value="{{message[0]}}" name="update" class="btn btn-primary">Update</button>
+											</li>
+										</form>
 								</footer>
+
 							</article>
-						{% endif %}
 					   {% endfor %}
 					   <li><a href="{{url_for('site.add_message')}}" class="button big next">Share a post! Click Here</a></li>
 {% endblock %}
