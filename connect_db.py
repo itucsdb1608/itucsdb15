@@ -30,21 +30,35 @@ def init_message_table():
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
         cursor.execute("DROP TABLE IF EXISTS MESSAGES")
-        query = """CREATE TABLE IF NOT EXISTS MESSAGES
+
+        query = """CREATE TABLE IF NOT EXISTS USERS
                 (
-                    USERNAME TEXT PRIMARY KEY  NOT NULL,
-                    CONTENT TEXT  NOT NULL,
-                    SUBJECT TEXT NOT NULL
+                    USERID SERIAL NOT NULL,
+                    USERNAME TEXT NOT NULL,
+                    UNIQUE(USERNAME),
+                    PRIMARY KEY(USERID)
                 )"""
         cursor.execute(query)
-        query="""INSERT INTO MESSAGES VALUES(%s,%s,%s)"""
-        cursor.execute(query,("ExampleUser","Hello Everybody","Hello Message"))
+
+
+        query = """CREATE TABLE IF NOT EXISTS MESSAGES
+                (
+                    MSGID SERIAL PRIMARY KEY NOT NULL,
+                    USERNAME TEXT NOT NULL,
+                    CONTENT TEXT  NOT NULL,
+                    SUBJECT TEXT NOT NULL,
+                    FOREIGN KEY (USERNAME) REFERENCES USERS(USERNAME)
+                )"""
+        cursor.execute(query)
+        query="""INSERT INTO USERS (USERNAME) VALUES (%s)"""
+        cursor.execute(query,("user1",))
+        query="""INSERT INTO USERS (USERNAME) VALUES (%s)"""
+        cursor.execute(query,("user2",))
         db_connection.commit()
         db_connection.close()
 
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-
 
 def add_message_to_table(message):
     try:
@@ -64,7 +78,7 @@ def get_messages_from_table():
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """SELECT USERNAME,CONTENT,SUBJECT FROM MESSAGES"""
+        query = """SELECT MSGID,USERNAME,CONTENT,SUBJECT FROM MESSAGES"""
         cursor.execute(query)
         fetchedData = cursor.fetchall()
         db_connection.commit()
@@ -74,25 +88,40 @@ def get_messages_from_table():
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-def remove_message_from_table(username):
+def get_users_from_users_table():
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """DELETE FROM MESSAGES WHERE USERNAME = %s"""
-        cursor.execute(query,(username,))
+        query = """SELECT USERNAME FROM USERS"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def remove_message_from_table(id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM MESSAGES WHERE MSGID = %s"""
+        cursor.execute(query,(id,))
         db_connection.commit()
         db_connection.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-def update_one_message(content,subject,username):
+def update_one_message(content,subject,messageId):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """UPDATE MESSAGES SET CONTENT=%s, SUBJECT=%s WHERE USERNAME=%s"""
-        cursor.execute(query,(content,subject,username))
+        query = """UPDATE MESSAGES SET CONTENT=%s, SUBJECT=%s WHERE MSGID = %s"""
+        cursor.execute(query,(content,subject,messageId))
         db_connection.commit()
         db_connection.close()
     except dbapi2.DatabaseError as error:
