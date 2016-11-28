@@ -61,8 +61,7 @@ def delete_message():
 @site.route('/message/add',methods=['GET','POST'])
 def add_message():
     if request.method == 'GET':
-        users = get_users_from_users_table();
-        return render_template('profile/add_message.html',users = users)
+        return render_template('profile/add_message.html')
     else:
         username = request.form['username']
         messageSubject = request.form['subject']
