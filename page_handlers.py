@@ -4,9 +4,10 @@ from flask import request
 from flask import redirect, url_for
 from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
 from message import Message
+from login import Person
 from connect_db import add_profile_to_table,get_profile_from_table,remove_profile_from_table,update_profile_from_table
 from profile import Profile
-from connect_db import add_to_login, Person, records_from_login, update_to_login, remove_from_login
+from connect_db import add_to_login, records_from_login, update_to_login, remove_from_login
 from connect_db import ekle_arkadas, sil_arkadas, duzenle_arkadas,tum_arkadaslar
 from friend import Friend
 from connect_db import add_personal_message, tum_mesajlar,update_personal_message,remove_personal_message

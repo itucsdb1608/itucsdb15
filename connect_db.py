@@ -4,6 +4,7 @@ import message
 import profile
 import friend
 import personal_message
+import login
 
 def get_elephantsqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
@@ -177,14 +178,6 @@ def update_profile_from_table (username,title,content,blog_id):
 
 
 ## Functions for Login Table
-
-class Person:
-    def __init__(self, name, surname, email, username, password):
-        self.name = name
-        self.surname = surname
-        self.email = email
-        self.username = username
-        self.password = password
 
 def create_login():
     try:
