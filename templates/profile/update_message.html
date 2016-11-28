@@ -2,29 +2,23 @@
 {% block title %}Anasayfa{% endblock %}
 
 {% block content %}
-<form role="form" action="" method="post" name="movie_add" class="form-→horizontal">
+<form role="form" action="" method="post" name="update_message" class="form-→horizontal">
 		<div class="form-group">
-			<label for="username" class="control-label col-sm-1">Enter username to update message subject and content</label>
+			<label for="subject" class="control-label col-sm-1">Enter new subject</label>
 				<div class="col-sm-3">
-					<input type="text" name="username" value="" />
+					<input type="text" name="subject"/>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="subject" class="control-label col-sm-1">Enter subject to update message</label>
+			<label for="content" class="control-label col-sm-1">Enter new content</label>
 				<div class="col-sm-3">
-					<input type="text" name="subject" value="" />
+					<input type="text" name="content"/>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="content" class="control-label col-sm-1">Enter content to update message</label>
-				<div class="col-sm-3">
-					<input type="text" name="content" value="" />
-				</div>
+		<div class="col-sm-1"></div>
+			<button type="submit" name="update" class="button big next">Update!</button>
 		</div>
-<div class="form-group">
-	<div class="col-sm-1"></div>
-		<button type="submit" name="delete" class="button big next">Update!</button>
-	</div>
 
 </form>
 {% endblock %}
