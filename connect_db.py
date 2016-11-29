@@ -225,6 +225,14 @@ def create_login():
                   )"""
         cursor.execute(operate)
         fill_kisiler_db(cursor)
+
+        operate = """CREATE TABLE IF NOT EXISTS USERLOGIN(
+                        id SERIAL NOT NULL PRIMARY KEY,
+                        user_name VARCHAR(32),
+                        FOREIGN KEY (user_name) REFERENCES LOGIN(user_name)
+                  )"""
+        cursor.execute(operate)
+
         db.commit()
         db.close()
 
