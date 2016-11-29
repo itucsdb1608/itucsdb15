@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}İletişim{% endblock %}
+{% block title %}Hakkımızda{% endblock %}
 				<!-- Main -->
 {% block content %}
 	<table border="1">
@@ -20,8 +20,14 @@
 			<td>{{i[2]}}</td>
 			<td>{{i[3]}}</td>
 			<td>{{i[4]}}</td>
-			<td><a href= {{url_for('site.remove_user', user = i)}} name="delete">Delete</a></td>
-			<td><a href= {{url_for('site.update_user', user = i)}} name="update">Update</a></td>
+			<td>
+			<form action="{{url_for('site.remove_user')}}" method="post" name="delete"><button type="submit" value="{{ i[5] }}" name="delete">Delete</button>
+			</form>
+			</td>
+			<td>
+			<form role="form" action="{{url_for('site.update_user',id=i[5])}}" method="get" name="update"><button type="submit" value="{{i[5]}}" name="update">Update</button>
+			</form>
+			</td>
 			</tr>
 		{% endif %}
 	{% endfor %}

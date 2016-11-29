@@ -214,11 +214,12 @@ def create_login():
         cursor = db.cursor()
         cursor.execute("DROP TABLE IF EXISTS LOGIN")
         operate = """CREATE TABLE IF NOT EXISTS LOGIN(
-                        name VARCHAR(16),
-                        surname VARCHAR(20),
-                        email VARCHAR(30),
-                        user_name VARCHAR(32) PRIMARY KEY,
-                        password VARCHAR(32)
+                        name VARCHAR(16) NOT NULL,
+                        surname VARCHAR(20) NOT NULL,
+                        email VARCHAR(30) NOT NULL,
+                        user_name VARCHAR(32) NOT NULL,
+                        password VARCHAR(32) NOT NULL,
+                        user_id SERIAL NOT NULL PRIMARY KEY
                   )"""
         cursor.execute(operate)
         db.commit()
@@ -275,27 +276,27 @@ def search_user_login(username, password):
         print("Error is %s." % err)
 
 
-def update_to_login(username, u_person):
+def update_to_login(user_id, u_person):
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
         operate = """ UPDATE LOGIN SET name = %s, surname = %s,
-                    email = %s, password = %s WHERE
-                    user_name = %s
+                    email = %s, password = %s, user_name = %s WHERE
+                    user_id = %s
                     """
         cursor.execute(operate,(u_person.name, u_person.surname, u_person.email,
-                                u_person.password, username))
+                                u_person.password, u_person.username ,user_id))
         db.commit()
         db.close()
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
-def remove_from_login(username):
+def remove_from_login(user_id):
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
-        operate = """DELETE FROM LOGIN WHERE user_name = %s"""
-        cursor.execute(operate, (username,))
+        operate = """DELETE FROM LOGIN WHERE user_id = %s"""
+        cursor.execute(operate, (user_id,))
 
         db.commit()
         db.close()

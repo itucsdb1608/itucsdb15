@@ -42,7 +42,7 @@ def sign_in():
         if check == 1:
             return redirect(url_for('site.signed_in'))
         else:
-            return render_template('home.html')
+            return render_template('error.html')
 
 
 @site.route('/contactus')
@@ -178,15 +178,15 @@ def aboutus():
 @site.route('/user/remove', methods=['GET', 'POST'])
 def remove_user():
     if request.method == 'GET':
-        return render_template('remove.html')
+        return render_template('about.html')
     else:
-        username = request.form['username']
-        remove_from_login(username)
+        user_id = request.form['delete']
+        remove_from_login(user_id)
         records = records_from_login()
         return render_template('about.html', records = records)
 
-@site.route('/user/update', methods=['GET', 'POST'])
-def update_user():
+@site.route('/user/update/', methods=['GET', 'POST'])
+def update_user(id):
     if request.method == 'GET':
         return render_template('update.html')
     else:
@@ -196,7 +196,7 @@ def update_user():
         email = request.form['email']
         password = request.form['password']
         updateRecord = Person(name, surname, email, username, password)
-        update_to_login(username, updateRecord)
+        update_to_login(id, updateRecord)
         records = records_from_login()
         return render_template('about.html', records = records)
 
