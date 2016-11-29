@@ -18,9 +18,11 @@ def create_app():
 def main():
     app=create_app()
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    app.debug = True
+    app.run()
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
-        port, debug = int(VCAP_APP_PORT), False
+        port, debug = int(VCAP_APP_PORT), True
     else:
         port, debug = 5000, True
     app.run(host='0.0.0.0', port=port, debug=debug)

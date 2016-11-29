@@ -135,6 +135,7 @@ def init_profile_table():
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
+        cursor.execute("DROP TABLE IF EXISTS PROFILE")
         query = """CREATE TABLE IF NOT EXISTS PROFILE
                 (
                     BLOG_ID SERIAL PRIMARY KEY,
@@ -145,8 +146,8 @@ def init_profile_table():
 
                 )"""
         cursor.execute(query)
-   ##     query="""INSERT INTO PROFILE (USERNAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
-   ##    cursor.execute(query,("Cuntay","Hello Everybody","This is my first Blog"))
+        query="""INSERT INTO PROFILE (USER_NAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
+        cursor.execute(query,("cuntay","Hello Everybody","This is my first Blog"))
         db_connection.commit()
         db_connection.close()
 
