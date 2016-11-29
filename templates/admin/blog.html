@@ -83,10 +83,18 @@
                                             <div class="item-actions-block">
                                                 <ul class="item-actions-list">
                                                     <li>
-                                                        <a class="remove" href="{{url_for('site.delete_blog')}}"> <i class="fa fa-trash-o "></i> </a>
+                                                <form role="form" action="{{url_for('site.delete_blog')}}" method="post" name="delete">
+
+                                                    	<button type="submit" value="{{profile[0]}}"  name="delete" class="remove"><i class="fa fa-trash-o "></i></button>
+                                                 </form>
+
                                                     </li>
                                                     <li>
-                                                        <a class="edit" href="{{url_for('site.update_blog')}}"> <i class="fa fa-pencil"></i> </a>
+                                                <form role="form" action="{{url_for('site.update_blog',blog_id=profile[0])}}" method="get" name="update">
+
+                                                    	<button type="submit" value="{{profile[0]}}"  name="update" class="edit"><i class="fa fa-pencil "></i></button>
+                                                </form>
+
                                                     </li>
                                                 </ul>
                                             </div>

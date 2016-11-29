@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask import current_app
-from flask import request
+from flask import request, session
 from flask import redirect, url_for
 from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
 from message import Message
@@ -40,9 +40,15 @@ def sign_in():
         password = request.form['password']
         check = search_user_login(username, password)
         if check == 1:
+            session['name'] = username
             return redirect(url_for('site.signed_in'))
         else:
             return render_template('error.html')
+
+@site.route('/cikis', methods=['GET'])
+def cikis():
+    session['name'] = ""
+    return redirect(url_for('site.home_page'))
 
 
 @site.route('/contactus')
@@ -117,24 +123,22 @@ def signed_in():
         return redirect(url_for('site.signed_in'))
 
 
-@site.route('/admin/blog/update',methods=['GET','POST'])
-def update_blog():
+@site.route('/admin/blog/<int:blog_id>/update',methods=['GET','POST'])
+def update_blog(blog_id):
     if request.method == 'GET':
         return render_template('admin/blog_guncelle.html')
     else:
-        blog_id = request.form['blog_id']
-        username = request.form['username']
         title = request.form['title']
         content = request.form['content']
-        update_profile_from_table(username,title,content,blog_id)
+        update_profile_from_table(title,content,blog_id)
         return redirect(url_for('site.blog'))
 
 @site.route('/admin/blog/delete',methods=['GET','POST'])
 def delete_blog():
     if request.method == 'GET':
-        return render_template('admin/blog_sil.html')
+        return render_template('admin/blog.html')
     else:
-        blog_id = request.form['blog_id']
+        blog_id = request.form['delete']
         remove_profile_from_table(blog_id)
         return redirect(url_for('site.blog'))
 @site.route('/admin/blog/add',methods=['GET','POST'])
@@ -142,10 +146,10 @@ def add_blog():
     if request.method == 'GET':
         return render_template('admin/blog_ekle.html')
     else:
-        username = request.form['username']
+        user_name = session['name']
         title = request.form['title']
         content = request.form['content']
-        newProfile = Profile(username,title,content)
+        newProfile = Profile(user_name,title,content)
         add_profile_to_table(newProfile)
         return redirect(url_for('site.blog'))
 

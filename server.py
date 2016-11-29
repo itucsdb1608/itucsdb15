@@ -2,6 +2,7 @@ import os
 
 from page_handlers import site
 from flask import Flask
+from flask.globals import session, request
 from connect_db import init_message_table
 from connect_db import init_profile_table
 from connect_db import create_login
@@ -16,6 +17,7 @@ def create_app():
 
 def main():
     app=create_app()
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
         port, debug = int(VCAP_APP_PORT), False

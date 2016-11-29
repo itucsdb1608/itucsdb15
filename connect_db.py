@@ -135,17 +135,18 @@ def init_profile_table():
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        cursor.execute("DROP TABLE IF EXISTS PROFILE")
         query = """CREATE TABLE IF NOT EXISTS PROFILE
                 (
                     BLOG_ID SERIAL PRIMARY KEY,
-                    USERNAME VARCHAR(80),
+                    USER_NAME VARCHAR(80) NOT NULL,
                     TITLE VARCHAR(80),
-                    CONTENT TEXT NOT NULL
+                    CONTENT TEXT NOT NULL,
+                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE
+
                 )"""
         cursor.execute(query)
-        query="""INSERT INTO PROFILE (USERNAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
-        cursor.execute(query,("Cuntay","Hello Everybody","This is my first Blog"))
+   ##     query="""INSERT INTO PROFILE (USERNAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
+   ##    cursor.execute(query,("Cuntay","Hello Everybody","This is my first Blog"))
         db_connection.commit()
         db_connection.close()
 
@@ -158,8 +159,8 @@ def add_profile_to_table(profile):
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """INSERT INTO PROFILE (USERNAME,TITLE,CONTENT) VALUES (%s,%s,%s) """
-        cursor.execute(query,(profile.username,profile.title,profile.content))
+        query = """INSERT INTO PROFILE (USER_NAME,TITLE,CONTENT) VALUES (%s,%s,%s) """
+        cursor.execute(query,(profile.user_name,profile.title,profile.content))
         db_connection.commit()
         db_connection.close()
 
@@ -171,7 +172,7 @@ def get_profile_from_table():
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """SELECT BLOG_ID,USERNAME,TITLE,CONTENT FROM PROFILE"""
+        query = """SELECT BLOG_ID,USER_NAME,TITLE,CONTENT FROM PROFILE"""
         cursor.execute(query)
         fetchedData = cursor.fetchall()
         db_connection.commit()
@@ -193,13 +194,13 @@ def remove_profile_from_table(blog_id):
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-def update_profile_from_table (username,title,content,blog_id):
+def update_profile_from_table (title,content,blog_id):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """UPDATE PROFILE SET USERNAME=%s, TITLE=%s, CONTENT=%s WHERE BLOG_ID=%s"""
-        cursor.execute(query,(username,title,content,blog_id))
+        query = """UPDATE PROFILE SET TITLE=%s, CONTENT=%s WHERE BLOG_ID=%s"""
+        cursor.execute(query,(title,content,blog_id))
         db_connection.commit()
         db_connection.close()
     except dbapi2.DatabaseError as error:
@@ -212,21 +213,34 @@ def create_login():
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
-        cursor.execute("DROP TABLE IF EXISTS LOGIN")
+
         operate = """CREATE TABLE IF NOT EXISTS LOGIN(
                         name VARCHAR(16) NOT NULL,
                         surname VARCHAR(20) NOT NULL,
                         email VARCHAR(30) NOT NULL,
-                        user_name VARCHAR(32) NOT NULL,
+                        user_name VARCHAR(32) UNIQUE,
                         password VARCHAR(32) NOT NULL,
                         user_id SERIAL NOT NULL PRIMARY KEY
                   )"""
         cursor.execute(operate)
+        fill_kisiler_db(cursor)
         db.commit()
         db.close()
 
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
+
+
+def fill_kisiler_db(cursor):
+    query = """INSERT INTO LOGIN(name, surname, email, user_name, password)
+                   VALUES ('Tuncay','Demirbaş', 'tuncay@hotmail.com' ,'cuntay', '123456');
+                INSERT INTO LOGIN(name, surname, email, user_name, password)
+                   VALUES ('Enes','Basat', 'enes@hotmail.com' ,'enes', 'enes123');
+                INSERT INTO LOGIN(name, surname, email, user_name, password)
+                   VALUES ('Furkan','Artunç', 'furkan@hotmail.com' ,'furkan', 'furkan789');"""
+
+    cursor.execute(query)
+
 
 def add_to_login(n_person):
     try:
