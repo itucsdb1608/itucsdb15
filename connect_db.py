@@ -142,7 +142,7 @@ def init_profile_table():
                     USER_NAME VARCHAR(80) NOT NULL,
                     TITLE VARCHAR(80),
                     CONTENT TEXT NOT NULL,
-                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE
+                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME)
 
                 )"""
         cursor.execute(query)
