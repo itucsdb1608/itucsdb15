@@ -17,7 +17,7 @@
 								<li><a href="#" class="button big next">Next Page</a></li>
 							</ul>
 						<div class="box">
-													<form  role="form" action="{{ url_for('site.personal_send') }}" id="yeni" method="post">
+													<form  role="form" action="{{ url_for('site.personal_send',my = myusername) }}" id="yeni" method="post">
 														<div class="row uniform 50%">
 															<div class="12u">
 																<input type="text"  id="UserName" name="UserName" placeholder="to UserName">
@@ -36,14 +36,9 @@
 															</div>
 														</div>
 													</form>
-													<h2> Mesaj Listesi </h2>
-													<a  href= "{{ url_for('site.mesaj_listing') }}"  role="button"> Tum Mesaj listesi</a>
- 										<ul>
-								        {% for mesaj in mesajlar %}
-								            <li>
-								                <div>
-								                    <p>Username: {{ mesaj[0] }}    --->   Mesaj: {{ mesaj[1] }}</p>
-								                    <form  role="form" action="{{ url_for('site.update_message_1') }}" id="yeni" method="post">
+
+
+															<form  role="form" action="{{ url_for('site.personal_message_update',my = myusername) }}" id="guncelle" method="post">
 														<div class="row uniform 50%">
 															<div class="12u">
 																<input type="text"  id="UserName" name="UserName" placeholder="to UserName">
@@ -51,7 +46,7 @@
 														</div>
 														<div class="row uniform 50%">
 															<div class="12u">
-																<input type="text"  id="PersonalContent" name="PersonalContent" placeholder="PersonalContent">
+																<input type="text"  id="PersonalContent" name="PersonalContent" placeholder="new message">
 															</div>
 														</div>
 														<div class="row uniform">
@@ -62,21 +57,25 @@
 															</div>
 														</div>
 													</form>
-													<form  role="form" action="{{ url_for('site.delete_personel_message') }}" id="yeni" method="post">
-														<div class="row uniform 50%">
-															<div class="12u">
-																<input type="text"  id="UserName" name="UserName" placeholder="to UserName">
-															</div>
-														</div>
 
-														<div class="row uniform">
-															<div class="12u">
-																<ul class="actions align-right">
-																	<input type="submit"   name = "submit"  value = "Delete">
-																</ul>
-															</div>
-														</div>
-													</form>
+
+
+													<h2> Mesaj Listesi </h2>
+
+ 										<ul>
+
+								        {% for bilgi in bilgiler %}
+								            <li>
+								                <div>
+								                    <p>to Username: {{ bilgi[1] }}    --->   Mesaj: {{ bilgi[2] }}</p>
+
+									    <form role="form" action="{{ url_for('site.personal_message_delete',username=bilgi[1], myusername = bilgi[0], mesaj = bilgi[2] )}}" method="post">
+								        <div class="form-group">
+								            <button class="btn btn-success" type="submit">Sil</button>
+								        </div>
+
+								    </form>
+
  													<br/>
 								                    <br/>
 								                </div>

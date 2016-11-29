@@ -10,7 +10,7 @@ from profile import Profile
 from connect_db import add_to_login, records_from_login, update_to_login, remove_from_login, search_user_login
 from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkadas,sil_arkadas,guncelle_arkadas
 from friend import Friend
-from connect_db import add_personal_message, tum_mesajlar,update_personal_message,remove_personal_message
+from connect_db import send_message,send_username_for_messages,update_personal_message,sil_kisisel_mesaj
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -320,34 +320,71 @@ def admin_home():
 def admin_kisisel():
         return render_template('admin/kisisel.html')
 
-@site.route('/messages/add', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
-def personal_send():
+@site.route('/messages')
+def message_request():
+        return render_template('profile/mesaj.html')
+
+
+@site.route('/personalmessage/send/<my>', methods=['GET', 'POST'])
+def personal_send(my):
     if request.method == 'GET':
         return render_template('profile/mesaj.html')
     elif request.method == 'POST':
         if request.form['submit'] == 'Add':
+
             touser = request.form['UserName']
-            content = request.form['PersonalContent']
-            add_personal_message(touser, content)
-            return redirect(url_for('site.personel_message_request'))
-@site.route('/messages/mesajlar')
-def mesaj_listing(): #yeni
-     tumu = tum_mesajlar()
-     return render_template('profile/mesaj.html', mesajlar = tumu)
-@site.route('/messages/update',methods=['GET','POST'])
-def update_message_1():
+            mesaj = request.form['PersonalContent']
+
+            send_message(my,touser,mesaj)
+
+            all = send_username_for_messages(my)
+            username = my
+            return render_template('profile/mesaj.html',bilgiler = all ,  myusername = username )
+
+
+@site.route('/personalmessageupdate/<my>', methods=['GET', 'POST'])
+def personal_message_update(my):
     if request.method == 'GET':
         return render_template('profile/mesaj.html')
-    else:
-        username = request.form['UserName']
-        content = request.form['PersonalContent']
-        update_personal_message(username,content)
-        return redirect(url_for('site.personel_message_request'))
-@site.route('/messages/delete',methods=['GET','POST'])
-def delete_personel_message():
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Update':
+
+            touser = request.form['UserName']
+            mesaj = request.form['PersonalContent']
+
+            update_personal_message(my,touser,mesaj)
+
+            all = send_username_for_messages(my)
+            username = my
+            return render_template('profile/mesaj.html',bilgiler = all ,  myusername = username )
+
+
+
+
+@site.route('/mesaj/gonder', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
+def take_username():
     if request.method == 'GET':
         return render_template('profile/mesaj.html')
+    elif request.form['submit'] == 'Send':
+         username = request.form['Username']
+         all = send_username_for_messages(username)
+         return render_template('profile/mesaj.html',bilgiler = all , myusername = username )
+
+
+@site.route('/pmgiris')
+def pmessage_request():
+        return render_template('profile/mesajgiris.html')
+
+
+
+
+@site.route('/mesaj/sil/<username>/<myusername>/<mesaj>', methods=['GET', 'POST'])
+def personal_message_delete(username, myusername,mesaj):
+    if request.method == 'POST':
+
+        sil_kisisel_mesaj(username,mesaj)
+        all = send_username_for_messages(myusername)
+
+        return render_template('profile/mesaj.html',bilgiler = all , myusername = myusername )
     else:
-        username = request.form['UserName']
-        remove_personal_message(username)
-        return redirect(url_for('site.personel_message_request'))
+        return redirect(url_for('site.message_request'))

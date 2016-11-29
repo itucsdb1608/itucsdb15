@@ -6,7 +6,7 @@ from flask.globals import session, request
 from connect_db import init_message_table
 from connect_db import init_profile_table
 from connect_db import init_friend_table
-
+from connect_db import init_personal_message_table
 from connect_db import create_login
 
 def create_app():
@@ -16,6 +16,7 @@ def create_app():
     app.init_profile_table = init_profile_table()
     app.init_friend_table = init_friend_table()
     app.create_login = create_login()
+    app.init_personal_message_table = init_personal_message_table()
     return app
 
 def main():

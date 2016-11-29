@@ -476,64 +476,120 @@ def tum_arkadaslar():
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 #----- arkadas.html sayfasi i�in ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
-def add_personal_message(toUser ,content):
+def init_personal_message_table():        #n
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-        query = """CREATE TABLE IF NOT EXISTS PERSONAL
-                    (
-                        TOUSER TEXT NOT NULL,
-                        CONTENT TEXT NOT NULL,
-                        MESSAGE_ID SERIAL NOT NULL PRIMARY KEY
-                    )"""
+     #   cursor.execute("DROP TABLE IF EXISTS PERSONFRIENDS")
+        query = """CREATE TABLE IF NOT EXISTS PERSONMSSG
+                (
+                    USERNAME TEXT NOT NULL,
+                    NAME TEXT NOT NULL,
+                    SURNAME TEXT NOT NULL,
+                    PRIMARY KEY(USERNAME)
+
+                )"""
         cursor.execute(query)
 
-        query = """INSERT INTO PERSONAL (TOUSER,CONTENT)  VALUES (%s,%s )"""
-        cursor.execute(query, (toUser,content))
+        cursor.execute("DROP TABLE IF EXISTS MESSAGERELATION")
+        query = """CREATE TABLE IF NOT EXISTS MESSAGERELATION
+                (
+                    USERNAME TEXT NOT NULL REFERENCES PERSONMSSG(USERNAME),
+                    TOUSERNAME TEXT NOT NULL,
+                    MESSAGE TEXT NOT NULL,
+                    PRIMARY KEY(USERNAME,TOUSERNAME,MESSAGE)
+
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO PERSONMSSG (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
+        cursor.execute(query, ("mert@","mert","ari",))
+
+
+        query = """INSERT INTO MESSAGERELATION (USERNAME,TOUSERNAME,MESSAGE)  VALUES (%s,%s,%s )"""
+        cursor.execute(query, ("mert@","emre@","sa",))
+
+
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def send_message(username,fusername,message):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+        query = """INSERT INTO MESSAGERELATION (USERNAME,TOUSERNAME,MESSAGE)  VALUES (%s,%s ,%s)"""
+        cursor.execute(query, (username,fusername,message,))
+
+
         db_connection.commit()
         db_connection.close()
         cursor.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-def tum_mesajlar():     #yeni
+
+
+
+def update_personal_message(username,fusername,message):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-        query = """SELECT * FROM PERSONAL"""
-        cursor.execute(query)
-        tumu = cursor.fetchall()
+        query = """UPDATE MESSAGERELATION SET MESSAGE = %s
+                                        WHERE USERNAME = %s AND
+                                                TOUSERNAME =   %s"""
+        cursor.execute(query, (message,username,fusername))
+
+
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
+
+def send_username_for_messages(username):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+
+
+
+        query = """SELECT * FROM MESSAGERELATION
+                                WHERE USERNAME = %s"""
+        cursor.execute(query,(username,))
+        all = cursor.fetchall()
         db_connection.commit()
         db_connection.close()
         cursor.close()
 
-        return tumu
+        return all
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-def update_personal_message(toUser ,content):
+def sil_kisisel_mesaj(tousername,message):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """UPDATE PERSONAL SET CONTENT=%s WHERE TOUSER=%s"""
-        cursor.execute(query,(content,toUser))
+        q = """DELETE FROM MESSAGERELATION WHERE TOUSERNAME = %s
+                                            AND MESSAGE = %s"""
+        cursor.execute(q, (tousername,message))
         db_connection.commit()
         db_connection.close()
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-def remove_personal_message(toUser):
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-        query = """DELETE FROM PERSONAL WHERE TOUSER = %s"""
-        cursor.execute(query,(toUser,))
-        db_connection.commit()
-        db_connection.close()
+        cursor.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
