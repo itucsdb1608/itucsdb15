@@ -1,0 +1,33 @@
+{% extends "profile/base.html" %}
+{% block title %}friends{% endblock %}
+				<!-- Main -->
+{% block content %}
+
+							<article class="post">
+
+
+
+								<section>
+								<div>
+									<h2>Welcome</h2>
+									 <form  role="form" action="{{ url_for('site.gonder_fr') }}" id="User" method="post">
+							            <h3>Enter your user name:</h3>
+												<p> veritabaninda sadece 'emre@' var o yuzden <b>emre@</b> giriniz </p>
+							            <div>
+							                <label for="Username">User name</label>
+							                <input type="text"  id="Username" name="Username" placeholder="Username">
+							            </div>
+
+											<input type="submit" name = "submit" value = "UsernameGonder" >
+
+							        </form>
+
+
+					            	 </div>
+
+
+								</section>
+
+							</article>
+
+					{% endblock %}

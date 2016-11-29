@@ -10,59 +10,29 @@
 										<p>Agini Genislet..</p>
 									</div>
 									<div class="meta">
-										<time class="published" datetime="2015-10-18">Toplam Arkadas Sayasi</time>
-										<a href="#" class="author"><span class="name">x</span></a>
+										<time class="published" datetime="2015-10-18">Toplam Arkadas Sayisi</time>
+										<h2>	{{toplam}}			</h2>
 									</div>
 								</header>
 
 
 								<section>
 								<div>
-									<h2>Arkadas Ekle - Sil - Duzenle</h2>
-									 <form  role="form" action="{{ url_for('site.friend') }}" id="ArkadasEkleme" method="post">
-							            <h3>Arkadas Ekle</h3>
-							            <div>
-							                <label for="FriendName">Name</label>
-							                <input type="text"  id="FriendName" name="FriendName" placeholder="FriendName">
-							            </div>
-							            <div>
-							                <label for="FriendSurname">Surname</label>
-							                <input type="text"  id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
-							            </div>
-											<input type="submit" name = "submit" value = "Ekle" >
-
-							        </form>
-							        <form  role="form" action="{{ url_for('site.friend') }}" id="ArkadasSilme" method="post">
-							             <h3>Arkadas Sil</h3>
-							             <div>
-							                <label for="FriendID">Friend ID</label>
-							                <input type="text"  id="FriendID" name="FriendID" placeholder="FriendID">
-							            </div>
-							            <input type="submit" name = "submit" value = "Sil" >
-							        </form>
-							        <form  role="form" action="{{ url_for('site.friend') }}" id="ArkadasDuzenleme" method="post">
-							            <h3>Arkadas Duzenle</h3>
-							            <div >
-							                <label for="FriendID">arkadas id si</label>
-							                <input type="text" id="FriendID" name="FriendID" placeholder="FriendID">
-							            </div>
-							            <div>
-							                <label for="FriendName"> yeni isim</label>
-							                <input type="text" class="form-control" id="FriendName" name="FriendName" placeholder="FriendName">
-							            </div>
-							            <div >
-							                <label for="FriendSurname">yeni soyisim</label>
-							                <input type="text" class="form-control" id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
-							            </div>
-
-							            <input type="submit" name = "submit" value = "Duzenle" >
-							        </form>
-							         <h2> Arkadas Listesi </h2>
+										<h2> Arkadas Listen </h2>
  										<ul>
-								        {% for arkadas in arkadaslar %}
+								        {% for username in arkadaslar %}
 								            <li>
 								                <div>
-								                    <p>name: {{ arkadas[0] }}   |||  surname: {{ arkadas[1] }}  |||  id: {{ arkadas[2] }}</p>
+								                    <p>{{ username[0] }}</p>
+						                      <form role="form" action="{{ url_for('site.friend_delete',username=username[0], myusername = myusername )}}" method="post">
+								        <div class="form-group">
+								            <button class="btn btn-success" type="submit">Sil</button>
+								        </div>
+
+								    </form>
+
+
+
  													<br/>
 								                    <br/>
 								                </div>
@@ -72,8 +42,48 @@
 
 								    </ul>
 
-					            	 </div>
-					            	 <a  href= "{{ url_for('site.friend_listing') }}"  role="button"> Tum arkadas listesi</a>
+									<h2>Arkadaslarini Duzenle</h2>
+									 <form  role="form" action="{{ url_for('site.friend_add', my = myusername ) }}" id="ArkadasEkleme" method="post">
+							            <h3>Arkadas Ekle</h3>
+
+
+							            <div>
+							                <label for="FriendUserName">Your friend username</label>
+							                <input type="text"  id="FriendUserName" name="FriendUserName" placeholder="FriendUserName">
+							            </div>
+							            <div>
+							                <label for="FriendName">Your friend Name</label>
+							                <input type="text"  id="FriendName" name="FriendName" placeholder="FriendName">
+							            </div>
+							            <div>
+							                <label for="FriendSurname">Your friend Surname</label>
+							                <input type="text"  id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
+							            </div>
+											<input type="submit" name = "submit" value = "Ekle" >
+
+							        </form>
+
+							        <form  role="form" action="{{ url_for('site.friend_update', my = myusername ) }}" id="ArkadasDuzenle" method="post">
+							            <h3>Arkadas Duzenle</h3>
+
+
+							            <div>
+							                <label for="FriendUserName">Your friend username</label>
+							                <input type="text"  id="FriendUserName" name="FriendUserName" placeholder="FriendUserName">
+							            </div>
+							            <div>
+							                <label for="FriendName">Your friend new name</label>
+							                <input type="text"  id="FriendName" name="FriendName" placeholder="FriendName">
+							            </div>
+							            <div>
+							                <label for="FriendSurname">Your friend new surname</label>
+							                <input type="text"  id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
+							            </div>
+											<input type="submit" name = "submit" value = "Guncelle" >
+
+							        </form>
+
+
 
 
 								</section>
@@ -81,12 +91,3 @@
 							</article>
 
 					{% endblock %}
-					{% block menu %}
-
-									<!-- Sidebar -->
-
-											<!-- Intro -->
-
-
-					{% endblock %}
-											<!-- Footer -->
