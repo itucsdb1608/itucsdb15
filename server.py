@@ -5,6 +5,8 @@ from flask import Flask
 from flask.globals import session, request
 from connect_db import init_message_table
 from connect_db import init_profile_table
+from connect_db import init_friend_table
+
 from connect_db import create_login
 
 def create_app():
@@ -12,6 +14,7 @@ def create_app():
     app.register_blueprint(site)
     app.init_message_table = init_message_table()
     app.init_profile_table = init_profile_table()
+    app.init_friend_table = init_friend_table()
     app.create_login = create_login()
     return app
 

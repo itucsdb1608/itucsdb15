@@ -319,50 +319,142 @@ def remove_from_login(user_id):
         print("Error is %s." % err)
 
 #----- arkadas.html sayfasi i�in ekleme , silme , guncelleme fonksiyonlari -    emre kose
-def ekle_arkadas(name ,surname):
+def init_friend_table():        #n
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-        q1 = """CREATE TABLE IF NOT EXISTS FRIENDTABLE
-                    (
-                        NAME TEXT NOT NULL,
-                        SURNAME TEXT NOT NULL,
-                        ID SERIAL NOT NULL PRIMARY KEY
-                    )"""
-        cursor.execute(q1)
+     #   cursor.execute("DROP TABLE IF EXISTS PERSONFRIENDS")
+        query = """CREATE TABLE IF NOT EXISTS PERSONFRIENDS
+                (
+                    USERNAME TEXT PRIMARY KEY ,
+                    NAME TEXT NOT NULL,
+                    SURNAME TEXT NOT NULL
 
-        q2 = """INSERT INTO FRIENDTABLE (NAME,SURNAME)  VALUES (%s,%s )"""
-        cursor.execute(q2, (name,surname))
+                )"""
+        cursor.execute(query)
+
+        cursor.execute("DROP TABLE IF EXISTS FRIENDSRELATION")
+        query = """CREATE TABLE IF NOT EXISTS FRIENDSRELATION
+                (
+                    USERNAME TEXT NOT NULL REFERENCES PERSONFRIENDS(USERNAME),
+                    FRIENDUSERNAME TEXT NOT NULL,
+                    PRIMARY KEY(USERNAME,FRIENDUSERNAME)
+
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO PERSONFRIENDS (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
+        cursor.execute(query, ("emre@","emre","kose",))
+
+        query = """INSERT INTO PERSONFRIENDS (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
+        cursor.execute(query, ("user2","veli","reis",))
+
+        query = """INSERT INTO FRIENDSRELATION (USERNAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
+        cursor.execute(query, ("emre@","user2",))
+
+
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def sil_arkadas(username):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        q = """DELETE FROM FRIENDSRELATION WHERE FRIENDUSERNAME = %s"""
+        cursor.execute(q, (username,))
         db_connection.commit()
         db_connection.close()
         cursor.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-def duzenle_arkadas(ID, name , surname):
+def guncelle_arkadas(ad, arkullaniciadi,yeniisim, yenisoyisim):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        q = """UPDATE FRIENDTABLE SET NAME = %s, SURNAME = %s WHERE ID = %s"""
-        cursor.execute(q, ( name, surname,ID))
+        q = """UPDATE PERSONFRIENDS SET NAME = %s, SURNAME = %s
+                     WHERE USERNAME = %s"""
+        cursor.execute(q, (yeniisim,yenisoyisim,arkullaniciadi))
         db_connection.commit()
+        db_connection.close()
         cursor.close()
     except dbapi2.DatabaseError as error:
-            print("Error %s" % error)
-def sil_arkadas(silici):
+        print("Error %s" % error)
+
+
+
+def ekle_arkadas(username,fusername,name ,surname):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-        q = """DELETE FROM FRIENDTABLE WHERE ID = %s"""
-        cursor.execute(q, (silici))
+
+        query = """INSERT INTO PERSONFRIENDS (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
+        cursor.execute(query, (fusername,name,surname))
+
+
+        query = """INSERT INTO FRIENDSRELATION (USERNAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
+        cursor.execute(query, (username,fusername))
+
+
         db_connection.commit()
         db_connection.close()
         cursor.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
+
+def gonder_username(username):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+
+
+
+        query = """SELECT FRIENDUSERNAME FROM FRIENDSRELATION
+                                WHERE USERNAME = %s"""
+        cursor.execute(query,(username,))
+        tumu = cursor.fetchall()
+
+
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+
+        return tumu
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
+
+def toplam_arkadas(username):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+
+        query = """SELECT COUNT(*) FROM FRIENDSRELATION
+                                WHERE USERNAME = %s"""
+        cursor.execute(query,(username,))
+        toplam = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        cursor.close()
+
+        return toplam
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
@@ -372,7 +464,8 @@ def tum_arkadaslar():
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-        query = """SELECT * FROM FRIENDTABLE"""
+        query = """SELECT * FROM FRIENDSRELATION
+                                WHERE USERNAME = %s"""
         cursor.execute(query)
         tumu = cursor.fetchall()
         db_connection.commit()

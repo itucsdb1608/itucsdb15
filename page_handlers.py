@@ -8,7 +8,7 @@ from login import Person
 from connect_db import add_profile_to_table,get_profile_from_table,remove_profile_from_table,update_profile_from_table
 from profile import Profile
 from connect_db import add_to_login, records_from_login, update_to_login, remove_from_login, search_user_login
-from connect_db import ekle_arkadas, sil_arkadas, duzenle_arkadas,tum_arkadaslar
+from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkadas,sil_arkadas,guncelle_arkadas
 from friend import Friend
 from connect_db import add_personal_message, tum_mesajlar,update_personal_message,remove_personal_message
 
@@ -86,16 +86,26 @@ def add_message():
         add_message_to_table(newMessage)
         return redirect(url_for('site.signed_in'))
 
+@site.route('/friends')
+def friend_requests():
+        return render_template('profile/arkadas.html')
+
 @site.route('/friend/change', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
 def friend():
     if request.method == 'GET':
         return render_template('profile/arkadas.html')
     elif request.method == 'POST':
         if request.form['submit'] == 'Ekle':
+            kullaniciadi = request.form['UserName']
+            arkullaniciadi = request.form['FriendUserName']
             isim = request.form['FriendName']
             soyisim = request.form['FriendSurname']
-            ekle_arkadas(isim, soyisim)
-            return redirect(url_for('site.friend_requests'))
+            ekle_arkadas(kullaniciadi,arkullaniciadi,isim, soyisim)
+            toplamarkadas = toplam_arkadas(kullaniciadi)
+            tumu = gonder_username(kullaniciadi)
+            username = kullaniciadi
+          #  return redirect(url_for('site.friend_requests'))
+            return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas ,  myusername = username  )
         elif request.form['submit'] == 'Duzenle':
             id = request.form['FriendID']
             isim = request.form['FriendName']
@@ -106,12 +116,104 @@ def friend():
             id = request.form['FriendID']
             sil_arkadas(id)
             return redirect(url_for('site.friend_requests'))
+        elif request.form['submit'] == 'UsernameGonder':
+            username = request.form['Username']
+            tumu = gonder_username(username)
+            toplamarkadas = toplam_arkadas(username)
+           # tumu = tum_arkadaslar()
+            return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas ) #olmazsa render ile dene
+
+
+
+@site.route('/friend/ekle/<my>', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
+def friend_add(my):
+    if request.method == 'GET':
+        return render_template('profile/arkadas.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Ekle':
+
+            arkullaniciadi = request.form['FriendUserName']
+            isim = request.form['FriendName']
+            soyisim = request.form['FriendSurname']
+            ekle_arkadas(my,arkullaniciadi,isim, soyisim)
+            toplamarkadas = toplam_arkadas(my)
+            tumu = gonder_username(my)
+            username = my
+          #  return redirect(url_for('site.friend_requests'))
+            return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas ,  myusername = username  )
+
+
+
+@site.route('/friend/gonder', methods=['GET', 'POST'])      #arkadas.html in icinde kullanildi
+def gonder_fr():
+    if request.method == 'GET':
+        return render_template('profile/arkadas.html')
+    elif request.form['submit'] == 'UsernameGonder':
+         username = request.form['Username']
+         tumu = gonder_username(username)
+         toplamarkadas = toplam_arkadas(username)
+         # tumu = tum_arkadaslar()
+         return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas , myusername = username )
+        # return redirect(url_for('site.friend',arkadaslar = tumu , toplam = toplamarkadas ))
+        # return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas ) #olmazsa render ile dene
 
 @site.route('/friend/arkadasListesi')                       #arkadas.html in icinde kullanildi
 def friend_listing():
      tumu = tum_arkadaslar()
      return render_template('profile/arkadas.html', arkadaslar = tumu)
 
+
+@site.route('/friend/guncel/<my>', methods=['GET', 'POST'])
+def friend_update(my):
+    if request.method == 'GET':
+        return render_template('profile/arkadas.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Guncelle':
+            ad = my
+            arkullaniciadi =  request.form['FriendUserName']
+            yeniisim = request.form['FriendName']
+            yenisoyisim = request.form['FriendSurname']
+            guncelle_arkadas(ad, arkullaniciadi,yeniisim, yenisoyisim)
+            toplamarkadas = toplam_arkadas(ad)
+            tumu = gonder_username(ad)
+
+          #  return redirect(url_for('site.friend_requests'))
+            return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas ,  myusername = ad  )
+
+@site.route('/friend/guncelle/<friendusername>/<myname>', methods=['GET', 'POST'])
+def friend_real_update(friendusername , myname):
+    if request.method == 'GET':
+        return render_template('profile/arkadas.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Guncelle':
+            ad = myname
+            arkullaniciadi = friendusername
+            yeniisim = request.form['FriendName']
+            yenisoyisim = request.form['FriendSurname']
+            guncelle_arkadas(ad, arkullaniciadi,yeniisim, yenisoyisim)
+            toplamarkadas = toplam_arkadas(ad)
+            tumu = gonder_username(ad)
+            username = ad
+          #  return redirect(url_for('site.friend_requests'))
+            return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas ,  myusername = username  )
+
+@site.route('/friend/sil/<username>/<myusername>', methods=['GET', 'POST'])
+def friend_delete(username, myusername):
+    if request.method == 'POST':
+        a = username
+        sil_arkadas(a)
+
+        tumu = gonder_username(myusername)
+        toplamarkadas = toplam_arkadas(myusername)
+        return render_template('profile/arkadas.html',arkadaslar = tumu , toplam = toplamarkadas , myusername = myusername )
+    else:
+        return redirect(url_for('site.friend'))
+
+
+
+@site.route('/un')
+def usernamefr_requests():
+        return render_template('profile/arkadasgiris.html')
 
 
 @site.route('/signedin',methods=['GET', 'POST'])
@@ -170,9 +272,7 @@ def profile():
 def personel_message_request():
     return render_template('profile/mesaj.html')
 
-@site.route('/friends')
-def friend_requests():
-        return render_template('profile/arkadas.html')
+
 
 @site.route('/aboutus')
 def aboutus():
