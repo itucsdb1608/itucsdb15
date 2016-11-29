@@ -186,10 +186,11 @@ def remove_user():
         return render_template('about.html', records = records)
 
 @site.route('/user/update/', methods=['GET', 'POST'])
-def update_user(id):
+def update_user():
     if request.method == 'GET':
         return render_template('update.html')
     else:
+        id = request.form['id_num']
         username = request.form['username']
         name = request.form['name']
         surname = request.form['surname']
