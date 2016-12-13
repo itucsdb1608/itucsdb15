@@ -135,7 +135,7 @@ def init_profile_table():
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        cursor.execute("DROP TABLE IF EXISTS PROFILE")
+        cursor.execute("DROP TABLE IF EXISTS PROFILE CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS PROFILE
                 (
                     BLOG_ID SERIAL PRIMARY KEY,
@@ -147,23 +147,25 @@ def init_profile_table():
                 )"""
         cursor.execute(query)
 
-
+        cursor.execute("DROP TABLE IF EXISTS UNIVERSITY CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS UNIVERSITY
                 (
                     UNIVERSITY_ID SERIAL PRIMARY KEY,
-                    UNIVERSITY_NAME VARCHAR(80) NOT NULL
+                    UNIVERSITY_NAME TEXT
 
                 )"""
         cursor.execute(query)
 
+        cursor.execute("DROP TABLE IF EXISTS CITY CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS CITY
                 (
                     CITY_ID SERIAL PRIMARY KEY,
-                    CITY_NAME VARCHAR(80) NOT NULL
+                    CITY_NAME TEXT
 
                 )"""
         cursor.execute(query)
 
+        cursor.execute("DROP TABLE IF EXISTS ACCOUNT CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS ACCOUNT
                 (
                     ACCOUNT_ID SERIAL PRIMARY KEY,
@@ -181,14 +183,22 @@ def init_profile_table():
                     EMAIL VARCHAR(80),
                     WEBSITE VARCHAR(80),
                     FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
-                    FOREIGN KEY (UNIVERSITY_ID)  REFERENCES UNIVERSITY(UNIVERSITY_ID),
-                    FOREIGN KEY (CITY_ID)  REFERENCES CITY(CITY_ID)
+                    FOREIGN KEY (UNIVERSITY_ID)  REFERENCES UNIVERSITY(UNIVERSITY_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (CITY_ID)  REFERENCES CITY(CITY_ID) ON DELETE CASCADE ON UPDATE CASCADE
 
                 )"""
         cursor.execute(query)
 
         query="""INSERT INTO PROFILE (USER_NAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
         cursor.execute(query,("cuntay","Hello Everybody","This is my first Blog"))
+        query="""
+        INSERT INTO UNIVERSITY(UNIVERSITY_NAME) VALUES
+        ('İstanbul Teknik Üniversitesi'),
+        ('Boğaziçi Üniversitesi'),
+        ('Orta Doğu Teknik Üniversitesi'),
+        ('Bilkent Üniversitesi');
+        """
+        cursor.execute(query)
         db_connection.commit()
         db_connection.close()
 
@@ -255,7 +265,7 @@ def create_login():
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
-
+        cursor.execute("DROP TABLE IF EXISTS LOGIN CASCADE;")
         operate = """CREATE TABLE IF NOT EXISTS LOGIN(
                         name VARCHAR(16) NOT NULL,
                         surname VARCHAR(20) NOT NULL,
@@ -367,7 +377,7 @@ def remove_from_login(user_id):
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
-#----- arkadas.html sayfasi i�in ekleme , silme , guncelleme fonksiyonlari -    emre kose
+#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari -    emre kose
 def init_friend_table():        #n
     try:
         dsn = connect()
@@ -524,7 +534,7 @@ def tum_arkadaslar():
         return tumu
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-#----- arkadas.html sayfasi i�in ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
+#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
 def init_personal_message_table():        #n
     try:
         dsn = connect()
