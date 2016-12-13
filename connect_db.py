@@ -142,10 +142,51 @@ def init_profile_table():
                     USER_NAME VARCHAR(80) NOT NULL,
                     TITLE VARCHAR(80),
                     CONTENT TEXT NOT NULL,
-                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME)
+                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE
 
                 )"""
         cursor.execute(query)
+
+
+        query = """CREATE TABLE IF NOT EXISTS UNIVERSITY
+                (
+                    UNIVERSITY_ID SERIAL PRIMARY KEY,
+                    UNIVERSITY_NAME VARCHAR(80) NOT NULL
+
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS CITY
+                (
+                    CITY_ID SERIAL PRIMARY KEY,
+                    CITY_NAME VARCHAR(80) NOT NULL
+
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS ACCOUNT
+                (
+                    ACCOUNT_ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80),
+                    USER_IMAGE TEXT,
+                    NAME VARCHAR(80),
+                    SURNAME VARCHAR(80),
+                    GENDER VARCHAR(10),
+                    UNIVERSITY_ID INTEGER,
+                    DEPARTMENT VARCHAR(80),
+                    INITIAL_YEAR INTEGER,
+                    END_YEAR INTEGER,
+                    BIRTHYEAR INTEGER,
+                    CITY_ID INTEGER,
+                    EMAIL VARCHAR(80),
+                    WEBSITE VARCHAR(80),
+                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (UNIVERSITY_ID)  REFERENCES UNIVERSITY(UNIVERSITY_ID),
+                    FOREIGN KEY (CITY_ID)  REFERENCES CITY(CITY_ID)
+
+                )"""
+        cursor.execute(query)
+
         query="""INSERT INTO PROFILE (USER_NAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
         cursor.execute(query,("cuntay","Hello Everybody","This is my first Blog"))
         db_connection.commit()

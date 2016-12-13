@@ -12,10 +12,10 @@ from connect_db import create_login
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(site)
+    app.create_login = create_login()
     app.init_message_table = init_message_table()
     app.init_profile_table = init_profile_table()
     app.init_friend_table = init_friend_table()
-    app.create_login = create_login()
     app.init_personal_message_table = init_personal_message_table()
     return app
 
