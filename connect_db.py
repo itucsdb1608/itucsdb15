@@ -6,7 +6,6 @@ import account
 import friend
 import personal_message
 import login
-from docutils.nodes import title
 
 def get_elephantsqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
