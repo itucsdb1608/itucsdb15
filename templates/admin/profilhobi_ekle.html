@@ -1,0 +1,45 @@
+{% extends "admin/base.html" %}
+{% block title %}Kişisel Bilgiler{% endblock %}
+				<!-- Main -->
+{% block content %}
+                    <div class="title-block">
+                        <h3 class="title">
+		Profil Sayfana Hobi Ekle
+	</h3>
+                        <p class="title-description"> BeeLink'lemeye Hazır ol! </p>
+                    </div>
+                    {% for profile in profile_account%}
+                    <div class="subtitle-block">
+                        <h3 class="subtitle">
+		Lütfen Eksiksiz Tüm alanları Doldurun..
+	</h3> </div>
+                    <section class="section">
+                        <div class="row sameheight-container">
+                            <div class="col-md-6">
+                                <div class="card card-block sameheight-item">
+                                    <div class="title-block">
+                                        <h3 class="title">
+						Kişisel Bilgiler | Genel
+					</h3> </div>
+                                    <form role="form" action="" method="post" name="blog_add">
+                                    <input type="hidden" name="userid" value="{{profile[0]}}">
+										<div class="form-group has-success"> <label class="control-label">Hobi Seç</label>
+                                <div class="form-group">
+								<select class="form-control" name="hobi">
+									{%for hobi in profile_hobby%}
+											<option value = "{{hobi[0]}}">{{hobi[1]}}</option>
+									{%endfor%}
+								</select> </div>
+
+										</div>
+                                       <div class="form-group"> <label class="control-label">Sıralaması</label>
+                                       <input type="text" name="ord" class="form-control boxed"> </div>
+										<div class="form-group"> <button type="submit" name="save" class="btn btn-primary">Ekle</button> </div>
+									</form>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+{% endblock %}

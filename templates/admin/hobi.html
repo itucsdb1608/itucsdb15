@@ -1,0 +1,123 @@
+{% extends "admin/base.html" %}
+{% block title %}Kisisel Bilgiler{% endblock %}
+				<!-- Main -->
+{% block content %}
+
+
+                    <div class="title-search-block">
+                        <div class="title-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="title">
+					Hobileri Yönet
+					<a href="{{url_for('site.add_hobi')}}" class="btn btn-primary btn-sm rounded-s">
+						Hobi Ekle
+					</a>
+				</h3>
+                                    <p class="title-description"> Hobileri Ekleyin</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="items-search">
+                            <form class="form-inline">
+                                <div class="input-group"> <input type="text" class="form-control boxed rounded-s" placeholder="Search for..."> <span class="input-group-btn">
+					<button class="btn btn-secondary rounded-s" type="button">
+						<i class="fa fa-search"></i>
+					</button>
+				</span> </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card items">
+                        <ul class="item-list striped">
+                            <li class="item item-list-header hidden-sm-down">
+                                <div class="item-row">
+                                    <div class="item-col fixed item-col-check"> <label class="item-check" id="select-all-items">
+						<input type="checkbox" class="checkbox">
+						<span></span>
+					</label> </div>
+                                    <div class="item-col item-col-header item-col-sales">
+                                        <div> <span>Hobi_id</span> </div>
+                                    </div>
+                                    <div class="item-col item-col-header item-col-author">
+                                        <div class="no-overflow"> <span>Hobiler</span> </div>
+                                    </div>
+                                    <div class="item-col item-col-header fixed item-col-actions-dropdown"> </div>
+                                </div>
+                            </li>
+ 						{% for profile in profile_blog%}
+							{% if profile %}
+                            <li class="item">
+                                <div class="item-row">
+                                    <div class="item-col fixed item-col-check"> <label class="item-check" id="select-all-items">
+							<input type="checkbox" class="checkbox">
+							<span></span>
+						</label> </div>
+                                    <div class="item-col item-col-sales">
+                                        <div class="item-heading">Hobi_id</div>
+                                        <div> {{profile[0]}} </div>
+                                    </div>
+                                    <div class="item-col item-col-author">
+                                        <div class="item-heading">Hobiler</div>
+                                        <div class="no-overflow"> <a href="">{{profile[1]}}</a> </div>
+                                    </div>
+                                    <div class="item-col fixed item-col-actions-dropdown">
+                                        <div class="item-actions-dropdown">
+                                            <a class="item-actions-toggle-btn"> <span class="inactive">
+									<i class="fa fa-cog"></i>
+								</span> <span class="active">
+								<i class="fa fa-chevron-circle-right"></i>
+								</span> </a>
+                                            <div class="item-actions-block">
+                                                <ul class="item-actions-list">
+                                                    <li>
+                                                <form role="form" action="{{url_for('site.delete_hobi')}}" method="post" name="delete">
+
+                                                    	<button type="submit" value="{{profile[0]}}"  name="delete" class="remove"><i class="fa fa-trash-o "></i></button>
+                                                 </form>
+
+                                                    </li>
+                                                    <li>
+                                                <form role="form" action="{{url_for('site.update_hobi',hobby_id=profile[0])}}" method="get" name="update">
+
+                                                    	<button type="submit" value="{{profile[0]}}"  name="update" class="edit"><i class="fa fa-pencil "></i></button>
+                                                </form>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+ 						{% endif %}
+					   {% endfor %}
+                        </ul>
+                    </div>
+                    <nav class="text-xs-right">
+                        <ul class="pagination">
+                            <li class="page-item"> <a class="page-link" href="">
+				Prev
+			</a> </li>
+                            <li class="page-item active"> <a class="page-link" href="">
+				1
+			</a> </li>
+                            <li class="page-item"> <a class="page-link" href="">
+				2
+			</a> </li>
+                            <li class="page-item"> <a class="page-link" href="">
+				3
+			</a> </li>
+                            <li class="page-item"> <a class="page-link" href="">
+				4
+			</a> </li>
+                            <li class="page-item"> <a class="page-link" href="">
+				5
+			</a> </li>
+                            <li class="page-item"> <a class="page-link" href="">
+				Next
+			</a> </li>
+                        </ul>
+                    </nav>
+
+{% endblock %}

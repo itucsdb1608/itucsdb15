@@ -2,9 +2,11 @@ import os,json,re
 import psycopg2 as dbapi2
 import message
 import profile
+import account
 import friend
 import personal_message
 import login
+from docutils.nodes import title
 
 def get_elephantsqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
@@ -165,21 +167,39 @@ def init_profile_table():
                 )"""
         cursor.execute(query)
 
+        cursor.execute("DROP TABLE IF EXISTS HOBBY CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS HOBBY
+                (
+                    HOBBY_ID SERIAL PRIMARY KEY,
+                    HOBBY_NAME TEXT
+
+                )"""
+        cursor.execute(query)
+
+        cursor.execute("DROP TABLE IF EXISTS INTEREST CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS INTEREST
+                (
+                    INTEREST_ID SERIAL PRIMARY KEY,
+                    INTEREST_NAME TEXT
+
+                )"""
+        cursor.execute(query)
+
         cursor.execute("DROP TABLE IF EXISTS ACCOUNT CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS ACCOUNT
                 (
                     ACCOUNT_ID SERIAL PRIMARY KEY,
                     USER_NAME VARCHAR(80),
-                    USER_IMAGE TEXT,
+                    USER_IMAGE TEXT DEFAULT 'http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-tech-guy.png',
                     NAME VARCHAR(80),
                     SURNAME VARCHAR(80),
-                    GENDER VARCHAR(10),
-                    UNIVERSITY_ID INTEGER,
+                    GENDER VARCHAR(10) DEFAULT 'Bay',
+                    UNIVERSITY_ID INTEGER DEFAULT 1,
                     DEPARTMENT VARCHAR(80),
                     INITIAL_YEAR INTEGER,
                     END_YEAR INTEGER,
                     BIRTHYEAR INTEGER,
-                    CITY_ID INTEGER,
+                    CITY_ID INTEGER DEFAULT 1,
                     EMAIL VARCHAR(80),
                     WEBSITE VARCHAR(80),
                     FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -188,6 +208,51 @@ def init_profile_table():
 
                 )"""
         cursor.execute(query)
+
+        cursor.execute("DROP TABLE IF EXISTS ACCPERSONAL CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS ACCPERSONAL
+                (
+                    ACC_ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80) UNIQUE,
+                    ABOUTME TEXT,
+                    CODE TEXT,
+                    SUM1 VARCHAR(80),
+                    SUM2 VARCHAR(80),
+                    SUM3 VARCHAR(80),
+                    WORD TEXT,
+                    SCHOOL VARCHAR(255),
+                    SCHOOL_GRADE INTEGER,
+                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE
+                )"""
+        cursor.execute(query)
+
+        cursor.execute("DROP TABLE IF EXISTS HOBBYALL CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS HOBBYALL
+                (
+                    ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80),
+                    HOBBY_ID INTEGER,
+                    ORD INTEGER,
+                    FOREIGN KEY (USER_NAME)  REFERENCES ACCPERSONAL(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (HOBBY_ID)  REFERENCES HOBBY(HOBBY_ID) ON DELETE CASCADE ON UPDATE CASCADE
+
+
+                )"""
+        cursor.execute(query)
+
+        cursor.execute("DROP TABLE IF EXISTS INTERESTALL CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS INTERESTALL
+                (
+                    ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80),
+                    INTEREST_ID INTEGER,
+                    ORD INTEGER,
+                    FOREIGN KEY (USER_NAME)  REFERENCES ACCPERSONAL(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (INTEREST_ID)  REFERENCES INTEREST(INTEREST_ID) ON DELETE CASCADE ON UPDATE CASCADE
+
+                )"""
+        cursor.execute(query)
+
 
         query="""INSERT INTO PROFILE (USER_NAME,TITLE,CONTENT) VALUES (%s,%s,%s)"""
         cursor.execute(query,("cuntay","Hello Everybody","This is my first Blog"))
@@ -199,12 +264,167 @@ def init_profile_table():
         ('Bilkent Üniversitesi');
         """
         cursor.execute(query)
+        query="""
+        INSERT INTO CITY(CITY_NAME) VALUES
+        ('İstanbul'),
+        ('Ankara'),
+        ('İzmir'),
+        ('Bursa');
+        """
+        cursor.execute(query)
+        query="""
+        INSERT INTO HOBBY(HOBBY_NAME) VALUES
+        ('Kitap okumak'),
+        ('Müzik dinlemek'),
+        ('Futbol oynamak'),
+        ('Sinemaya gitmek'),
+        ('Uyumak :)'),
+        ('Yüzmek'),
+        ('Tenis oynamak'),
+        ('Fotoğraf çekmek');
+        """
+        cursor.execute(query)
+
+        query="""
+        INSERT INTO INTEREST(INTEREST_NAME) VALUES
+        ('İnternet'),
+        ('Bilgisayar'),
+        ('Seyehat'),
+        ('Veri Madenciliği'),
+        ('Yemek'),
+        ('Kahve'),
+        ('Çay'),
+        ('Programlama');
+        """
+        cursor.execute(query)
         db_connection.commit()
         db_connection.close()
 
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
+
+def add_account_to_table(addaccount):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO ACCOUNT (USER_NAME,NAME,SURNAME,EMAIL) VALUES (%s,%s,%s,%s) """
+        cursor.execute(query,(addaccount.user_name,addaccount.name,addaccount.surname,addaccount.email))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def add_accountpersonal_to_table(username):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO ACCPERSONAL (USER_NAME) VALUES (%s) """
+        cursor.execute(query,[username])
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def get_account_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT A.USER_NAME, A.USER_IMAGE, A.NAME, A.SURNAME, A.GENDER,
+        U.UNIVERSITY_NAME, A.DEPARTMENT, A.INITIAL_YEAR, A.END_YEAR, A.BIRTHYEAR,
+        C.CITY_NAME, A.EMAIL, A.WEBSITE
+        FROM ACCOUNT AS A, UNIVERSITY AS U, CITY AS C
+        WHERE (A.UNIVERSITY_ID= U.UNIVERSITY_ID) AND (A.CITY_ID= C.CITY_ID) AND (USER_NAME = %s)"""
+        print(asd)
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def get_accountpersonal_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT * FROM ACCPERSONAL WHERE (USER_NAME = %s)"""
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def update_account_from_table (username,ad,soyad,resim,cinsiyet,universite,bolum,giris,bitis,dogum,sehir,eposta,web):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE ACCOUNT SET
+        USER_IMAGE=%s, NAME=%s, SURNAME=%s, GENDER=%s, UNIVERSITY_ID=%s, DEPARTMENT=%s, INITIAL_YEAR=%s,
+        END_YEAR=%s, BIRTHYEAR=%s, CITY_ID=%s , EMAIL=%s , WEBSITE=%s
+        WHERE USER_NAME=%s"""
+        cursor.execute(query,(resim,ad,soyad,cinsiyet,universite,bolum,giris,bitis,dogum,sehir,eposta,web,username))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def update_accountpersonal_from_table(username,hakkimda,kod,sum1,sum2,sum3,soz,lise,ort):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE ACCPERSONAL SET
+        ABOUTME=%s , CODE=%s, SUM1=%s, SUM2=%s, SUM3=%s, WORD=%s, SCHOOL=%s, SCHOOL_GRADE=%s
+        WHERE USER_NAME=%s"""
+        cursor.execute(query,(hakkimda,kod,sum1,sum2,sum3,soz,lise,ort,username))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def get_university_from_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT * FROM UNIVERSITY"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def get_city_from_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT * FROM CITY"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
 
 def add_profile_to_table(profile):
     try:
@@ -219,13 +439,13 @@ def add_profile_to_table(profile):
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
 
-def get_profile_from_table():
+def get_profile_from_table(asd):
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """SELECT BLOG_ID,USER_NAME,TITLE,CONTENT FROM PROFILE"""
-        cursor.execute(query)
+        query = """SELECT BLOG_ID,USER_NAME,TITLE,CONTENT FROM PROFILE WHERE (USER_NAME = %s)"""
+        cursor.execute(query,[asd])
         fetchedData = cursor.fetchall()
         db_connection.commit()
         db_connection.close()
@@ -257,6 +477,218 @@ def update_profile_from_table (title,content,blog_id):
         db_connection.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
+
+
+def get_hobby_from_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT * FROM HOBBY"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def add_hobby_to_table(title):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO HOBBY (HOBBY_NAME) VALUES (%s) """
+        cursor.execute(query,[title])
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def remove_hobby_from_table(hobby_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM HOBBY WHERE HOBBY_ID = %s"""
+        cursor.execute(query,(hobby_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def update_hobby_from_table (title,hobby_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE HOBBY SET HOBBY_NAME=%s WHERE HOBBY_ID=%s"""
+        cursor.execute(query,(title,hobby_id))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
+def get_hobbyall_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT HOBBYALL.ORD, HOBBY.HOBBY_NAME FROM HOBBYALL, HOBBY
+        WHERE (HOBBYALL.HOBBY_ID = HOBBY.HOBBY_ID) AND (USER_NAME = %s)"""
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def add_hobbyall_to_table(userid,hobi,ord):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO HOBBYALL (USER_NAME, HOBBY_ID, ORD) VALUES (%s,%s,%s) """
+        cursor.execute(query,(userid, hobi, ord))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def remove_hobbyall_from_table(hobbyall_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM HOBBYALL WHERE ID = %s"""
+        cursor.execute(query,(hobbyall_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
+
+
+
+def get_ilgiall_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT INTERESTALL.ORD, INTEREST.INTEREST_NAME FROM INTERESTALL, INTEREST
+        WHERE (INTERESTALL.INTEREST_ID = INTEREST.INTEREST_ID) AND (USER_NAME = %s)"""
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def add_ilgiall_to_table(userid,ilgi,ord):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO INTERESTALL (USER_NAME, INTEREST_ID, ORD) VALUES (%s,%s,%s) """
+        cursor.execute(query,(userid, ilgi, ord))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def remove_ilgiall_from_table(hobbyall_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM INTERESTALL WHERE ID = %s"""
+        cursor.execute(query,(hobbyall_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
+
+
+
+
+
+def get_ilgi_from_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT * FROM INTEREST"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def add_ilgi_to_table(title):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO INTEREST (INTEREST_NAME) VALUES (%s) """
+        cursor.execute(query,[title])
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+def remove_ilgi_from_table(ilgi_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM INTEREST WHERE INTEREST_ID = %s"""
+        cursor.execute(query,(ilgi_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+def update_ilgi_from_table (title,ilgi_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE INTEREST SET INTEREST_NAME=%s WHERE INTEREST_ID=%s"""
+        cursor.execute(query,(title,ilgi_id))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+
+
 
 
 ## Functions for Login Table
@@ -293,11 +725,7 @@ def create_login():
 
 def fill_kisiler_db(cursor):
     query = """INSERT INTO LOGIN(name, surname, email, user_name, password)
-                   VALUES ('Tuncay','Demirbaş', 'tuncay@hotmail.com' ,'cuntay', '123456');
-                INSERT INTO LOGIN(name, surname, email, user_name, password)
-                   VALUES ('Enes','Basat', 'enes@hotmail.com' ,'enes', 'enes123');
-                INSERT INTO LOGIN(name, surname, email, user_name, password)
-                   VALUES ('Furkan','Artunç', 'furkan@hotmail.com' ,'furkan', 'furkan789');"""
+                   VALUES ('Tuncay','Demirbaş', 'tuncayitu@gmail.com' ,'cuntay', '123456');"""
 
     cursor.execute(query)
 

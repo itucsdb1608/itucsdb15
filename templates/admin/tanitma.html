@@ -1,0 +1,73 @@
+{% extends "admin/base.html" %}
+{% block title %}Kişisel Bilgiler{% endblock %}
+				<!-- Main -->
+{% block content %}
+                    <div class="title-block">
+                        <h3 class="title">
+		Profil Tanıt Kendini
+	</h3>
+                        <p class="title-description"> BeeLink'lemeye Hazır ol! </p>
+                    </div>
+ 						{% for profile in profile_account%}
+							{% if profile %}
+                    <div class="subtitle-block">
+                        <h3 class="subtitle">
+		Lütfen Eksiksiz Tüm alanları Doldurun..
+	</h3> </div>
+                    <section class="section">
+                        <div class="row sameheight-container">
+                            <div class="col-md-6">
+                                <div class="card card-block sameheight-item">
+                                    <div class="title-block">
+                                        <h3 class="title">
+						Kişisel Bilgiler | Genel
+					</h3> </div>
+								 <form role="form" action="" method="post" name="user_update">
+                                    <input type="hidden" name="username" value="{{profile[1]}}">
+                                        <div class="form-group"> <label class="control-label">Hakkımda</label>
+                                        <textarea rows="3" name="hakkimda" class="form-control boxed">{{profile[2]}}</textarea> </div>
+                                        <div class="form-group"> <label class="control-label">Kodla anlat kendini</label>
+                                        <input type="text" name="kod" class="form-control boxed" value="{{profile[3]}}"> </div>
+                                        <div class="form-group"> <label class="control-label">3 Kelimeyle özetle (En yüksek öncelikli ilk sırada)</label>
+											<div class="row form-group">
+												<div class="col-xs-4">
+
+											<input type="text" name="sum1" value="{{profile[4]}}" class="form-control underlined" placeholder="Birincisi">
+												</div>
+												<div class="col-xs-4">
+
+											<input type="text" name="sum2" value="{{profile[5]}}" class="form-control underlined" placeholder="İkincisi">
+												</div>
+												<div class="col-xs-4">
+
+											<input type="text" name="sum3" value="{{profile[6]}}" class="form-control underlined" placeholder="Üçüncüsü">
+												</div>
+											</div>
+										</div>
+                                        <div class="form-group"> <label class="control-label">Sevdiğin Bir Söz</label>
+                                        <textarea rows="3" name="soz" class="form-control boxed">{{profile[7]}}</textarea> </div>
+
+                                        <div class="form-group has-success">
+										<label class="control-label">Lise Eğitim Bilginiz</label>
+											<div class="row form-group">
+												<div class="col-xs-8">
+											<label class="control-label">Lise</label>
+											<input type="text" value="{{profile[8]}}" name="lise" class="form-control underlined" placeholder="Lise Adını Giriniz">
+												</div>
+												<div class="col-xs-4">
+											<label class="control-label">Ortalama</label>
+											<input type="text" value="{{profile[9]}}" name="ort" class="form-control underlined" placeholder="Ortalamanız">
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+										<button type="submit" name="update"  class="btn btn-primary">Güncelle</button> </div>
+                                    </form>
+                                </div>
+                            </div>
+  						{% endif %}
+					   {% endfor %}
+
+                        </div>
+                    </section>
+{% endblock %}

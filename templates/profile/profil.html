@@ -3,23 +3,21 @@
 				<!-- Main -->
 {% block content %}
 				<!-- Main -->
+ 						{% for profile in profile_accountall%}
+							{% if profile %}
 							<article class="post">
 
 								<section>
 									<h3>Hakkımda</h3>
-									<p>İstanbul Teknik Üniversitesi Bilgisayar Mühendisliği 4. Sınıf Öğrencisi Olup,
-									Bilgisayar Denilen Aleti Çok Seven Kodlarla Uğraşmayı Daha Da Çok Seven
-									Hatta Programlama Konularında Kendini Geliştirmeyi Daha Daha Çok Seven Ve Hatta Hatta
-									Bu Yazıya Böyle Devam Ederse Baya Bir Uzayacağının Farkına Varan <u>Eğlenceli Biri</u> :)
-									</br><code>for (;;) { code, eat, sleep }</code> </p>
+									<p>{{profile[2]}}
+									</br><code>{{profile[3]}}</code> </p>
 									<hr />
-									<h2>Code</h2>
-									<h3>Eat</h3>
-									<h4>Sleep</h4>
+									<h2>{{profile[4]}}</h2>
+									<h3>{{profile[5]}}</h3>
+									<h4>{{profile[6]}}</h4>
 									<hr />
 									<h4>Alıntı (Sevİlen söz)</h4>
-									<blockquote>Trend olan tweet'lerden biri, dünyanın kaderinin nasıl üç elma tarafından belirlenmiş
-										olduğunu özetliyordu : "Havva'nın yediği elma, Newton'ın kafasına düşen elma ve Steve'in inşa ettiği elma."</blockquote>
+									<blockquote>{{profile[7]}}</blockquote>
 								</section>
 
 								<section>
@@ -27,31 +25,25 @@
 									<div class="row">
 										<div class="6u 12u$(medium)">
 											<h4>Hobiler</h4>
+											{% for profilee in profile_hobbyall%}
 											<ul  class="alt">
-												<li>Kitap okumak</li>
-												<li>Müzik dinlemek</li>
-												<li>Futbol oynamak</li>
-												<li>Fotoğraf çekmek</li>
-												<li>Sinemaya gitmek</li>
-												<li>Uyumak :)</li>
+												<li>{{profilee[1]}}</li>
 											</ul>
+											{%endfor%}
 										</div>
 										<div class="6u$ 12u$(medium)">
 											<h4>İlgi Alanları</h4>
-											<ul class="alt">
-												<li>İnternet</li>
-												<li>Bilgisayar</li>
-												<li>Seyehat</li>
-												<li>Veri Madenciliği</li>
-												<li>Yeme-İçme</li>
-												<li>Programlama</li>
+											{% for profileee in profile_ilgiall%}
+											<ul  class="alt">
+												<li>{{profileee[1]}}</li>
 											</ul>
+											{%endfor%}
 										</div>
 									</div>
 								</section>
 
 								<section>
-									<h3>EĞİTİM BİLGİLERİ</h3>
+									<h3>LİSE EĞİTİM BİLGİSİ</h3>
 									<div class="table-wrapper">
 										<table>
 											<thead>
@@ -64,18 +56,8 @@
 											<tbody>
 												<tr>
 													<td>Lise</td>
-													<td>Yunus Emre Lisesi</td>
-													<td>70.00</td>
-												</tr>
-												<tr>
-													<td>ÖnLisans</td>
-													<td>Adıyaman Üniversitesi</td>
-													<td>97,50</td>
-												</tr>
-												<tr>
-													<td>Lisans</td>
-													<td>İstanbul Teknik Üniversitesi</td>
-													<td>2.53</td>
+													<td>{{profile[8]}}</td>
+													<td>{{profile[9]}}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -83,62 +65,9 @@
 
 
 								</section>
-
-								<section>
-									<h3>İLETİŞİM</h3>
-									<form method="post" action="#">
-										<div class="row uniform">
-											<div class="6u 12u$(xsmall)">
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Adınız" />
-											</div>
-											<div class="6u$ 12u$(xsmall)">
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="E-posta" />
-											</div>
-											<div class="12u$">
-												<div class="select-wrapper">
-													<select name="demo-category" id="demo-category">
-														<option value="">- Mesaj Kategorisi -</option>
-														<option value="1">Kişisel</option>
-														<option value="1">Üniversite</option>
-														<option value="1">Ders</option>
-														<option value="1">Ticari</option>
-													</select>
-												</div>
-											</div>
-											<div class="4u 12u$(small)">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Düşük</label>
-											</div>
-											<div class="4u 12u$(small)">
-												<input type="radio" id="demo-priority-normal" name="demo-priority">
-												<label for="demo-priority-normal">Normal</label>
-											</div>
-											<div class="4u$ 12u$(small)">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">Yüksek</label>
-											</div>
-											<div class="6u 12u$(small)">
-												<input type="checkbox" id="demo-copy" name="demo-copy">
-												<label for="demo-copy">Kopyala</label>
-											</div>
-											<div class="6u$ 12u$(small)">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">Robot Değilim</label>
-											</div>
-											<div class="12u$">
-												<textarea name="demo-message" id="demo-message" placeholder="Mesajınızı Giriniz" rows="6"></textarea>
-											</div>
-											<div class="12u$">
-												<ul class="actions">
-													<li><input type="submit" value="Mesaj Gönder" /></li>
-												</ul>
-											</div>
-										</div>
-									</form>
-								</section>
 								<p>
 
-<div class="12u$"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic02.jpg')}}" alt="" /></span></div>									<h3>BLOGLAMA - <a href="{{url_for('site.blog')}}" class="button icon fa-save">Blog Ekle</a></h3>
+<div class="12u$"><span class="image fit"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic02.jpg')}}" alt=""  /></span></div>									<h3>BLOGLAMA - <a href="{{url_for('site.blog')}}" class="button icon fa-save">Blog Ekle</a></h3>
  						{% for profile in profile_blog%}
 
 								<section>
@@ -153,24 +82,26 @@
 
 					   {% endfor %}
 							</article>
-
+  						{% endif %}
+					   {% endfor %}
 
 {% endblock %}
 
 
 {% block menu %}
 
-
+ 						{% for profile in profile_account%}
+							{% if profile %}
 				<!-- Sidebar -->
 
 						<!-- Intro -->
 							<section id="intro">
-								<a href="#" class="losgo"><img src="{{url_for('static',filename='profile/future-imperfect/images/profile.png')}}" alt="" /></a>
+								<a href="#" class="losgo"><img src="{{profile[1]}}" alt="BeeLink"  height="250" width="250" /></a>
 
 								<header>
-									<h3>Tuncay Demirbaş</h3>
-									<p>İstanbul Teknİk Ünİversİtesİ</br>Bİlgİsayar MÜhendİslİğİ, 4.Sınıf</a></p>
-									<a href="#" class="button icon fa-save">Arkadaş Ekle</a>
+									<h3>{{profile[2]}} {{profile[3]}}</h3>
+									<p>{{profile[5]}}</br>{{profile[6]}}, {{profile[7]}}-{{profile[8]}}</a></p>
+									<a href="{{url_for('site.admin_home')}}" class="button icon fa-save">Profili Düzenle</a>
 											<ul class="icons">
 												<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 												<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
@@ -188,11 +119,11 @@
 										<article class="mini-post">
 											<header>
 												<h3><a href="#">Yaşadığı Şehir</a></h3>
-												<time class="published" datetime="2015-10-18">İstanbul</time>
+												<time class="published" datetime="2015-10-18">{{profile[10]}}</time>
 												<h3><a href="#">E-posta Adresi</a></h3>
-												<time class="published" datetime="2015-10-18">tuncayİtu@gmail.com</time>
+												<time class="published" datetime="2015-10-18">{{profile[11]}}</time>
 												<h3><a href="#">Web Sitesi</a></h3>
-												<time class="published" datetime="2015-10-18">tuncaydemİrbas.com</time>
+												<time class="published" datetime="2015-10-18">{{profile[12]}}</time>
 												<a href="#" class="author"><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></a>
 											</header>
 											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic06.jpg')}}" alt="" /></a>
@@ -201,30 +132,18 @@
 									<!-- Mini Post -->
 										<article class="mini-post">
 											<header>
-												<h3><a href="#">C/C++</a></h3>
-												<time class="published" datetime="2015-10-20">iyi seviye</time>
-												<h3><a href="#">Java</a></h3>
-												<time class="published" datetime="2015-10-20">iyi seviye</time>
-												<h3><a href="#">PHP</a></h3>
-												<time class="published" datetime="2015-10-20">iyi seviye</time>
+												<h3><a href="#">Cinsiyet</a></h3>
+												<time class="published" datetime="2015-10-20">{{profile[4]}}</time>
+												<h3><a href="#">Doğum Tarihi</a></h3>
+												<time class="published" datetime="2015-10-20">{{profile[9]}}</time>
+												<h3><a href="#">Kullanıcı Adı</a></h3>
+												<time class="published" datetime="2015-10-20">{{profile[0]}}</time>
 												<a href="#" class="author"><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar3.jpg')}}" alt="" /></a>
 											</header>
 											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic04.jpg')}}" alt="" /></a>
 										</article>
 
 									<!-- Mini Post -->
-										<article class="mini-post">
-											<header>
-												<h3><a href="#">Türkçe</a></h3>
-												<time class="published" datetime="2015-10-19">Ana dil</time>
-												<h3><a href="#">İngilizce</a></h3>
-												<time class="published" datetime="2015-10-19">İleri seviye</time>
-												<h3><a href="#">Almanca</a></h3>
-												<time class="published" datetime="2015-10-19">Başlangıç</time>
-												<a href="#" class="author"><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar2.jpg')}}" alt="" /></a>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic05.jpg')}}" alt="" /></a>
-										</article>
 
 
 
@@ -254,56 +173,6 @@
 							</section>
 
 						<!-- Posts List -->
-							<section>
-								<ul class="posts">
-									<li>
-									<h2>En Popüler Profiller</h2>
-										<article>
-											<header>
-												<h3><a href="#">Tuncay Demirbaş</a></h3>
-												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/avatar.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Ahmet Kaçmaz</a></h3>
-												<time class="published" datetime="2015-10-20">Marmara Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic09.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Furkan Artunç</a></h3>
-												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic10.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">İbrahim Dolapçı</a></h3>
-												<time class="published" datetime="2015-10-20">İstanbul Teknik Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic11.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="#">Eyüp Ergin</a></h3>
-												<time class="published" datetime="2015-10-20">Boğaziçi Üniversitesi</time>
-											</header>
-											<a href="#" class="image"><img src="{{url_for('static',filename='profile/future-imperfect/images/pic12.jpg')}}" alt="" /></a>
-										</article>
-									</li>
-								</ul>
-							</section>
 
 						<!-- About -->
 							<section class="blurb">
@@ -313,5 +182,8 @@
 									<li><a href="#" class="button">Daha Fazla</a></li>
 								</ul>
 							</section>
+  						{% endif %}
+					   {% endfor %}
+
 {% endblock %}
 						<!-- Footer -->

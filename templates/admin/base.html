@@ -84,7 +84,7 @@
     			      {{session['name']}}
     			    </span> </a>
                                 <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <a class="dropdown-item" href="{{url_for('site.profile')}}"> <i class="fa fa-user icon"></i> Profil </a>
+                                    <a class="dropdown-item" href="{{ url_for('site.profile', username=session['name']) }}"> <i class="fa fa-user icon"></i> Profil </a>
                                     <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Bildirimler </a>
                                     <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Ayarlar </a>
                                     <div class="dropdown-divider"></div>
@@ -112,37 +112,40 @@
     								Kişisel Bilgiler
     							</a> </li>
 
+                                        <li> <a href="{{url_for('site.admin_tanitma')}}">
+    								Tanıt Kendini
+    							</a> </li>
+
                                         <li> <a href="{{url_for('site.blog')}}">
     								Bloglama
     							</a> </li>
-
-                                        <li> <a href="items-list.html">
-    								Profil Resmi
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href=""> <i class="fa fa-bar-chart"></i> İlgi ve Hobiler <i class="fa arrow"></i> </a>
+                                    <ul>
+                                        <li> <a href="{{url_for('site.profililgi')}}">
+    								İlgi Alanı Ekle
     							</a> </li>
-                                        <li> <a href="item-editor.html">
-    								Arkadaşlar
+                                        <li> <a href="{{url_for('site.profilhobi')}}">
+    								Hobi Ekle
     							</a> </li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href=""> <i class="fa fa-bar-chart"></i> İstatistikler <i class="fa arrow"></i> </a>
+                                    <a href=""> <i class="fa fa-table"></i> Yönet <i class="fa arrow"></i> </a>
                                     <ul>
-                                        <li> <a href="charts-flot.html">
-    								Kişisel
+                                        <li> <a href="{{url_for('site.hobi')}}">
+    								Hobileri yönet
     							</a> </li>
-                                        <li> <a href="charts-morris.html">
-    								Genel
+                                        <li> <a href="{{url_for('site.ilgi')}}">
+    								İlgi Alanlarını yönet
     							</a> </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href=""> <i class="fa fa-table"></i> Bloglama <i class="fa arrow"></i> </a>
-                                    <ul>
-                                        <li> <a href="static-tables.html">
-    								1 Blog yaz
+                                        <li> <a href="{{url_for('site.ilgi')}}">
+    								Şehirleri yönet
     							</a> </li>
-                                        <li> <a href="responsive-tables.html">
-    								Mevcut Blog Yazıları
+                                        <li> <a href="{{url_for('site.ilgi')}}">
+    								Üniversiteleri yönet
     							</a> </li>
                                     </ul>
                                 </li>

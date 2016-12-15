@@ -11,7 +11,7 @@
                                             <h4 class="title">
             				İstatistikler
             			</h4>
-                                            <p class="title-description"> Üye Bilgileri ve Bazı Bilgiler <a href="{{url_for('site.profile')}}">
+                                            <p class="title-description"> Üye Bilgileri ve Bazı Bilgiler <a href="{{ url_for('site.profile', username=session['name']) }}">
             					Profil Sayfanız ile ilgili
             				</a> </p>
                                         </div>
