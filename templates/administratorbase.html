@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>BeeLink - {% block title %}{% endblock %} - Dünya ile bağlantı kur | BeeLink'le</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="{{url_for('static',filename='homepage/js/ie/html5shiv.js')}}"></script><![endif]-->
+		<link rel="stylesheet" href="{{url_for('static',filename='homepage/assets/css/main.css')}}" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="{{url_for('static',filename='homepage/assets/css/ie8.css')}}" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1><a href="{{url_for('site.home_page')}}">BeeLink</a> by itucsdb1608</h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="{{url_for('site.administrator')}}">Admin Ana Sayfa</a></li>
+							<li><a href="{{url_for('site.signed_in')}}">Kendi Profiline Geç</a></li>
+							<li><a href="{{url_for('site.administrator_add_user')}}">Kullanıcı Ekle</a></li>
+							<li><a href="{{url_for('site.administrator_exit')}}">Çıkış</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container 75%">
+{% block content %} {% endblock %}
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; 2016, BeeLink. Tüm Hakları Saklıdır.</li><li>Design: <a href="http://itucsdb1608.mybluemix.net/">BeeLink Teams</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.dropotron.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/jquery.scrollgress.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/skel.min.js')}}"></script>
+			<script src="{{url_for('static',filename='homepage/assets/js/util.js')}}"></script>
+			<!--[if lte IE 8]><script src="{{url_for('static',filename='js/respond.min.js')}}"></script><![endif]-->
+			<script src="{{url_for('static',filename='homepage/assets/js/main.js')}}"></script>
+
+	</body>
+</html>

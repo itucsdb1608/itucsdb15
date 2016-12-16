@@ -698,23 +698,28 @@ def create_login():
         cursor = db.cursor()
         cursor.execute("DROP TABLE IF EXISTS LOGIN CASCADE;")
         operate = """CREATE TABLE IF NOT EXISTS LOGIN(
-                        name VARCHAR(16) NOT NULL,
-                        surname VARCHAR(20) NOT NULL,
-                        email VARCHAR(30) NOT NULL,
+                        name VARCHAR(25) NOT NULL,
+                        surname VARCHAR(25) NOT NULL,
+                        email VARCHAR(35) NOT NULL,
                         user_name VARCHAR(32) UNIQUE,
                         password VARCHAR(32) NOT NULL,
-                        user_id SERIAL NOT NULL PRIMARY KEY
+                        user_id SERIAL NOT NULL PRIMARY KEY,
+                        authority VARCHAR(10) NOT NULL
                   )"""
+        cursor.execute(operate)
+        operate = """INSERT INTO LOGIN(name, surname, email, user_name, password, authority)
+                   VALUES ('administrator','admin', 'admin@beelink.com' ,'admin', 'admin123', 'admin');"""
+
         cursor.execute(operate)
         fill_kisiler_db(cursor)
 
+        cursor.execute("DROP TABLE IF EXISTS USERLOGIN CASCADE;")
         operate = """CREATE TABLE IF NOT EXISTS USERLOGIN(
                         id SERIAL NOT NULL PRIMARY KEY,
                         user_name VARCHAR(32),
-                        FOREIGN KEY (user_name) REFERENCES LOGIN(user_name)
+                        FOREIGN KEY (user_name) REFERENCES LOGIN(user_name) ON DELETE CASCADE ON UPDATE CASCADE
                   )"""
         cursor.execute(operate)
-
         db.commit()
         db.close()
 
@@ -723,21 +728,36 @@ def create_login():
 
 
 def fill_kisiler_db(cursor):
-    query = """INSERT INTO LOGIN(name, surname, email, user_name, password)
-                   VALUES ('Tuncay','Demirbaş', 'tuncayitu@gmail.com' ,'cuntay', '123456');"""
+    query = """INSERT INTO LOGIN(name, surname, email, user_name, password, authority)
+                   VALUES ('Tuncay','Demirbaş', 'tuncayitu@gmail.com' ,'cuntay', '123456', 'user');"""
 
     cursor.execute(query)
+
+def add_from_admin(n_person, authority):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """INSERT INTO LOGIN(name, surname, email, user_name, password, authority)
+                     VALUES (%s,%s,%s,%s,%s,%s)
+                  """
+        cursor.execute(operate,(n_person.name, n_person.surname, n_person.email,
+                                n_person.username, n_person.password, authority))
+        db.commit()
+        db.close()
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
 
 
 def add_to_login(n_person):
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
-        operate = """INSERT INTO LOGIN(name, surname, email, user_name, password)
-                     VALUES (%s,%s,%s,%s,%s)
+        operate = """INSERT INTO LOGIN(name, surname, email, user_name, password, authority)
+                     VALUES (%s,%s,%s,%s,%s,%s)
                   """
         cursor.execute(operate,(n_person.name, n_person.surname, n_person.email,
-                                n_person.username, n_person.password))
+                                n_person.username, n_person.password, 'user'))
         db.commit()
         db.close()
 
@@ -768,7 +788,9 @@ def search_user_login(username, password):
         record = cursor.fetchone()
         db.commit()
         db.close()
-        if record:
+        if record and record[6] == "admin":
+            return 2
+        elif record:
             return 1
         else:
             return 0

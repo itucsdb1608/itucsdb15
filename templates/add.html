@@ -1,0 +1,45 @@
+{% extends "administratorbase.html" %}
+{% block title %}All Users{% endblock %}
+				<!-- Main -->
+{% block content %}
+
+					<form method="post" action="#">
+						<div class="row uniform 50%">
+							<div class="12u">
+									<input type="text" name="type" id="type" value="" placeholder="Type: admin or user" required autofocus>
+								</div>
+						</div>
+							<div class="row uniform 50%">
+								<div class="6u 12u(mobilep)">
+									<input type="text" name="name" id="name" value="" placeholder="Adınız" required autofocus>
+								</div>
+								<div class="6u 12u(mobilep)">
+									<input type="text" name="surname" id="email" value="" placeholder="Soyadınız" required autofocus>
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="email" name="email" id="subject" value="" placeholder="E-posta Adresiniz" required autofocus>
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="text" name="password" id="name" value="" placeholder="Parola" required autofocus>
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="text" name="username" id="subject" value="" placeholder="Kullanıcı Adınız" required autofocus>
+								</div>
+							</div>
+							<div class="row uniform">
+								<div class="12u">
+									<ul class="actions align-center">
+										<li><input type="submit" name="signup" value="Kaydet"></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+
+
+{% endblock %}

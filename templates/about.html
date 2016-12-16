@@ -1,40 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Hakkımızda{% endblock %}
+{% block title %}Normal Üyelerimiz{% endblock %}
 				<!-- Main -->
 {% block content %}
 	<table border="1">
 	<tr>
-	<th>ID</th>
 	<th>Name</th>
 	<th>Surname</th>
 	<th>E-mail</th>
 	<th>User name</th>
-	<th>Password</th>
-	<th>Delete</th>
-	<th>Update</th>
-	<th>Authority</th>
 	</tr>
 	{% for i in records %}
 		{% if i %}
 	<tr>
-	<td>{{i[5]}}</td>
+			{% if i[6]== "user" %}
 	<td>{{i[0]}}</td>
 	<td>{{i[1]}}</td>
 	<td>{{i[2]}}</td>
 	<td>{{i[3]}}</td>
-	<td>{{i[4]}}</td>
-	<td>
-	<form action="{{url_for('site.remove_user')}}" method="post" name="delete"><button type="submit" value="{{ i[5] }}" name="delete">Delete</button>
-	</form>
-	</td>
-	<td>
-	<a href= "{{ url_for('site.update_user')}}" name="update">Update</a>
-	</form>
-	</td>
 	</tr>
+			{% endif %}
 		{% endif %}
 	{% endfor %}
 	</table>
-
 
 {% endblock %}

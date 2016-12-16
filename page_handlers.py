@@ -17,7 +17,7 @@ from connect_db import add_to_login, records_from_login, update_to_login, remove
 from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkadas,sil_arkadas,guncelle_arkadas
 from friend import Friend
 from connect_db import send_message,send_username_for_messages,update_personal_message,sil_kisisel_mesaj
-
+from connect_db import add_from_admin
 site = Blueprint('site', __name__)
 @site.route('/')
 def home_page():
@@ -41,6 +41,26 @@ def sign_up():
 
     return render_template('home.html')
 
+@site.route('/administrator/add', methods=['GET','POST'])
+def administrator_add_user():
+    if request.method == 'GET':
+        return render_template('add.html')
+    else:
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        username = request.form['username']
+        password = request.form['password']
+        newRecord = Person(name, surname, email, username, password)
+        authority = request.form['type']
+        add_from_admin(newRecord, authority)
+    return redirect(url_for('site.administrator'))
+
+@site.route('/administrator/exit')
+def administrator_exit():
+    session['name'] = ""
+    return render_template('home.html')
+
 @site.route('/signin', methods=['GET','POST'])
 def sign_in():
     if request.method == 'GET':
@@ -52,8 +72,17 @@ def sign_in():
         if check == 1:
             session['name'] = username
             return redirect(url_for('site.signed_in'))
+        elif check == 2:
+            session['name'] = username
+            return redirect(url_for('site.administrator'))
         else:
             return render_template('error.html')
+
+@site.route('/administrator')
+def administrator():
+    records = records_from_login()
+    return render_template('administrator.html', records = records)
+
 
 @site.route('/cikis', methods=['GET'])
 def cikis():
@@ -495,19 +524,18 @@ def aboutus():
 @site.route('/user/remove', methods=['GET', 'POST'])
 def remove_user():
     if request.method == 'GET':
-        return render_template('about.html')
+        return render_template('administrator.html')
     else:
         user_id = request.form['delete']
         remove_from_login(user_id)
         records = records_from_login()
-        return render_template('about.html', records = records)
+        return render_template('administrator.html', records = records)
 
-@site.route('/user/update/', methods=['GET', 'POST'])
-def update_user():
+@site.route('/user/update/<int:id>', methods=['GET', 'POST'])
+def update_user(id):
     if request.method == 'GET':
         return render_template('update.html')
     else:
-        id = request.form['id_num']
         username = request.form['username']
         name = request.form['name']
         surname = request.form['surname']
@@ -516,7 +544,7 @@ def update_user():
         updateRecord = Person(name, surname, email, username, password)
         update_to_login(id, updateRecord)
         records = records_from_login()
-        return render_template('about.html', records = records)
+        return render_template('administrator.html', records = records)
 
 @site.route('/admin/login')
 def admin_login():
