@@ -21,7 +21,7 @@ from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkada
 
 from friend import Friend
 from connect_db import send_message,send_username_for_messages,update_personal_message,sil_kisisel_mesaj
-from connect_db import add_from_admin, addnote_from_admin, notes_from_admins, update_adminnote, remove_adminnote, search_name
+from connect_db import add_from_admin, addnote_from_admin, notes_from_admins, update_adminnote, remove_adminnote, search_name, search_admin
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -125,8 +125,16 @@ def sign_in():
 
 @site.route('/administrator')
 def administrator():
-    records = records_from_login()
-    return render_template('administrator.html', records = records)
+    if session['name'] == "":
+        return render_template('home.html')
+    else:
+        uname = session['name']
+        check = search_admin(uname)
+        if check == 1:
+            records = records_from_login()
+            return render_template('administrator.html', records = records)
+        else:
+            return render_template('home.html')
 
 
 @site.route('/cikis', methods=['GET'])

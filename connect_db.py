@@ -6,6 +6,7 @@ import account
 import friend
 import personal_message
 import login
+from oauthlib.oauth1.rfc5849.endpoints import authorization
 
 def get_elephantsqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
@@ -854,6 +855,23 @@ def update_adminnote(note, id):
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
+
+def search_admin(username):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """SELECT authority FROM LOGIN WHERE user_name = %s
+                  """
+        cursor.execute(operate, (username,))
+        authority = cursor.fetchone()
+        db.commit()
+        db.close()
+        if authority[0] == 'admin':
+            return 1
+        else:
+            return 0
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
 
 def add_from_admin(n_person, authority):
     try:
