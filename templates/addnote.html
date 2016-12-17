@@ -1,0 +1,20 @@
+{% extends "administratorbase.html" %}
+{% block title %}All Users{% endblock %}
+
+				<!-- Main -->
+{% block content %}
+<form method="post" action="#">
+<div class="12u">
+		<input type="text" name="note" id="note" value="" placeholder="Notu giriniz" required autofocus>
+</div>
+<br/>
+<div class="row uniform">
+								<div class="12u">
+									<ul class="actions align-center">
+										<li><input type="submit" name="signup" value="Kaydet"></li>
+									</ul>
+								</div>
+</div>
+</form>
+
+{% endblock %}

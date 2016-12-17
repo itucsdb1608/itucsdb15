@@ -1,0 +1,32 @@
+{% extends "administratorbase.html" %}
+{% block title %}Tüm Notlarım{% endblock %}
+				<!-- Main -->
+{% block content %}
+<table border="1">
+	<tr>
+	<th>Note ID</th>
+	<th>Note</th>
+	<th>Delete Note</th>
+	<th>Update Note</th>
+	</tr>
+	</tr>
+{% for i in notes %}
+	{% if i %}
+	<tr>
+	<td>{{i[0]}}</td>
+	<td>{{i[1]}}</td>
+	<td>
+	<form action="{{url_for('site.remove_admin_note')}}" method="post" name="delete"><button type="submit" value="{{ i[0] }}" name="delete">Delete</button>
+	</form>
+	</td>
+	<td>
+	<form role="form" action="{{url_for('site.update_admin_note', id = i[0])}}" method="get" name="update"><button type="submit" value="{{ i[0] }}" name="update">Update</button>
+	</form>
+	</td>
+	</tr>
+	{% endif %}
+{% endfor %}
+</table>
+
+
+{% endblock %}

@@ -121,7 +121,7 @@ def update_one_message(content,subject,messageId):
         db_connection.rollback()
     finally:
         if db_connection:
-            db_connection.close()	
+            db_connection.close()
 
 def add_comments_for_message(comId,username,content):
     dsn = connect()
@@ -739,9 +739,10 @@ def create_login():
         cursor.execute(operate)
         fill_kisiler_db(cursor)
 
-        cursor.execute("DROP TABLE IF EXISTS USERLOGIN CASCADE;")
-        operate = """CREATE TABLE IF NOT EXISTS USERLOGIN(
+        cursor.execute("DROP TABLE IF EXISTS ADMINNOTES CASCADE;")
+        operate = """CREATE TABLE IF NOT EXISTS ADMINNOTES(
                         id SERIAL NOT NULL PRIMARY KEY,
+                        note VARCHAR(200),
                         user_name VARCHAR(32),
                         FOREIGN KEY (user_name) REFERENCES LOGIN(user_name) ON DELETE CASCADE ON UPDATE CASCADE
                   )"""
@@ -752,12 +753,69 @@ def create_login():
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
+def addnote_from_admin(note, username):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """INSERT INTO ADMINNOTES(note, user_name)
+                     VALUES (%s, %s)
+                  """
+        cursor.execute(operate,(note, username))
+        db.commit()
+        db.close()
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
 
 def fill_kisiler_db(cursor):
     query = """INSERT INTO LOGIN(name, surname, email, user_name, password, authority)
                    VALUES ('Tuncay','Demirbaş', 'tuncayitu@gmail.com' ,'cuntay', '123456', 'user');"""
 
     cursor.execute(query)
+
+def notes_from_admins(username):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """SELECT id, note FROM ADMINNOTES, LOGIN WHERE (ADMINNOTES.USER_NAME = %s AND
+                    LOGIN.USER_NAME = %s)
+                  """
+        cursor.execute(operate,(username, username))
+        notes = cursor.fetchall()
+        db.commit()
+        db.close()
+        return notes
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
+def remove_adminnote(id):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """DELETE FROM ADMINNOTES WHERE id = %s"""
+        cursor.execute(operate, (id,))
+        db.commit()
+        db.close()
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
+
+def update_adminnote(note, id):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """UPDATE ADMINNOTES SET note = %s WHERE
+                    id = %s
+                  """
+        cursor.execute(operate,(note, id))
+        db.commit()
+        db.close()
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
 
 def add_from_admin(n_person, authority):
     try:

@@ -21,7 +21,7 @@ from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkada
 
 from friend import Friend
 from connect_db import send_message,send_username_for_messages,update_personal_message,sil_kisisel_mesaj
-from connect_db import add_from_admin
+from connect_db import add_from_admin, addnote_from_admin, notes_from_admins, update_adminnote, remove_adminnote
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -59,7 +59,47 @@ def administrator_add_user():
         newRecord = Person(name, surname, email, username, password)
         authority = request.form['type']
         add_from_admin(newRecord, authority)
+
     return redirect(url_for('site.administrator'))
+
+@site.route('/administrator/notes', methods=['GET','POST'])
+def administrator_notes():
+    username = session['name']
+    notes = notes_from_admins(username)
+    return render_template('notes.html', notes = notes)
+
+@site.route('/administrator/addnote', methods=['GET','POST'])
+def administrator_add_note():
+    if request.method == 'GET':
+        return render_template('addnote.html')
+    else:
+        note = request.form['note']
+        username = session['name']
+        addnote_from_admin(note, username)
+    return redirect(url_for('site.administrator_notes'))
+
+
+@site.route('/administrator/note/update/<int:id>', methods=['GET', 'POST'])
+def update_admin_note(id):
+    if request.method == 'GET':
+        return render_template('updatenode.html')
+    else:
+        note = request.form['note']
+        username = session['name']
+        update_adminnote(note, id)
+        notes = notes_from_admins(username)
+        return render_template('notes.html', notes = notes)
+
+@site.route('/administrator/note/remove', methods=['GET', 'POST'])
+def remove_admin_note():
+    if request.method == 'GET':
+        return render_template('notes.html')
+    else:
+        note_id = request.form['delete']
+        remove_adminnote(note_id)
+        username = session['name']
+        notes = notes_from_admins(username)
+        return render_template('notes.html', notes = notes)
 
 @site.route('/administrator/exit')
 def administrator_exit():
@@ -564,6 +604,7 @@ def update_user(id):
         update_to_login(id, updateRecord)
         records = records_from_login()
         return render_template('administrator.html', records = records)
+
 
 @site.route('/admin/login')
 def admin_login():
