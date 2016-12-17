@@ -26,21 +26,13 @@ def connect():
     return dsn
 
 def init_message_table():
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
     try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
+
+        cursor.execute("DROP TABLE IF EXISTS MCOMMENTS")
         cursor.execute("DROP TABLE IF EXISTS MESSAGES")
-
-        query = """CREATE TABLE IF NOT EXISTS USERS
-                (
-                    USERID SERIAL NOT NULL,
-                    USERNAME TEXT NOT NULL,
-                    UNIQUE(USERNAME),
-                    PRIMARY KEY(USERID)
-                )"""
-        cursor.execute(query)
-
 
         query = """CREATE TABLE IF NOT EXISTS MESSAGES
                 (
@@ -48,86 +40,120 @@ def init_message_table():
                     USERNAME TEXT NOT NULL,
                     CONTENT TEXT  NOT NULL,
                     SUBJECT TEXT NOT NULL,
-                    FOREIGN KEY (USERNAME) REFERENCES USERS(USERNAME)
+                    FOREIGN KEY (USERNAME) REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE
                 )"""
         cursor.execute(query)
-        query="""INSERT INTO USERS (USERNAME) VALUES (%s)"""
-        cursor.execute(query,("user1",))
-        query="""INSERT INTO USERS (USERNAME) VALUES (%s)"""
-        cursor.execute(query,("user2",))
-        db_connection.commit()
-        db_connection.close()
 
+        query="""CREATE TABLE IF NOT EXISTS MCOMMENTS(
+                    COMMENTID INTEGER NOT NULL,
+                    USERNAME TEXT NOT NULL,
+                    CONTENT TEXT  NOT NULL,
+                    FOREIGN KEY (USERNAME) REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (COMMENTID) REFERENCES MESSAGES(MSGID) ON DELETE CASCADE ON UPDATE CASCADE
+                )"""
+        cursor.execute(query)
+
+        db_connection.commit()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()
 
 def add_message_to_table(message):
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
     try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
         query = """INSERT INTO MESSAGES(USERNAME,CONTENT,SUBJECT) VALUES (%s,%s,%s) """
         cursor.execute(query,(message.username,message.content,message.subject))
         db_connection.commit()
-        db_connection.close()
-
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()
 
 def get_messages_from_table():
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
     try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
         query = """SELECT MSGID,USERNAME,CONTENT,SUBJECT FROM MESSAGES"""
         cursor.execute(query)
         fetchedData = cursor.fetchall()
         db_connection.commit()
-        db_connection.close()
         return fetchedData;
-
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-
-def get_users_from_users_table():
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-        query = """SELECT USERNAME FROM USERS"""
-        cursor.execute(query)
-        fetchedData = cursor.fetchall()
-        db_connection.commit()
-        db_connection.close()
-        return fetchedData;
-
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()
 
 def remove_message_from_table(id):
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
     try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
         query = """DELETE FROM MESSAGES WHERE MSGID = %s"""
         cursor.execute(query,(id,))
         db_connection.commit()
-        db_connection.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()
 
 def update_one_message(content,subject,messageId):
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
     try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
         query = """UPDATE MESSAGES SET CONTENT=%s, SUBJECT=%s WHERE MSGID = %s"""
         cursor.execute(query,(content,subject,messageId))
         db_connection.commit()
-        db_connection.close()
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()	
 
+def add_comments_for_message(comId,username,content):
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
+    try:
+        cursor = db_connection.cursor()
+        query = """INSERT INTO MCOMMENTS (COMMENTID,USERNAME,CONTENT) VALUES (%s,%s,%s) """
+        cursor.execute(query,(comId,username,content))
+        db_connection.commit()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()
+
+def get_message_comments():
+    dsn = connect()
+    db_connection = dbapi2.connect(dsn)
+    try:
+        cursor = db_connection.cursor()
+        query = """SELECT COMMENTID,USERNAME,CONTENT FROM MCOMMENTS"""
+        cursor.execute(query)
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        return fetchedData
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        db_connection.rollback()
+    finally:
+        if db_connection:
+            db_connection.close()
 
 ## Functions for Profile Table
 
