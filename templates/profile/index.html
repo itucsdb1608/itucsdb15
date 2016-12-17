@@ -4,26 +4,37 @@
 {% block content %}
 						<!-- Post -->
 						{% for message in messages%}
-							<article class="post">
-								<label for="subject" class="control-label col-sm-1">Subject:{{message[3]}}</label>
-								<footer>
-									<ul class="actions">
-										<li> <span class="content">{{message[2]}}</span></li>
-										<li><span class="name">{{message[1]}}</span></li>
-									<ul class="stats">
-										<form role="form" action="{{url_for('site.delete_message')}}" method="post" name="delete">
-											<li>
-												<button type="submit" value="{{ message[0] }}"  name="delete" class="btn btn-primary">Delete</button>
-											</li>
-										</form>
-										<form role="form" action="{{url_for('site.update_message',messageId=message[0])}}" method="get" name="update">
-											<li>
-												<button type="submit" value="{{message[0]}}" name="update" class="btn btn-primary">Update</button>
-											</li>
-										</form>
-								</footer>
-
-							</article>
+									<article class="post">
+										<label for="subject" class="control-label col-sm-1">Subject:{{message[3]}}</label>
+										<footer>
+											<ul class="actions">
+												<li> <span class="content">Message:{{message[2]}}</span></li>
+												<li><span class="name">User:{{message[1]}}</span></li>
+											{% if message[1]==user %}
+											<ul class="stats">
+												<form role="form" action="{{url_for('site.delete_message')}}" method="post" name="delete">
+													<li>
+														<button type="submit" value="{{ message[0] }}"  name="delete" class="btn btn-danger">Delete</button>
+													</li>
+												</form>
+												<form role="form" action="{{url_for('site.update_message',messageId=message[0])}}" method="get" name="update">
+													<li>
+														<button type="submit" value="{{message[0]}}" name="update" class="btn btn-default">Update</button>
+													</li>
+												</form>
+											{% endif %}
+												<form role="form" method="get">
+													<li>
+														<button type="submit" formaction="{{url_for('site.add_comment_to_message',id=message[0])}}" class="btn btn-deafult">Comment!</button>
+													</li>
+											{%for comment in comments%}
+												{% if message[0]==comment[0] %}
+												<span><br>User: {{comment[1]}}<br></span>
+												<textarea>{{comment[2]}}</textarea>
+												{% endif %}
+											{% endfor %}
+										</footer>
+									</article>
 					   {% endfor %}
 					   <li><a href="{{url_for('site.add_message')}}" class="button big next">Share a post! Click Here</a></li>
 {% endblock %}
