@@ -5,8 +5,8 @@
 						<!-- Post -->
 						{% for message in messages%}
 									<article class="post">
-										<label for="subject" class="control-label col-sm-1">Subject:{{message[3]}}</label>
-										<label for="username" class="control_label col-sm-1">User:{{message[1]}}</label>
+										<label for="subject" class="control-label col-sm-1"><strong>Subject:{{message[3]}}</strong></label>
+										<label for="username" class="control_label col-sm-1"><strong>User:{{message[1]}}</strong></label>
 										<footer>
 											<ul class="actions">
 												<li> <span class="content">Message:{{message[2]}}</span></li>
@@ -30,8 +30,12 @@
 											   </li>
 											{%for comment in comments%}
 												{% if message[0]==comment[0] %}
-												<span><br>User: {{comment[1]}}<br></span>
-												<textarea>{{comment[2]}}</textarea>
+												<article>
+												<p>
+												    <br><strong>User: {{comment[1]}}<strong><br>
+												</p>
+													<p>{{comment[2]}}</p>
+												</article>
 												{% endif %}
 											{% endfor %}
 										</footer>
