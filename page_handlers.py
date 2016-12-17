@@ -2,22 +2,27 @@ from flask import Blueprint, render_template
 from flask import current_app
 from flask import request, session
 from flask import redirect, url_for
-from connect_db import add_message_to_table,get_messages_from_table,remove_message_from_table,update_one_message
+
 from message import Message
+from connect_db import add_message_to_table,get_messages_from_table,get_message_comments,remove_message_from_table,update_one_message,add_comments_for_message
+
 from login import Person
 from connect_db import add_hobby_to_table,get_hobby_from_table,remove_hobby_from_table,update_hobby_from_table
 from connect_db import add_hobbyall_to_table,get_hobbyall_from_table,remove_hobbyall_from_table
 from connect_db import add_ilgiall_to_table,get_ilgiall_from_table,remove_ilgiall_from_table
 from connect_db import add_ilgi_to_table,get_ilgi_from_table,remove_ilgi_from_table,update_ilgi_from_table
 from connect_db import add_profile_to_table,get_profile_from_table,remove_profile_from_table,update_profile_from_table
+
 from profile import Profile
 from connect_db import add_account_to_table,get_account_from_table,get_university_from_table,get_city_from_table,update_account_from_table,update_accountpersonal_from_table,add_accountpersonal_to_table,get_accountpersonal_from_table
 from addaccount import Addaccount
 from connect_db import add_to_login, records_from_login, update_to_login, remove_from_login, search_user_login
 from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkadas,sil_arkadas,guncelle_arkadas
+
 from friend import Friend
 from connect_db import send_message,send_username_for_messages,update_personal_message,sil_kisisel_mesaj
 from connect_db import add_from_admin
+
 site = Blueprint('site', __name__)
 @site.route('/')
 def home_page():
@@ -94,6 +99,7 @@ def cikis():
 def contact():
     return render_template('iletisim.html')
 
+
 @site.route('/message/<int:messageId>/update',methods=['GET','POST'])
 def update_message(messageId):
     if request.method == 'GET':
@@ -118,12 +124,34 @@ def add_message():
     if request.method == 'GET':
         return render_template('profile/add_message.html')
     else:
-        username = request.form['username']
+        username = session['name']
         messageSubject = request.form['subject']
         messageContent = request.form['content']
         newMessage = Message(username,messageContent,messageSubject)
         add_message_to_table(newMessage)
         return redirect(url_for('site.signed_in'))
+
+@site.route('/comment/add/<int:id>',methods=['GET','POST'])
+def add_comment_to_message(id):
+    if request.method == 'GET':
+        return render_template('profile/add_comment.html')
+    else:
+        content = request.form['comment']
+        username = session['name']
+        add_comments_for_message(id,username,content)
+        return redirect(url_for('site.signed_in'))
+
+@site.route('/signedin',methods=['GET', 'POST'])
+def signed_in():
+    if request.method == 'GET':
+        messages = get_messages_from_table()
+        comments = get_message_comments()
+        user = session['name']
+        return render_template('profile/index.html', messages = messages,comments = comments,user=user)
+    else:
+        return redirect(url_for('site.signed_in'))
+
+
 
 @site.route('/friends')
 def friend_requests():
@@ -253,15 +281,6 @@ def friend_delete(username, myusername):
 @site.route('/un')
 def usernamefr_requests():
         return render_template('profile/arkadasgiris.html')
-
-
-@site.route('/signedin',methods=['GET', 'POST'])
-def signed_in():
-    if request.method == 'GET':
-        messages = get_messages_from_table()
-        return render_template('profile/index.html', messages = messages)
-    else:
-        return redirect(url_for('site.signed_in'))
 
 
 @site.route('/admin/blog/<int:blog_id>/update',methods=['GET','POST'])
