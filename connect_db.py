@@ -728,7 +728,7 @@ def create_login():
                         surname VARCHAR(25) NOT NULL,
                         email VARCHAR(35) NOT NULL,
                         user_name VARCHAR(32) UNIQUE,
-                        password VARCHAR(32) NOT NULL,
+                        password VARCHAR(32) UNIQUE NOT NULL,
                         user_id SERIAL NOT NULL PRIMARY KEY,
                         authority VARCHAR(10) NOT NULL
                   )"""
@@ -737,6 +737,24 @@ def create_login():
                    VALUES ('administrator','admin', 'admin@beelink.com' ,'admin', 'admin123', 'admin');"""
 
         cursor.execute(operate)
+
+
+
+
+        cursor.execute("DROP TABLE IF EXISTS USERSIGNUP CASCADE;")
+        operate = """CREATE TABLE IF NOT EXISTS USERSIGNUP(
+                        id SERIAL NOT NULL PRIMARY KEY,
+                        password VARCHAR(32),
+                        user_name VARCHAR(32),
+                        FOREIGN KEY (password) REFERENCES LOGIN(password) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (user_name) REFERENCES LOGIN(user_name) ON DELETE CASCADE ON UPDATE CASCADE
+                  )"""
+        cursor.execute(operate)
+
+        operate = """INSERT INTO USERSIGNUP(user_name, password) VALUES('admin', 'admin123')"""
+
+        cursor.execute(operate)
+
         fill_kisiler_db(cursor)
 
         cursor.execute("DROP TABLE IF EXISTS ADMINNOTES CASCADE;")
@@ -772,6 +790,8 @@ def fill_kisiler_db(cursor):
                    VALUES ('Tuncay','Demirbaş', 'tuncayitu@gmail.com' ,'cuntay', '123456', 'user');"""
 
     cursor.execute(query)
+    operate = """INSERT INTO USERSIGNUP(user_name, password) VALUES('cuntay', '123456')"""
+    cursor.execute(operate)
 
 def notes_from_admins(username):
     try:
@@ -826,6 +846,10 @@ def add_from_admin(n_person, authority):
                   """
         cursor.execute(operate,(n_person.name, n_person.surname, n_person.email,
                                 n_person.username, n_person.password, authority))
+
+        operate = """INSERT INTO USERSIGNUP(user_name, password) VALUES(%s, %s)"""
+
+        cursor.execute(operate, (n_person.username, n_person.password))
         db.commit()
         db.close()
 
@@ -842,6 +866,11 @@ def add_to_login(n_person):
                   """
         cursor.execute(operate,(n_person.name, n_person.surname, n_person.email,
                                 n_person.username, n_person.password, 'user'))
+
+        operate = """INSERT INTO USERSIGNUP(user_name, password) VALUES(%s, %s)"""
+
+        cursor.execute(operate, (n_person.username, n_person.password))
+
         db.commit()
         db.close()
 
@@ -865,19 +894,30 @@ def search_user_login(username, password):
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
-        operate = """SELECT * FROM LOGIN WHERE
+
+        operate = """SELECT * FROM USERSIGNUP WHERE
+                    password = %s AND user_name = %s
+                    """
+        cursor.execute(operate,(password, username,))
+        record = cursor.fetchone()
+
+        if record:
+            operate = """SELECT authority FROM LOGIN WHERE
                     user_name = %s AND password = %s
                     """
-        cursor.execute(operate,(username, password,))
-        record = cursor.fetchone()
-        db.commit()
-        db.close()
-        if record and record[6] == "admin":
-            return 2
-        elif record:
-            return 1
+            cursor.execute(operate,(username, password,))
+            authorization = cursor.fetchone()
+            db.commit()
+            db.close()
+            if authorization[0] == "admin":
+                return 2
+            else:
+                return 1
         else:
+            db.commit()
+            db.close()
             return 0
+
 
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
