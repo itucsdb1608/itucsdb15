@@ -21,7 +21,7 @@ from connect_db import ekle_arkadas,tum_arkadaslar,gonder_username,toplam_arkada
 
 from friend import Friend
 from connect_db import send_message,send_username_for_messages,update_personal_message,sil_kisisel_mesaj
-from connect_db import add_from_admin, addnote_from_admin, notes_from_admins, update_adminnote, remove_adminnote
+from connect_db import add_from_admin, addnote_from_admin, notes_from_admins, update_adminnote, remove_adminnote, search_name
 
 site = Blueprint('site', __name__)
 @site.route('/')
@@ -585,10 +585,17 @@ def remove_user():
     if request.method == 'GET':
         return render_template('administrator.html')
     else:
+        uname = session['name']
         user_id = request.form['delete']
-        remove_from_login(user_id)
-        records = records_from_login()
-        return render_template('administrator.html', records = records)
+        check = search_name(user_id, uname)
+
+        if check == 1:
+            remove_from_login(user_id)
+            return render_template('home.html')
+        else:
+            remove_from_login(user_id)
+            records = records_from_login()
+            return render_template('administrator.html', records = records)
 
 @site.route('/user/update/<int:id>', methods=['GET', 'POST'])
 def update_user(id):

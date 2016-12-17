@@ -785,6 +785,24 @@ def addnote_from_admin(note, username):
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
+def search_name(id, username):
+    try:
+        db = dbapi2.connect(connect())
+        cursor = db.cursor()
+        operate = """SELECT * FROM LOGIN WHERE (user_id = %s AND user_name = %s)
+                  """
+        cursor.execute(operate, (id, username))
+        record = cursor.fetchone()
+        db.commit()
+        db.close()
+        if record:
+            return 1
+        else:
+            return 0
+
+    except dbapi2.DatabaseError as err:
+        print("Error is %s." % err)
+
 def fill_kisiler_db(cursor):
     query = """INSERT INTO LOGIN(name, surname, email, user_name, password, authority)
                    VALUES ('Tuncay','Demirbaş', 'tuncayitu@gmail.com' ,'cuntay', '123456', 'user');"""
