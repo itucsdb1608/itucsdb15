@@ -432,7 +432,7 @@ def delete_profililgi():
         return render_template('admin/profililgi.html')
     else:
         ilgi_id = request.form['delete']
-        remove_hobbyall_from_table(ilgi_id)
+        remove_ilgiall_from_table(ilgi_id)
         return redirect(url_for('site.profililgi'))
 @site.route('/admin/profililgi/add',methods=['GET','POST'])
 def add_profililgi():

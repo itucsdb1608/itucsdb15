@@ -565,8 +565,8 @@ def get_hobbyall_from_table(asd):
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """SELECT HOBBYALL.ORD, HOBBY.HOBBY_NAME FROM HOBBYALL, HOBBY
-        WHERE (HOBBYALL.HOBBY_ID = HOBBY.HOBBY_ID) AND (USER_NAME = %s)"""
+        query = """SELECT HOBBYALL.ORD, HOBBY.HOBBY_NAME, HOBBYALL.ID FROM HOBBYALL, HOBBY
+        WHERE (HOBBYALL.HOBBY_ID = HOBBY.HOBBY_ID) AND (USER_NAME = %s) ORDER BY HOBBYALL.ORD"""
         cursor.execute(query,[asd])
         fetchedData = cursor.fetchall()
         db_connection.commit()
@@ -613,8 +613,8 @@ def get_ilgiall_from_table(asd):
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
-        query = """SELECT INTERESTALL.ORD, INTEREST.INTEREST_NAME FROM INTERESTALL, INTEREST
-        WHERE (INTERESTALL.INTEREST_ID = INTEREST.INTEREST_ID) AND (USER_NAME = %s)"""
+        query = """SELECT INTERESTALL.ORD, INTEREST.INTEREST_NAME, INTERESTALL.ID FROM INTERESTALL, INTEREST
+        WHERE (INTERESTALL.INTEREST_ID = INTEREST.INTEREST_ID) AND (USER_NAME = %s) ORDER BY INTERESTALL.ORD"""
         cursor.execute(query,[asd])
         fetchedData = cursor.fetchall()
         db_connection.commit()
