@@ -985,164 +985,55 @@ def remove_from_login(user_id):
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
 
-#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari -    emre kose
-def init_friend_table():        #n
+#----- FRIENDS RELATIONS PART - EMRE KOSE
+def init_friend_table():
     try:
         dsn = connect()
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-     #   cursor.execute("DROP TABLE IF EXISTS PERSONFRIENDS")
-        query = """CREATE TABLE IF NOT EXISTS PERSONFRIENDS
-                (
-                    USERNAME TEXT PRIMARY KEY ,
-                    NAME TEXT NOT NULL,
-                    SURNAME TEXT NOT NULL
 
-                )"""
+        query = """CREATE TABLE IF NOT EXISTS PERSONFRIENDS
+                 (
+                     USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                     NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME),
+                     SURNAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME),
+                     NICKNAME VARCHAR(80),
+                     PRIMARY KEY(USER_NAME)
+
+                 )"""
         cursor.execute(query)
 
-        cursor.execute("DROP TABLE IF EXISTS FRIENDSRELATION")
+     #  cursor.execute("DROP TABLE IF EXISTS FRIENDSRELATION")
         query = """CREATE TABLE IF NOT EXISTS FRIENDSRELATION
                 (
-                    USERNAME TEXT NOT NULL REFERENCES PERSONFRIENDS(USERNAME),
-                    FRIENDUSERNAME TEXT NOT NULL,
-                    PRIMARY KEY(USERNAME,FRIENDUSERNAME)
+                    USER_NAME VARCHAR(80) NOT NULL REFERENCES PERSONFRIENDS(USER_NAME),
+                    FRIENDUSERNAME VARCHAR(80)  NOT NULL REFERENCES PERSONFRIENDS(USER_NAME),
+                    PRIMARY KEY(USER_NAME,FRIENDUSERNAME)
 
                 )"""
         cursor.execute(query)
 
-        query = """INSERT INTO PERSONFRIENDS (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
-        cursor.execute(query, ("emre@","emre","kose",))
 
-        query = """INSERT INTO PERSONFRIENDS (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
-        cursor.execute(query, ("user2","veli","reis",))
+        query = """CREATE TABLE IF NOT EXISTS CANDIDATE_FRIENDS
+                (
+                    USER_NAME VARCHAR(80) NOT NULL REFERENCES PERSONFRIENDS(USER_NAME),
+                    FRIENDUSERNAME VARCHAR(80)  NOT NULL REFERENCES PERSONFRIENDS(USER_NAME),
+                    PRIMARY KEY(USER_NAME,FRIENDUSERNAME)
 
-        query = """INSERT INTO FRIENDSRELATION (USERNAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
-        cursor.execute(query, ("emre@","user2",))
-
-
-        db_connection.commit()
-        db_connection.close()
-
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-
-def sil_arkadas(username):
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-        q = """DELETE FROM FRIENDSRELATION WHERE FRIENDUSERNAME = %s"""
-        cursor.execute(q, (username,))
-        db_connection.commit()
-        db_connection.close()
-        cursor.close()
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-
-def guncelle_arkadas(ad, arkullaniciadi,yeniisim, yenisoyisim):
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-        q = """UPDATE PERSONFRIENDS SET NAME = %s, SURNAME = %s
-                     WHERE USERNAME = %s"""
-        cursor.execute(q, (yeniisim,yenisoyisim,arkullaniciadi))
-        db_connection.commit()
-        db_connection.close()
-        cursor.close()
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-
-
-
-def ekle_arkadas(username,fusername,name ,surname):
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-
-
-        query = """INSERT INTO PERSONFRIENDS (USERNAME,NAME,SURNAME)  VALUES (%s,%s,%s )"""
-        cursor.execute(query, (fusername,name,surname))
-
-
-        query = """INSERT INTO FRIENDSRELATION (USERNAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
-        cursor.execute(query, (username,fusername))
-
-
-        db_connection.commit()
-        db_connection.close()
-        cursor.close()
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-
-
-
-
-def gonder_username(username):
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-
-
-
-
-        query = """SELECT FRIENDUSERNAME FROM FRIENDSRELATION
-                                WHERE USERNAME = %s"""
-        cursor.execute(query,(username,))
-        tumu = cursor.fetchall()
-
-
-        db_connection.commit()
-        db_connection.close()
-        cursor.close()
-
-        return tumu
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-
-
-
-
-def toplam_arkadas(username):
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-
-        query = """SELECT COUNT(*) FROM FRIENDSRELATION
-                                WHERE USERNAME = %s"""
-        cursor.execute(query,(username,))
-        toplam = cursor.fetchall()
-        db_connection.commit()
-        db_connection.close()
-        cursor.close()
-
-        return toplam
-    except dbapi2.DatabaseError as error:
-        print("Error %s" % error)
-
-def tum_arkadaslar():
-    try:
-        dsn = connect()
-        db_connection = dbapi2.connect(dsn)
-        cursor = db_connection.cursor()
-
-        query = """SELECT * FROM FRIENDSRELATION
-                                WHERE USERNAME = %s"""
+                )"""
         cursor.execute(query)
-        tumu = cursor.fetchall()
+
+
+
         db_connection.commit()
         db_connection.close()
-        cursor.close()
 
-        return tumu
     except dbapi2.DatabaseError as error:
         print("Error %s" % error)
-#----- arkadas.html sayfasi için ekleme , silme , guncelleme fonksiyonlari sonu-    emre kose
+
+#-----
+
 def init_personal_message_table():        #n
     try:
         dsn = connect()
