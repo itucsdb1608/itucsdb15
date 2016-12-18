@@ -992,7 +992,7 @@ def init_friend_table():
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-
+        cursor.execute("DROP TABLE IF EXISTS PERSONFRIENDS CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS PERSONFRIENDS
                  (
                      USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1004,7 +1004,8 @@ def init_friend_table():
                  )"""
         cursor.execute(query)
 
-     #  cursor.execute("DROP TABLE IF EXISTS FRIENDSRELATION")
+
+        cursor.execute("DROP TABLE IF EXISTS FRIENDSRELATION CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS FRIENDSRELATION
                 (
                     USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1014,7 +1015,7 @@ def init_friend_table():
                 )"""
         cursor.execute(query)
 
-
+        cursor.execute("DROP TABLE IF EXISTS CANDIDATE_FRIENDS;")
         query = """CREATE TABLE IF NOT EXISTS CANDIDATE_FRIENDS
                 (
                     USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
