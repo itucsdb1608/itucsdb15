@@ -43,7 +43,7 @@ def sign_up():
         add_to_login(newRecord)
         add_account_to_table(newAccount)
         add_accountpersonal_to_table(username)
-
+        insert_to_person_friends(username)
     return render_template('home.html')
 
 @site.route('/administrator/add', methods=['GET','POST'])
@@ -242,7 +242,7 @@ def friend_update(my):
             myinfo = get_myinfos(my)
             toplamarkadas = toplam_arkadas(ad)
             tumu = gonder_username(ad)
-            t = yakin_arkileri_al(username)
+            t = yakin_arkileri_al(my)
           #  return redirect(url_for('site.friend_requests'))
             return render_template('profile/arkadas.html',t=t,arkadaslar = tumu , toplam = toplamarkadas ,  myusername = ad ,myinfos = myinfo  )
 
