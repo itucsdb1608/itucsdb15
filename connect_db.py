@@ -1141,6 +1141,8 @@ def yakin_arkadas_bul(username):
                         for olasi_arkadaslar in tumu:
                             query =""" INSERT INTO CANDIDATE_FRIENDS (USER_NAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
                             cursor.execute(query,(username,olasi_arkadaslar[0],))
+                            query =""" INSERT INTO CANDIDATE_FRIENDS (USER_NAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
+                            cursor.execute(query,(olasi_arkadaslar[0],username,))
 
         db_connection.commit()
         db_connection.close()
