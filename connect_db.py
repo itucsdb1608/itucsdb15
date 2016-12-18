@@ -996,8 +996,8 @@ def init_friend_table():
         query = """CREATE TABLE IF NOT EXISTS PERSONFRIENDS
                  (
                      USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
-                     NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME),
-                     SURNAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME),
+                     NAME VARCHAR(80) NOT NULL,
+                     SURNAME VARCHAR(80) NOT NULL,
                      NICKNAME VARCHAR(80),
                      PRIMARY KEY(USER_NAME)
 
@@ -1008,18 +1008,18 @@ def init_friend_table():
         cursor.execute("DROP TABLE IF EXISTS FRIENDSRELATION CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS FRIENDSRELATION
                 (
-                    USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
-                    FRIENDUSERNAME VARCHAR(80)  NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    USER_NAME VARCHAR(80) NOT NULL REFERENCES PERSONFRIENDS(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FRIENDUSERNAME VARCHAR(80)  NOT NULL REFERENCES PERSONFRIENDS(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
                     PRIMARY KEY(USER_NAME,FRIENDUSERNAME)
 
                 )"""
         cursor.execute(query)
 
-        cursor.execute("DROP TABLE IF EXISTS CANDIDATE_FRIENDS;")
+        cursor.execute("DROP TABLE IF EXISTS CANDIDATE_FRIENDS CASCADE;")
         query = """CREATE TABLE IF NOT EXISTS CANDIDATE_FRIENDS
                 (
-                    USER_NAME VARCHAR(80) NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
-                    FRIENDUSERNAME VARCHAR(80)  NOT NULL REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    USER_NAME VARCHAR(80) NOT NULL REFERENCES PERSONFRIENDS(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FRIENDUSERNAME VARCHAR(80)  NOT NULL REFERENCES PERSONFRIENDS(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
                     PRIMARY KEY(USER_NAME,FRIENDUSERNAME)
 
                 )"""
@@ -1060,7 +1060,7 @@ def guncelle_arkadas(ad, yeni_nickname):
         cursor = db_connection.cursor()
         q = """UPDATE PERSONFRIENDS SET NICKNAME = %s
                      WHERE USER_NAME = %s"""
-        cursor.execute(q, (yeni_nickname,ad))
+        cursor.execute(q, (yeni_nickname,ad,))
         db_connection.commit()
         db_connection.close()
         cursor.close()
@@ -1079,7 +1079,7 @@ def insert_to_person_friends(username):
         bilgi = cursor.fetchone()
 
         query = """INSERT INTO PERSONFRIENDS (USER_NAME,NAME,SURNAME,NICKNAME)  VALUES (%s,%s,%s,%s )"""
-        cursor.execute(query, (username,bilgi[0],bilgi[1],"nickname"))
+        cursor.execute(query, (username,bilgi[0],bilgi[1],"nickname",))
 
 
         db_connection.commit()
@@ -1119,7 +1119,7 @@ def yakin_arkadas_bul(username):
         db_connection = dbapi2.connect(dsn)
         cursor = db_connection.cursor()
 
-        toplam = toplam_arkadas(username)
+        toplam = toplam_arkadas(username,)
 
         if toplam:
                     query = """(SELECT FRIENDUSERNAME FROM FRIENDSRELATION
@@ -1134,13 +1134,13 @@ def yakin_arkadas_bul(username):
 
 
                                     """
-                    cursor.execute(query,(username,username,username))
+                    cursor.execute(query,(username,username,username,))
                     tumu = cursor.fetchall()
 
                     if tumu:
                         for olasi_arkadaslar in tumu:
                             query =""" INSERT INTO CANDIDATE_FRIENDS (USER_NAME,FRIENDUSERNAME)  VALUES (%s,%s )"""
-                            cursor.execute(query,(username,olasi_arkadaslar[0]))
+                            cursor.execute(query,(username,olasi_arkadaslar[0],))
 
         db_connection.commit()
         db_connection.close()
@@ -1160,7 +1160,7 @@ def yakin_arkileri_al(username):
 
             query = """ SELECT FRIENDUSERNAME FROM CANDIDATE_FRIENDS
                                 WHERE USER_NAME = %s"""
-            cursor.execute(query,(username))
+            cursor.execute(query,(username,))
             tumu = cursor.fetchall()
 
 
