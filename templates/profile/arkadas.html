@@ -7,7 +7,9 @@
 								<header>
 									<div class="title">
 										<h2><a href="#">Arkadaslar</a></h2>
-										<p>Agini Genislet..</p>
+										<h1>Merhaba {{myusername}} </h1>
+										 <h2> Nickname: {{ myinfos[0]}}</h2>
+
 									</div>
 									<div class="meta">
 										<time class="published" datetime="2015-10-18">Toplam Arkadas Sayisi</time>
@@ -20,10 +22,11 @@
 								<div>
 										<h2> Arkadas Listen </h2>
  										<ul>
+
 								        {% for username in arkadaslar %}
 								            <li>
 								                <div>
-								                    <p>{{ username[0] }}</p>
+								                    <p>username:{{ username[0] }} name: {{ username[1] }} surname: {{ username[2] }} nickname: {{ username[3] }}  </p>
 						                      <form role="form" action="{{ url_for('site.friend_delete',username=username[0], myusername = myusername )}}" method="post">
 								        <div class="form-group">
 								            <button class="btn btn-success" type="submit">Sil</button>
@@ -51,40 +54,33 @@
 							                <label for="FriendUserName">Your friend username</label>
 							                <input type="text"  id="FriendUserName" name="FriendUserName" placeholder="FriendUserName">
 							            </div>
-							            <div>
-							                <label for="FriendName">Your friend Name</label>
-							                <input type="text"  id="FriendName" name="FriendName" placeholder="FriendName">
-							            </div>
-							            <div>
-							                <label for="FriendSurname">Your friend Surname</label>
-							                <input type="text"  id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
-							            </div>
+
 											<input type="submit" name = "submit" value = "Ekle" >
 
 							        </form>
 
 							        <form  role="form" action="{{ url_for('site.friend_update', my = myusername ) }}" id="ArkadasDuzenle" method="post">
-							            <h3>Arkadas Duzenle</h3>
+							            <h3>nickname degistir</h3>
 
 
 							            <div>
-							                <label for="FriendUserName">Your friend username</label>
-							                <input type="text"  id="FriendUserName" name="FriendUserName" placeholder="FriendUserName">
-							            </div>
-							            <div>
-							                <label for="FriendName">Your friend new name</label>
-							                <input type="text"  id="FriendName" name="FriendName" placeholder="FriendName">
-							            </div>
-							            <div>
-							                <label for="FriendSurname">Your friend new surname</label>
-							                <input type="text"  id="FriendSurname" name="FriendSurname" placeholder="FriendSurname">
+							                <label for="Nickname">yeni nickname</label>
+							                <input type="text"  id="Nickname" name="Nickname" placeholder="Nickname">
 							            </div>
 											<input type="submit" name = "submit" value = "Guncelle" >
 
 							        </form>
 
 
+										<h1>taniyor olabileceklerin: </h1>
 
+								            <li>
+								                <div>
+													{% for olasiarkiler in t %}
+								                   <p>username: {{ olasiarkiler[0] }}   </p>
+								                   <br/>
+								                   {% endfor %}
+											 </div> </li>
 
 								</section>
 
