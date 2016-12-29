@@ -68,9 +68,6 @@ Ayrıca kullanıcı profil menüsüne basıp, kişisel sayfasına geçiş yaptı
 Resim 6’da görüldüğü üzere http://itucsdb1608.mybluemix.net/profile/<user-name> linki oluşacaktır. <user-name> kısmına giriş yapan kullanıcının username’i gelecektir.
 Kullanıcı PROFİLİ DÜZENLE butonuna basarak, profil yönetim paneline geçiş yapacaktır.
  
- Profil Yönetim Paneli
- ----------------------
- 
 .. figure:: tuncay/7.PNG
    :figclass: align-center
    
