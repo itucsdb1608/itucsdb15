@@ -60,14 +60,23 @@ Resim 2, 3, 4 ‘de gözüken kısımları kullanıcı Profili düzenle butonuna
     
 Ayrıca kullanıcı profil menüsüne basıp, kişisel sayfasına geçiş yaptığı sırada URL kısmı şöyle olacaktır:
  
+   .. figure:: tuncay/6.PNG
+   :figclass: align-center
+   
 Resim 6: Profil Link kısmı
+
 Resim 6’da görüldüğü üzere http://itucsdb1608.mybluemix.net/profile/<user-name> linki oluşacaktır. <user-name> kısmına giriş yapan kullanıcının username’i gelecektir.
 Kullanıcı PROFİLİ DÜZENLE butonuna basarak, profil yönetim paneline geçiş yapacaktır.
  
+   .. figure:: tuncay/7.PNG
+   :figclass: align-center
+   
 Resim 7: Profili düzenle sayfası
+
 Resim 7’de gözüktüğü üzere kullanıcı http://itucsdb1608.mybluemix.net/admin/home sayfasına geçmiş olacak ve böyle bir görüntü karşısına çıkacaktır.
 Kullanıcı buradan solda bulunan menüler arası geçiş yapabilir.
 Menüler sırayla şu içeriklere sahiptir.
+
 1.	Profil
 
 a.	Kişisel Bilgiler (Profildeki bilgileri düzenleme kısmı)
@@ -83,13 +92,22 @@ b.	Hobi Ekle  (Profil sayfasına hobi ekleme kısmı)
 
 a.	Hobileri Yönet (Mevcut hobi listesindeki hobileri düzenleme kısmı)
 b.	İlgi Alanlarını Yönet (Mevcut ilgi alanı listesindeki kısımları düzenleme kısmı)
+
 Sırayla ilk menüden başlarsak:
- 
+   .. figure:: tuncay/8.PNG
+   :figclass: align-center
 Resim 8: Menü kısmı
+
 Resim 8’deki görüntüden anlaşılacağı üzere, kullanıcı Profil menüsü sekmesi altında karşısına çıkan seçeneklerden Kişisel Bilgiler kısmına tıkladıktan sonra karşına şöyle bir sayfa çıkar.
  
+   .. figure:: tuncay/9.PNG
+   :figclass: align-center
+   
 Resim 9: Kişisel bilgiler güncelleme kısmı
  
+   .. figure:: tuncay/10.PNG
+   :figclass: align-center
+   
 Resim 10: Kişisel bilgiler güncelleme kısmı devamı
 
 Resim 9 ve 10 ‘da görülen Profil Bilgileri -> Kişisel Bilgiler kısmında kullanıcı profil sayfasındaki mevcut bilgileri güncelleyebilir.
@@ -106,9 +124,12 @@ Sırayla Kişisel Bilgiler kısmında bulunan bilgiler şöyle
 •	Yaşadığınız Şehir
 •	E-posta Adresiniz
 •	Web Siteniz
+
 Bu bilgiler kullanıcı BeeLink’e üye olur olmaz oluşur, ve default olarak NULL tanımlıdır. Bundan sebep kullanıcı sürekli bu bilgileri güncelleyebilir.
 Kullanıcı daha sonra güncelleme işlemini tamamladıktan sonra Tanıt Kendini menü kısmına tıklar ve ilgili sayfaya girer:
 
+  .. figure:: tuncay/11.PNG
+   :figclass: align-center
  
 Resim 11: Tanıt Kendini Sayfası
 
