@@ -1,15 +1,15 @@
-Welcome to itucsdb's documentation!
-===================================
+Welcome to itucsdb1608's documentation!
+=======================================
 
-:Team: Team Name
+:Team: Beelink
 
 :Members:
 
-   * Member 1
-   * Member 2
-   * Member 3
-   * Member 4
-   * Member 5
+   * Tuncay Demirbaş
+   * Hayati Enes Basat
+   * Furkan Artunç
+   * Emre Köse
+   * Mert Arı
 
 **project description goes here (a few paragraphs)**
 
