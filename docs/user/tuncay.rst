@@ -16,7 +16,7 @@ Projede istenilen bütün teknolojiler kullanıldı. Tasarım olarak HTML5,CSS, 
 http://itucsdb1608.mybluemix.net/profile/<user-name> sayfasını ve 
 http://itucsdb1608.mybluemix.net/admin/ url ve uzantıları olan sayfaları dizayn ettim.
 
-Profil
+Profil sayfası görünümü
 -------
 Kullanıcı sisteme kullanıcı adı ve şifresiyle giriş yaptıktan sonra karşısına şöyle bir sayfa çıkacaktır.
 
@@ -68,6 +68,9 @@ Ayrıca kullanıcı profil menüsüne basıp, kişisel sayfasına geçiş yaptı
 Resim 6’da görüldüğü üzere http://itucsdb1608.mybluemix.net/profile/<user-name> linki oluşacaktır. <user-name> kısmına giriş yapan kullanıcının username’i gelecektir.
 Kullanıcı PROFİLİ DÜZENLE butonuna basarak, profil yönetim paneline geçiş yapacaktır.
  
+ Profil Yönetim Paneli
+ ----------------------
+ 
 .. figure:: tuncay/7.PNG
    :figclass: align-center
    
@@ -94,8 +97,10 @@ a.	Hobileri Yönet (Mevcut hobi listesindeki hobileri düzenleme kısmı)
 b.	İlgi Alanlarını Yönet (Mevcut ilgi alanı listesindeki kısımları düzenleme kısmı)
 
 Sırayla ilk menüden başlarsak:
+
 .. figure:: tuncay/8.PNG
    :figclass: align-center
+   
     Resim 8: Menü kısmı
 
 Resim 8’deki görüntüden anlaşılacağı üzere, kullanıcı Profil menüsü sekmesi altında karşısına çıkan seçeneklerden Kişisel Bilgiler kısmına tıkladıktan sonra karşına şöyle bir sayfa çıkar.
