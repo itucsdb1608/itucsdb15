@@ -41,7 +41,8 @@ Operasyonlar
  
  tablolarının içerikleri ve yeni çoklu ekleme, varolan çokluyu silme, güncelleme arama gibi veritabanı işlemleri bu kısımda açıklanmıştır.
  
- 1. Account ve Accpersonal (profil sayfası kişisel bilgiler için, tablo)
+1. Account ve Accpersonal (profil sayfası kişisel bilgiler için, tablo)
+---------
  
  Kullanıcı tablosu ile ilişkili olan sayfam,
 Öncelikle kullanıcının ;
@@ -101,7 +102,7 @@ ACCPERSONAL Tablosunun genel görünümü şöyledir:
 .. figure:: tuncay/3.PNG
    :figclass: align-center
    
-   Resim 2: ACCPERSONAL Tablosu
+   Resim 3: ACCPERSONAL Tablosu
    
 Gördüğünüz üzere Account Tablosunda birçok sütun bulunmakta.
 * user_name
@@ -296,11 +297,163 @@ gerekli güncelleme işlemleri sonrası veritabanında ACCOUNT ve ACCPERSONAL ta
 .. figure:: tuncay/4.PNG
    :figclass: align-center
    
-   Resim 2: ACCOUNT Tablosundaki kayıtlar
+   Resim 4: ACCOUNT Tablosundaki kayıtlar
    
 .. figure:: tuncay/5.PNG
    :figclass: align-center
    
-   Resim 2: ACCPERSONAL Tablosundaki kayıtlar   
+   Resim 5: ACCPERSONAL Tablosundaki kayıtlar   
    
+2. Profile (profil sayfası blog işlemleri, tablo)
+--------
+
+Sistemdeki kayıtlı kullanıcı giriş yaptığı kullanıcı adıyla profil sayfasında her türlü değişikliği yapabilir, 
+birden fazla Blog ekleyebilir, düzenleyebilir, silebilir. kısacası **CRUD** işlemlerinin hepsi yapılmaktadır.
+
+.. figure:: tuncay/6.PNG
+   :figclass: align-center
    
+   Resim 6: profile tablosu genel görünümü
+   
+Tüm sütunlar varlık içerisinde tanımlanmıştır ve user_name ile relation sağlanmıştır.
+
+Kullanıcı profil sayfasına girip,
+Blog kısmında, kullanıcı kendi kişisel sayfası için istediği kadar blog ekleyebilir, silebilir, güncelleyebilir, ve son olarak
+her kullanıcının profil sayfasından URL uzatısı **profile/<user-name>** olduğu için, GET metodu ile user_name alınıp SELECT komutu ile ve WHERE koşulu ile sadece ilgili kullanıcıya özel blog yazılarının getirilmesi sağlanmıştır.
+
+**Blog tablosnun create edilmesi**
+
+.. code-block:: python
+
+   def init_profile_table():
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        cursor.execute("DROP TABLE IF EXISTS PROFILE CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS PROFILE
+                (
+                    BLOG_ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80) NOT NULL,
+                    TITLE VARCHAR(80),
+                    CONTENT TEXT NOT NULL,
+                    FOREIGN KEY (USER_NAME)  REFERENCES LOGIN(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE
+                )"""
+        cursor.execute(query)
+        
+Yukarıdaki kod diliminde PROFILE tablosu oluşturulmuştur. PROFILE tablosu daha önce oluşturulduysa o tablo silinir ve sıfırdan yeni tablo oluşturulur. Kodun bu partında birincil anahtar olarak BLOG_ID belirlenmiştir. ve ON DELETE CASCADE ON UPDATE CASCADE işlemleri yapılmıştır. relation sağlanmıştır diğer tablolarla.
+
+zaten en üstte belirttiğim gibi proje çalıştırıldığı gibi **server.py** de init_profile_table komutu işletilir ve tüm tablolar başlangıçta CREATE edilir.
+
+* Blog Ekleme işlemi
+
+.. code-block:: python
+
+   @site.route('/admin/blog/add',methods=['GET','POST'])
+   def add_blog():
+    if request.method == 'GET':
+        return render_template('admin/blog_ekle.html')
+    else:
+        user_name = session['name']
+        title = request.form['title']
+        content = request.form['content']
+        newProfile = Profile(user_name,title,content)
+        add_profile_to_table(newProfile)
+        return redirect(url_for('site.blog'))
+        
+HTML formlarından alınan bilgiler fonksiyon aracılığıyla  önce   Profile.py tanımlı olan koda işletilir.
+
+**Profil.py**
+
+.. code-block:: python
+
+   class Profile:
+    def __init__(self,user_name,title,content):
+        self.user_name = user_name
+        self.title = title
+        self.content = content    
+        
+Profile ile işletilen veriler, newProfile  değişkenine aktarılır ve ordan da   add_profile_to_table fonskiyonuna gönderilir.
+
+.. code-block:: python
+
+   def add_profile_to_table(profile):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO PROFILE (USER_NAME,TITLE,CONTENT) VALUES (%s,%s,%s) """
+        cursor.execute(query,(profile.user_name,profile.title,profile.content))
+        db_connection.commit()
+        db_connection.close()
+        
+Yukarıda belirtilen kod parçacığında ekleme işlemi gerçekleştirilir.
+
+**Güncelleme Fonksiyonu**
+.. code-block:: python
+
+   def update_profile_from_table (title,content,blog_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE PROFILE SET TITLE=%s, CONTENT=%s WHERE BLOG_ID=%s"""
+        cursor.execute(query,(title,content,blog_id))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+
+Aynı Add mantığında olduğu gibi kullanıcıdan HTML formları aracılığı ile bilgiler alınır ve sql kodu olarak işletilir.
+
+**Silme Fonksiyonu**
+
+.. code-block:: python
+
+   def remove_profile_from_table(blog_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM PROFILE WHERE BLOG_ID = %s"""
+        cursor.execute(query,(blog_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+Silinmek istenen çoklunun birincil anahtarı olan BLOG_ID'sini alarak fonksiyona gönderir ve çokluyu siler.        
+
+**Seçme Fonksiyonu ile ilgili kullanıcıya özel blogların getirilmesi**
+
+.. code-block:: python
+
+   def get_profile_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT BLOG_ID,USER_NAME,TITLE,CONTENT FROM PROFILE WHERE (USER_NAME = %s)"""
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+where komutu ile koşul belirtilip seçili kayıt getirilir sadece.
+
+**3. İlgi alanı ve Hobi veritabanı kısmı**
+-----------
+
+Aşağıda belirtilen 4 varlık ile ilgili bilgiler verilecektir.
+
+* hobby (hobi tablosu)
+* hobbyall (profil sayfasına hobi ekleme için, tablo)
+* interest (ilgi alanları tablosu)
+* interestall (profil sayfasına ilgi alanı ekleme için, tablo)
+
+bu 4 temel varlık profil sayfasına kullanıcın hobi ve ilgi alanları eklemesi veya bu ilgi alanları ve hobi listesindeki verilere yeni veriler eklemesi silmesi güncellemesini içerir.
+
