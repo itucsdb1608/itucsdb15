@@ -24,8 +24,8 @@ Code
 
 .. toctree::
 
-   Tuncay Demirbaş
-   Hayati Enes Basat
-   Furkan Artunç
-   Emre Köse
-   Mert Arı
+   enes
+   tuncay
+   emre
+   furkan
+   member5
