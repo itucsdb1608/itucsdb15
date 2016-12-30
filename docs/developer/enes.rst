@@ -30,8 +30,10 @@ Varsayılan olarak veri tabanında yönetici yetkisine sahip bir kayıt bulunmak
         cursor.execute(operate)
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
+
 Kullanıcı Yapısı için Oluşturulan Sınıf
 -------
+Login.py dosyası altında tutulan bu sınıf, kullanıcı tarafından girilen bu beş değerin olması açısından önemli ve veri tabanı işlemleri için yardımcı olmaktadır.
 
 .. code-block:: python
   class Person:
@@ -42,7 +44,6 @@ Kullanıcı Yapısı için Oluşturulan Sınıf
         self.username = username
         self.password = password
 
-Login.py dosyası altında tutulan bu sınıf, kullanıcı tarafından girilen bu beş değerin olması açısından önemli ve veri tabanı işlemleri için yardımcı olmaktadır.
 
 Kullanıcı Ekleme Sayfası ve İşlemleri
 -------
