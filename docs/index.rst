@@ -11,7 +11,8 @@ Welcome to itucsdb1608's documentation!
    * Emre Köse
    * Mert Arı
 
-**project description goes here (a few paragraphs)**
+Projeyi yapmaktaki amacımız:
+Beelink insanların birbiriyle bağlantı kurabileceği, birbirinin paylaşımlarını görebileceği güncel bir platformdur.
 
 Contents:
 
