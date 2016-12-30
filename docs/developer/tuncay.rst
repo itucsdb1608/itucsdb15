@@ -693,3 +693,95 @@ CRUD işlemleri başarılı bir şekilde yapılmakta olup, tablolar dinamiktir.
 ----------
 
 Burada tanımladığım city ve university tablolarını açıklayacağım.
+Profile menüsü altında, Kişisel Bilgiler kısmında yer şehir ve üniversite bölümündeki veriler
+city ve university tablolarından çekilmektedir.
+
+*Tabloların create edilme kodu:*
+
+.. code-block:: python
+
+        cursor.execute("DROP TABLE IF EXISTS UNIVERSITY CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS UNIVERSITY
+                (
+                    UNIVERSITY_ID SERIAL PRIMARY KEY,
+                    UNIVERSITY_NAME TEXT
+                )"""
+        cursor.execute(query)
+
+        cursor.execute("DROP TABLE IF EXISTS CITY CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS CITY
+                (
+                    CITY_ID SERIAL PRIMARY KEY,
+                    CITY_NAME TEXT
+                )"""
+        cursor.execute(query)
+        
+.. code-block:: python
+
+        query="""
+        INSERT INTO UNIVERSITY(UNIVERSITY_NAME) VALUES
+        ('İstanbul Teknik Üniversitesi'),
+        ('Boğaziçi Üniversitesi'),
+        ('Orta Doğu Teknik Üniversitesi'),
+        ('Bilkent Üniversitesi');
+        """
+        cursor.execute(query)
+        query="""
+        INSERT INTO CITY(CITY_NAME) VALUES
+        ('İstanbul'),
+        ('Ankara'),
+        ('İzmir'),
+        ('Bursa');
+        """
+        cursor.execute(query)
+        
+Yukarıdaki kod bloğunda, tabloların create edilme ve default olarak insert edilme kodları gösterilmiştir.
+Tabloların görünümü şöyledir:
+
+.. figure:: tuncay/11.PNG
+   :figclass: align-center
+   
+   Resim 11: CITY tablosu genel görünümü
+   
+.. figure:: tuncay/12.PNG
+   :figclass: align-center
+   
+   Resim 12: UNIVERSITY tablosu genel görünümü
+   
+   
+Genel olarak tüm varlıklarımdan detaylı bir şekilde bahsettim. ve istenilen görevleri yerine getirip, başarıyla projeye impelement ettim.
+
+Bunun yanında ayrıca session tanımı da yapıldı ve böylelikle kullanıcı etkileşimi sağlanmış oldu 
+ayrıca kullanıcı sistem çıkış yaptığında da session boşaltılmış oluyor.
+
+**session kod kısmı**
+
+.. code-block:: python
+
+        if check == 1:
+            session['name'] = username
+            return redirect(url_for('site.signed_in'))
+
+.. code-block:: python
+
+   @site.route('/cikis', methods=['GET'])
+   def cikis():
+    session['name'] = ""
+    return redirect(url_for('site.home_page'))
+    
+Ayrıca kullanıcı giriş yapmadan kullanıcıların profil sayfasını göremez.
+ayrıca sistemde kayıtlı olmayan bir kullanıcıya ulaşmak isterse direk anasayfaya yönlendirilecek
+Şöyle ki:
+
+.. code-block:: python
+
+   @site.route('/profile/<username>',methods=['GET','POST'])
+   def profile(username):
+    if request.method == 'GET':
+        profile_account     = get_account_from_table(username)
+        if not profile_account:
+            return redirect(url_for('site.home_page'))
+        elif username not in profile_account[0]:
+            return redirect(url_for('site.home_page'))
+            
+            
