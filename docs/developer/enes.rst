@@ -1,5 +1,5 @@
 Hayati Enes Basat Tarafından Tamamlanan Kısımlar
-======================================
+================================================
 
 Kaydol
 --------------
@@ -32,11 +32,13 @@ Varsayılan olarak veri tabanında yönetici yetkisine sahip bir kayıt bulunmak
         print("Error is %s." % err)
 
 Kullanıcı Yapısı için Oluşturulan Sınıf
--------
-Login.py dosyası altında tutulan bu sınıf, kullanıcı tarafından girilen bu beş değerin olması açısından önemli ve veri tabanı işlemleri için yardımcı olmaktadır.
+---------------------------------------
+
+Login.py dosyası altında tutulan bu sınıf, kullanıcı tarafından girilen bu beş değerin olması açısından önemli ve veri tabanı işlemleri için yardımcı olmaktadır. Amaç bir kullanıcı kaydının rahat bir şekilde aktarılabilmesidir.
 
 .. code-block:: python
-  class Person:
+
+   class Person:
     def __init__(self, name, surname, email, username, password):
         self.name = name
         self.surname = surname
@@ -46,14 +48,16 @@ Login.py dosyası altında tutulan bu sınıf, kullanıcı tarafından girilen b
 
 
 Kullanıcı Ekleme Sayfası ve İşlemleri
--------
+--------------------------------------
 
 Kullanıcı Ekleme Sayfası
-----
+-------------------------
+
 Ana sayfadan kaydol butonuna basıldığında get methodu ve boş metin kutularından oluşan bu sayfaya yönlendirilir. Bu sayfadan kullanıcı, bu metin kutularına bilgilerini girerek kaydol butonuna bastığında post methoduna geçer. Bilgiler <form> aracılığı ile tutulur.
 
 .. code-block:: html
-  <header>
+  
+   <header>
 						<h2>Yeni misin? Kaydol</h2>
 						<p>BeeLink Dünyasına Hoş Geldiniz..</p>
 					</header>
@@ -93,12 +97,13 @@ Ana sayfadan kaydol butonuna basıldığında get methodu ve boş metin kutular�
 					</div>
 
 Kullanıcı Ekleme Fonksiyonu
-----
+---------------------------
 Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve Person sınıfı yardımı ile yeni kayıt oluşturulur. Oluşturulan kayıt add_to_login fonksiyonuna yönlendirilir.
 
 .. code-block:: python
-  @site.route('/signup', methods=['GET','POST'])
-  def sign_up():
+
+   @site.route('/signup', methods=['GET','POST'])
+   def sign_up():
     if request.method == 'GET':
         return render_template('giris.html')
     else:
@@ -113,15 +118,16 @@ Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve
         add_account_to_table(newAccount)
         add_accountpersonal_to_table(username)
         insert_to_person_friends(username)
-    return render_template('home.html')
+     return render_template('home.html')
     
 Eklenen Kaydın Veritabanına Aktarılması
-----
+---------------------------------------
 
 Kullanıcının girdiği değerler, n_person sınıfında tutulduktan sonra, n_persondaki değerler "INSERT INTO" işlevi ile gerçeklenir. Ve kullanıcı veri tabanına eklenmiş olur.
 
 .. code-block:: python
-  def add_to_login(n_person):
+
+   def add_to_login(n_person):
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
@@ -139,12 +145,14 @@ Kullanıcının girdiği değerler, n_person sınıfında tutulduktan sonra, n_p
         db.close()
     except dbapi2.DatabaseError as err:
         print("Error is %s." % err)
+
 Yönetici Panelinden Kullanıcı Ekleme
-----
+------------------------------------
 Yönetici panelindeki kullanıcı ekle butonuna basıldığında, boş metin kutularından oluşan bu sayfaya yönlendirilir. Bu sayfadan yönetici, bu metin kutularına eklenecek kullanıcının bilgilerini girerek kaydol butonuna bastığında post methoduna geçer. Bilgiler <form> aracılığı ile tutulur. Burada select ve option şablonları ile yöneticinin kullanıcı veya yönetici yetkisini seçerek eklenecek kullanıcının yetkisini belirlemiş olur.
 
 .. code-block:: html
-  <form method="post" action="#">
+
+   <form method="post" action="#">
 						<div class="row uniform 50%">
 							<div class="12u">
 							<select class="form-control" name="type">
@@ -186,12 +194,13 @@ Yönetici panelindeki kullanıcı ekle butonuna basıldığında, boş metin kut
 						</form>
             
 Yönetici Panelinden Kullanıcı Ekleme Fonksiyonu
-----            
+-----------------------------------------------           
 Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve Person sınıfı yardımı ve yetki türü ile yeni kayıt oluşturulur. Oluşturulan kayıt add_from_admin fonksiyonuna yönlendirilir.
 
-.. code-block:: python            
-  @site.route('/administrator/add', methods=['GET','POST'])
-  def administrator_add_user():
+.. code-block:: python
+            
+   @site.route('/administrator/add', methods=['GET','POST'])
+   def administrator_add_user():
       if request.method == 'GET':
          return render_template('add.html')
       else:
@@ -207,10 +216,12 @@ Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve
       return redirect(url_for('site.administrator'))
 
 Yönetici Tarafından Eklenen Kaydın Veritabanına Aktarılması
-----     
+-----------------------------------------------------------  
 Kullanıcının girdiği değerler, n_person sınıfında tutulduktan sonra, n_person sınıfındaki değerler ve authority değeri "INSERT INTO" işlevi ile gerçeklenir. Ve yönetici tarafından eklenen kullanıcı veri tabanına eklenmiş olur.
-.. code-block:: python  
-  def add_from_admin(n_person, authority):
+
+.. code-block:: python
+ 
+   def add_from_admin(n_person, authority):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -230,13 +241,15 @@ Kullanıcının girdiği değerler, n_person sınıfında tutulduktan sonra, n_p
           print("Error is %s." % err)
 
 Yönetici Panelinden Kullanıcı Görüntüleme, Güncelleme ve Silme İşlemleri
---------------
+------------------------------------------------------------------------
 
 Kullanıcı Görüntüleme Sayfası
-----
+-----------------------------
 Yönetici panelinden tüm kullanıcılar görüntülenebilir.
+
 .. code-block:: html
-    <table border="1">
+
+   <table border="1">
     <tr>
     <th>ID</th>
     <th>Name</th>
@@ -272,10 +285,11 @@ Yönetici panelinden tüm kullanıcılar görüntülenebilir.
     </table>
 
 Kullanıcı Görüntüleme Fonksiyonu
-----
+--------------------------------
 
 .. code-block:: python
-  def records_from_login():
+
+   def records_from_login():
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -288,10 +302,11 @@ Kullanıcı Görüntüleme Fonksiyonu
           print("Error is %s." % err)
           
 Kullanıcı Güncelleme Sayfası
-----
+----------------------------
 
 .. code-block:: html
-	<div class="box">
+
+   <div class="box">
 	<form role="form" method="post" action="" name="update_user">
 	<div class="12u">
 	<input type="text" name="username" id="subject" value="" placeholder="New Username" required autofocus>
@@ -315,11 +330,12 @@ Kullanıcı Güncelleme Sayfası
 	</div>
   
 Kullanıcı Güncelleme Fonksiyonu
-----
+-------------------------------
 
 .. code-block:: python
-  @site.route('/user/update/<int:id>', methods=['GET', 'POST'])
-  def update_user(id):
+
+   @site.route('/user/update/<int:id>', methods=['GET', 'POST'])
+   def update_user(id):
       if request.method == 'GET':
           return render_template('update.html')
       else:
@@ -334,10 +350,11 @@ Kullanıcı Güncelleme Fonksiyonu
           return render_template('administrator.html', records = records)
           
 Veritabanında Kullanıcı Güncelleme Fonksiyonu
-----
+---------------------------------------------
 
 .. code-block:: python
-  def update_to_login(user_id, u_person):
+
+   def update_to_login(user_id, u_person):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -354,11 +371,12 @@ Veritabanında Kullanıcı Güncelleme Fonksiyonu
           print("Error is %s." % err)
         
 Kullanıcı Silme Fonksiyonu
-----
+--------------------------
 
 .. code-block:: python
-  @site.route('/user/remove', methods=['GET', 'POST'])
-  def remove_user():
+
+   @site.route('/user/remove', methods=['GET', 'POST'])
+   def remove_user():
       if request.method == 'GET':
           return render_template('administrator.html')
       else:
@@ -375,10 +393,11 @@ Kullanıcı Silme Fonksiyonu
               return render_template('administrator.html', records = records)
               
 Veritabanından Kullanıcı Silme Fonksiyonu
-----
+-----------------------------------------
 
 .. code-block:: python
-  def remove_from_login(user_id):
+
+   def remove_from_login(user_id):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -391,13 +410,15 @@ Veritabanından Kullanıcı Silme Fonksiyonu
           print("Error is %s." % err)
           
 Giriş ve Çıkış İşlemleri
---------------
+------------------------
+
 Giriş
-----
+-----
 Giriş yap sayfasında kullanıcı veya yönetici boş metin kutuları üzerine kullanıcı adı ve parolasını girer ve post methodu ile giriş sayfası gerçeklenir.
 
 .. code-block:: html
-  <header>
+
+   <header>
               <h2>Giriş Yap, BeeLink'le..</h2>
               <p>BeeLink Dünyasına Hoş Geldiniz..</p>
             </header>
@@ -424,12 +445,13 @@ Giriş yap sayfasında kullanıcı veya yönetici boş metin kutuları üzerine 
             </div>
 
 Kullanıcı Giriş Fonksiyonu
-----
+--------------------------
 Signin fonksiyonu post methodu ile gelen kullanıcı adı ve parolayı sorgular. Sorgulama doğru sonuç verirse session yani oturum açılmış olur. Sorgulama sonucunda sonuç 0 ise kullanıcı bilgileri yanlış veya eksik girilmiştir ve hata sayfasına yönlendirilir. Eğer giren yönetici ise sonuç 2 dir ve yönetici paneline yönlendirilir. Eğer giren kullanıcı ise sonuç 1 dir ve BeeLink platformuna giriş yapar ve sayfasına yönlendirilir. Oturum ismi kullanıcı adıdır ve diğer fonksiyonlarla beraber çalışmaktadır.
 
 .. code-block:: python
-  @site.route('/signin', methods=['GET','POST'])
-  def sign_in():
+
+   @site.route('/signin', methods=['GET','POST'])
+   def sign_in():
       if request.method == 'GET':
           return render_template('girisyap.html')
       else:
@@ -446,25 +468,27 @@ Signin fonksiyonu post methodu ile gelen kullanıcı adı ve parolayı sorgular.
               return render_template('error.html')
 
 Hatalı Giriş Sayfası
-----
+--------------------
 
   .. code-block:: html
-  {% extends "base.html" %}
-  {% block title %}Oops!{% endblock %}
 
-  {% block content %}
+     {% extends "base.html" %}
+     {% block title %}Oops!{% endblock %}
 
-  <script type="text/javascript">
-    alert("You have entered invalid username or password.")
-  </script>
-  {% endblock %}
+     {% block content %}
+
+     <script type="text/javascript">
+       alert("You have entered invalid username or password.")
+     </script>
+     {% endblock %}
   
 Yönetici Sayfasına Giriş Fonksiyonu
-----
+-----------------------------------
 
 .. code-block:: python
-  @site.route('/administrator')
-  def administrator():
+
+   @site.route('/administrator')
+   def administrator():
       if session['name'] == "":
           return render_template('home.html')
       else:
@@ -477,11 +501,12 @@ Yönetici Sayfasına Giriş Fonksiyonu
               return render_template('home.html')
 
 Kullanıcı Platformuna Giriş Fonksiyonu
-----
+--------------------------------------
 
-.. code-block:: python 
-  @site.route('/signedin',methods=['GET', 'POST'])
-  def signed_in():
+.. code-block:: python
+ 
+   @site.route('/signedin',methods=['GET', 'POST'])
+   def signed_in():
       if request.method == 'GET':
           messages = get_messages_from_table()
           comments = get_message_comments()
@@ -492,21 +517,23 @@ Kullanıcı Platformuna Giriş Fonksiyonu
 
              
 Yönetici Platformundan Çıkış Fonksiyonu
-----
+---------------------------------------
 
 .. code-block:: python 
-  @site.route('/administrator/exit')
-  def administrator_exit():
+
+   @site.route('/administrator/exit')
+   def administrator_exit():
       session['name'] = ""
       return render_template('home.html')
 
 Giriş ve Giriş Sorgulama  
---------------
+-------------------------
 Giriş
-----
+------
 
 .. code-block:: python
-  cursor.execute("DROP TABLE IF EXISTS USERSIGNUP CASCADE;")
+
+   cursor.execute("DROP TABLE IF EXISTS USERSIGNUP CASCADE;")
           operate = """CREATE TABLE IF NOT EXISTS USERSIGNUP(
                           id SERIAL NOT NULL PRIMARY KEY,
                           password VARCHAR(32),
@@ -521,10 +548,11 @@ Giriş
           cursor.execute(operate)
           
 Giriş Sorgulama İşlemleri
-----
+-------------------------
 
 .. code-block:: python
-  def search_user_login(username, password):
+
+   def search_user_login(username, password):
     try:
         db = dbapi2.connect(connect())
         cursor = db.cursor()
@@ -555,10 +583,11 @@ Giriş Sorgulama İşlemleri
           print("Error is %s." % err)
           
 Yönetici Sorgulama Fonksiyonu
-----
+-----------------------------
 
 .. code-block:: python
-  def search_admin(username):
+
+   def search_admin(username):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -576,10 +605,11 @@ Yönetici Sorgulama Fonksiyonu
           print("Error is %s." % err)
 
 Yönetici Not İşlemleri  
---------------
+----------------------
 
 .. code-block:: python
-  cursor.execute("DROP TABLE IF EXISTS USERSIGNUP CASCADE;")
+
+   cursor.execute("DROP TABLE IF EXISTS USERSIGNUP CASCADE;")
         operate = """CREATE TABLE IF NOT EXISTS USERSIGNUP(
                         id SERIAL NOT NULL PRIMARY KEY,
                         password VARCHAR(32),
@@ -595,10 +625,11 @@ Yönetici Not İşlemleri
 
 
 Notları Görüntüleme Sayfası
-----
+---------------------------
 
 .. code-block:: html
-  <table border="1">
+
+   <table border="1">
     <tr>
     <th>Note ID</th>
     <th>Note</th>
@@ -606,13 +637,13 @@ Notları Görüntüleme Sayfası
     <th>Update Note</th>
     </tr>
     </tr>
-  {% for i in notes %}
+    {% for i in notes %}
     {% if i %}
     <tr>
     <td>{{i[0]}}</td>
     <td>{{i[1]}}</td>
     <td>
-    <form action="{{url_for('site.remove_admin_note')}}" method="post" name="delete"><button type="submit" value="{{ i[0] }}" name="delete">Delete</button>
+    <form action="{{url_for('site.remove_admin_note')}}" method="post" name="delete"><button type="submit"    value="{{ i[0] }}" name="delete">Delete</button>
     </form>
     </td>
     <td>
@@ -620,25 +651,27 @@ Notları Görüntüleme Sayfası
     </form>
     </td>
     </tr>
-    {% endif %}
-  {% endfor %}
-  </table>
+      {% endif %}
+     {% endfor %}
+    </table>
   
 Notları Görüntüleme Fonksiyonu
-----
+------------------------------
 
 .. code-block:: python
-  @site.route('/administrator/notes', methods=['GET','POST'])
-  def administrator_notes():
+
+   @site.route('/administrator/notes', methods=['GET','POST'])
+   def administrator_notes():
       username = session['name']
       notes = notes_from_admins(username)
       return render_template('notes.html', notes = notes)
       
 Veritabanından Notları Görüntüleme
-----
+----------------------------------
 
 .. code-block:: python
-  def notes_from_admins(username):
+
+   def notes_from_admins(username):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -655,29 +688,31 @@ Veritabanından Notları Görüntüleme
           print("Error is %s." % err)
 
 Notları Güncelleme Sayfası
-----
+--------------------------
 
 .. code-block:: html
-  <form method="post" action="#">
-  <div class="12u">
+
+   <form method="post" action="#">
+   <div class="12u">
       <input type="text" name="note" id="note" value="" placeholder="Notu güncelleyin" required autofocus>
-  </div>
-  <br/>
-  <div class="row uniform">
+   </div>
+   <br/>
+   <div class="row uniform">
                   <div class="12u">
                     <ul class="actions align-center">
                       <li><input type="submit" name="signup" value="Kaydet"></li>
                     </ul>
                   </div>
-  </div>
-  </form>
+   </div>
+   </form>
   
 Notları Güncelleme Fonksiyonu
-----
+-----------------------------
 
 .. code-block:: python
-  @site.route('/administrator/note/update/<int:id>', methods=['GET', 'POST'])
-  def update_admin_note(id):
+
+   @site.route('/administrator/note/update/<int:id>', methods=['GET', 'POST'])
+   def update_admin_note(id):
       if request.method == 'GET':
           return render_template('updatenode.html')
       else:
@@ -688,10 +723,11 @@ Notları Güncelleme Fonksiyonu
           return render_template('notes.html', notes = notes)
           
 Veritabanında Notları Güncelleme Fonksiyonu
-----
+-------------------------------------------
 
 .. code-block:: python
-  def update_adminnote(note, id):
+
+   def update_adminnote(note, id):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -706,28 +742,30 @@ Veritabanında Notları Güncelleme Fonksiyonu
           print("Error is %s." % err)
 
 Notları Ekleme Sayfası
-----
+----------------------
 
 .. code-block:: html
-  <form method="post" action="#">
-  <div class="12u">
+
+   <form method="post" action="#">
+   <div class="12u">
       <input type="text" name="note" id="note" value="" placeholder="Notu giriniz" required autofocus>
-  </div>
-  <br/>
-  <div class="row uniform">
+   </div>
+   <br/>
+   <div class="row uniform">
                   <div class="12u">
                     <ul class="actions align-center">
                       <li><input type="submit" name="signup" value="Kaydet"></li>
                     </ul>
                   </div>
-  </div>
+   </div>
   
 Notları Ekleme Fonksiyonu
-----
+-------------------------
 
 .. code-block:: python
-  @site.route('/administrator/addnote', methods=['GET','POST'])
-  def administrator_add_note():
+
+   @site.route('/administrator/addnote', methods=['GET','POST'])
+   def administrator_add_note():
       if request.method == 'GET':
           return render_template('addnote.html')
       else:
@@ -737,10 +775,11 @@ Notları Ekleme Fonksiyonu
       return redirect(url_for('site.administrator_notes'))
       
 Veritabanına Notları Ekleme Fonksiyonu
-----
+--------------------------------------
 
 .. code-block:: python
-  def addnote_from_admin(note, username):
+
+   def addnote_from_admin(note, username):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
@@ -755,11 +794,12 @@ Veritabanına Notları Ekleme Fonksiyonu
           print("Error is %s." % err)
 
 Notları Silme Fonksiyonu
-----
+------------------------
 
 .. code-block:: python
-  @site.route('/administrator/note/remove', methods=['GET', 'POST'])
-  def remove_admin_note():
+
+   @site.route('/administrator/note/remove', methods=['GET', 'POST'])
+   def remove_admin_note():
       if request.method == 'GET':
           return render_template('notes.html')
       else:
@@ -770,10 +810,11 @@ Notları Silme Fonksiyonu
           return render_template('notes.html', notes = notes)
 
 Veritabanından Notları Silme
-----
+----------------------------
 
 .. code-block:: python
-  def remove_adminnote(id):
+
+   def remove_adminnote(id):
       try:
           db = dbapi2.connect(connect())
           cursor = db.cursor()
