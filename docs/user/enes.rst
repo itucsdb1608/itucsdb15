@@ -45,7 +45,7 @@ Kullanıcı Ekleme
 Yönetici, yönetici ana sayfasından kullanıcı ekle butonuna basarak bu sayfaya geçiş yapar. Kullanıcı ekle butonuna basarak ekleme sayfasına geçebilir. Bu sayfa üzerinde ekleyeceği kullanıcının bilgilerini girerek sisteme yeni bir kullanıcı ekleyebilir.
 
 .. figure:: enes/3.png
-   :figclass: align-center
+   :align: center
    
    Yönetici panelinden kullanıcı ekleme sayfası
  
