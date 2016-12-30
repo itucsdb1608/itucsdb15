@@ -22,6 +22,8 @@ Kullanıcı sisteme kullanıcı adı ve şifresiyle giriş yaptıktan sonra kar�
 
 .. figure:: tuncay/1.PNG
    :figclass: align-center
+   :scale: 100%
+   :alt: üniversity page screenshot   
    
    Resim 1: Profil menü kısmı
 
@@ -33,15 +35,19 @@ Genel olarak profil sayfasını göstermem gerekirse şöyle bir sayfa çıkacak
 
 .. figure:: tuncay/2.PNG
    :figclass: align-center
+   :scale: 100%
+   :alt: üniversity page screenshot  
    
-    Resim 2: Profil sayfası
+   Resim 2: Profil sayfası
 
 Resim 2’den görüldüğü üzere gayet hoş bir tasarımsal çalışma ile kullanıcı dostu bir ara yüze sahip olan sayfam, kullanıcı kendi kişisel bilgilerini girmesiyle daha da bir güzelleşmektedir. 
 
 .. figure:: tuncay/3.PNG
    :figclass: align-center
+   :scale: 100%
+   :alt: üniversity page screenshot  
  
-    Resim 3: Profil sayfası devamı
+   Resim 3: Profil sayfası devamı
 
 Resim’3 de mevcut profil sayfasının devamı gösterilmiştir.
  
@@ -56,14 +62,14 @@ Resim 2, 3, 4 ‘de gözüken kısımları kullanıcı Profili düzenle butonuna
 .. figure:: tuncay/5.PNG
    :figclass: align-center
    
-    Resim 5: Profili Düzenle botunu
+   Resim 5: Profili Düzenle botunu
     
 Ayrıca kullanıcı profil menüsüne basıp, kişisel sayfasına geçiş yaptığı sırada URL kısmı şöyle olacaktır:
  
 .. figure:: tuncay/6.PNG
    :figclass: align-center
    
-    Resim 6: Profil Link kısmı
+   Resim 6: Profil Link kısmı
 
 Resim 6’da görüldüğü üzere http://itucsdb1608.mybluemix.net/profile/<user-name> linki oluşacaktır. <user-name> kısmına giriş yapan kullanıcının username’i gelecektir.
 Kullanıcı PROFİLİ DÜZENLE butonuna basarak, profil yönetim paneline geçiş yapacaktır.
@@ -71,7 +77,7 @@ Kullanıcı PROFİLİ DÜZENLE butonuna basarak, profil yönetim paneline geçi�
 .. figure:: tuncay/7.PNG
    :figclass: align-center
    
-    Resim 7: Profili düzenle sayfası
+   Resim 7: Profili düzenle sayfası
 
 Resim 7’de gözüktüğü üzere kullanıcı http://itucsdb1608.mybluemix.net/admin/home sayfasına geçmiş olacak ve böyle bir görüntü karşısına çıkacaktır.
 Kullanıcı buradan solda bulunan menüler arası geçiş yapabilir.
@@ -98,19 +104,21 @@ Sırayla ilk menüden başlarsak:
 .. figure:: tuncay/8.PNG
    :figclass: align-center
    
-    Resim 8: Menü kısmı
+   Resim 8: Menü kısmı
 
 Resim 8’deki görüntüden anlaşılacağı üzere, kullanıcı Profil menüsü sekmesi altında karşısına çıkan seçeneklerden Kişisel Bilgiler kısmına tıkladıktan sonra karşına şöyle bir sayfa çıkar.
  
 .. figure:: tuncay/9.PNG
    :figclass: align-center
    
-    Resim 9: Kişisel bilgiler güncelleme kısmı
- 
+   Resim 9: Kişisel bilgiler güncelleme kısmı
+   
+Yukarıdaki resimdeki kısım Kişisel bilgiler güncelleme kısmı
+
 .. figure:: tuncay/10.PNG
    :figclass: align-center
    
-    Resim 10: Kişisel bilgiler güncelleme kısmı devamı
+   Resim 10: Kişisel bilgiler güncelleme kısmı devamı
 
 Resim 9 ve 10 ‘da görülen Profil Bilgileri -> Kişisel Bilgiler kısmında kullanıcı profil sayfasındaki mevcut bilgileri güncelleyebilir.
 Sırayla Kişisel Bilgiler kısmında bulunan bilgiler şöyle
