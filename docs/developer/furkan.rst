@@ -15,11 +15,10 @@ Parts Implemented by Furkan Artunç
   
 .. figure::  2.png
    :figclass: align-center 
+   
    Resim 2: Zaman tüneli sayfasına yönlendirme yapan fonksiyon
    
-      Resim 2’deki kod parçası zaman tüneli sayfasının çağrılmasıyla ilgili işlemleri yapmaktadır. 
-   
-    Bu fonksiyon iki şekilde yöntemle çağrılmaktadır “GET” ve “POST”. “GET” metoduyla çağrıldığı zaman veritabanından aldığı mesajları ekrana basmaktadır. Ayrıca kullanıcı adını giriş yapmış olan kullanıcının dönemlik girişinden almaktadır. Bu fonksiyonun içerisinde Flask kütüphanesinin sağladığı “render_template()” ve redirect() fonksiyonları kullanılmıştır.
+   Resim 2’deki kod parçası zaman tüneli sayfasının çağrılmasıyla ilgili işlemleri yapmaktadır. Bu fonksiyon iki şekilde yöntemle çağrılmaktadır “GET” ve “POST”. “GET” metoduyla çağrıldığı zaman veritabanından aldığı mesajları ekrana basmaktadır. Ayrıca kullanıcı adını giriş yapmış olan kullanıcının dönemlik girişinden almaktadır. Bu fonksiyonun içerisinde Flask kütüphanesinin sağladığı “render_template()” ve redirect() fonksiyonları kullanılmıştır.
    
 .. figure::  3.png
    :figclass: align-center    
