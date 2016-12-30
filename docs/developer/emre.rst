@@ -14,7 +14,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 
 -	     PERSONFRIENDS tablosu kişilerin kullanıcıadı, isim, soyisim ve takma isim özelliklerini tutar. Kullanıcı adı uygulamaya girişte(login) alınan username e dış anahtarlama ile bağlıdır.Giriş yapıldıktan sonra nickname özelliği otomatik olarak eklenir. 
  
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/7.jpg
+.. figure:: emre/7.jpg
    :figclass: align-center
    
    Resim 1: PERSONFRIENDS tablosu oluşturma 
@@ -22,7 +22,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 -   FRIENDSRELATION tablosu iki farklı username tutar. Bunun manası birinci username ikinci username ile arkadaş olduğudur. Dış anahtarlama ile PERSONFRIENDS tablosuna bağlıdır. 
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/8.jpg
+.. figure:: emre/8.jpg
    :figclass: align-center
    
    Resim 2: FRIENDSRELATION tablosu oluşturma 
@@ -30,7 +30,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 -   CANDIDATE_FRIENDS tablosu iki farklı username tutar. Bu tablodan birinci username ikinci username ile tanışık olma ihtimali olduğu anlaşılır. Bu tablonun içeriğinin oluşma şekli ise ortak arkadaşlık ilişkileri kontrol edilerek yapılır.
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/9.jpg
+.. figure:: emre/9.jpg
    :figclass: align-center
    
    Resim 3: CANDIDATE_FRIENDS tablosu oluşturma 
@@ -43,7 +43,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
     - insert_to_person_friends fonksiyonu uygulamaya kayıt esnasında kullanılarak bazı bilgilerin ekleme yapılarak personfriends tablosuna ekleme amaçlıdır.
 
  
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/10.jpg
+.. figure:: emre/10.jpg
    :figclass: align-center
    
    Resim 4: insert_to_person_friends fonksiyonu 
@@ -52,7 +52,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
     -ekle_arkadas fonksiyonu adında da anlaşılacağı üzere arkadaş eklendiğinde friends_relation tablosuna eklenen arkadaşın kullanıcı adını ekler.Ancak öncesinde bu kişinin PERSONFRIENDS dolayısıyla LOGIN tablosunda olup olmadığını kontrol eder.
 
  
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/11.jpg
+.. figure:: emre/11.jpg
    :figclass: align-center
    
    Resim 5: ekle_arkadas fonksiyonu 
@@ -61,7 +61,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 -sil_arkadas fonksiyonu listelenen arkadaşların silinmesi esnasında kullanılır.Değişken olarak iki username alır ve bunları arkadaş ilişkilerini tutan FRIENDSRELATION tablosuna yansıtır.
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/12.jpg
+.. figure:: emre/12.jpg
    :figclass: align-center
    
    Resim 6: sil_arkadas fonksiyonu 
@@ -69,7 +69,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 
 -yakın_arkadas_bul fonksiyonu, kullanıcının kendi arkadaşlarının => arkadaşlarını elde edip daha sonra bu username leri kendi arkadaşlarından ve kendi username inden çıkartarak ortaya çıkan bir fonksiyondur. Bu bilgiler ise candidate_friends tablosuna eklenir.
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/13.jpg
+.. figure:: emre/13.jpg
    :figclass: align-center
    
    Resim 7: yakın_arkadas_bul fonksiyonu 
@@ -79,7 +79,7 @@ Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 -guncelle_arkadas fonksiyonu kişinin kendine özgü olan takma adını(nickname) güncelleyebilmesi için oluşturulmuştur.
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/14.jpg
+.. figure:: emre/14.jpg
    :figclass: align-center
    
    Resim 8: guncelle_arkadas fonksiyonu 
@@ -92,7 +92,7 @@ c- Tablolarda bulunan bilgileri elde etmek için oluşturulan fonksiyonlar:
 
 -gonder_username fonksiyonu kullanıcının arkadaş bilgilerini tablodan çekmek için kullanılır.
  
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/15.jpg
+.. figure:: emre/15.jpg
    :figclass: align-center
    
    Resim 9: gonder_username fonksiyonu 
@@ -102,7 +102,7 @@ c- Tablolarda bulunan bilgileri elde etmek için oluşturulan fonksiyonlar:
 -yakin_arkileri_al fonksiyonu CANDIDATE_FRIENDS tablosundaki bilgileri çekmek amacıyla oluşturulmuştur.
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/16.jpg
+.. figure:: emre/16.jpg
    :figclass: align-center
    
    Resim 10: yakin_arkileri_al fonksiyonu 
@@ -110,7 +110,7 @@ c- Tablolarda bulunan bilgileri elde etmek için oluşturulan fonksiyonlar:
 -toplam_arkadas fonksiyonu kullanıcının toplamda kaç adet arkadaşı olduğunu hesaplatmak için kullanılan bir fonksiyondur.
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/17.jpg
+.. figure:: emre/17.jpg
    :figclass: align-center
    
    Resim 11: toplam_arkadas fonksiyonu 
@@ -120,7 +120,7 @@ c- Tablolarda bulunan bilgileri elde etmek için oluşturulan fonksiyonlar:
 -get_myinfos fonksiyonu kullanıcının kendi bilgilerini PERSONFRIENDS tablosundan çekmek için oluşturulmuştur.
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/18.jpg
+.. figure:: emre/18.jpg
    :figclass: align-center
    
    Resim 12: get_myinfos fonksiyonu 
@@ -134,7 +134,7 @@ c- Tablolarda bulunan bilgileri elde etmek için oluşturulan fonksiyonlar:
  Burada da görüldüğü gibi myinfo kullanıcının kendi bilgilerini sayfaya yansıtır.
  tumu  o kullanıcının arkadaş bilgilerini sayfaya yansıtır.
  toplamarkadas toplam arkadaş sayısını ve de yakin_arkileri_al fonksiyonu connect_db.py dan çalışarak olası arkdaş bilgilerini sayfaya    yansıtır.
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/19.jpg
+.. figure:: emre/19.jpg
    :figclass: align-center
    
    Resim 13: gonder_fr fonksiyonu 
@@ -147,7 +147,7 @@ Diğer fonksiyonlar ise ekleme, silme ve güncelleme özellikleri kullanıldığ
 Ekleme özelliği kullanıldığında çağırılan fonksiyon:
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/22.jpg
+.. figure:: emre/22.jpg
    :figclass: align-center
    
    Resim 14: friend_add fonksiyonu 
@@ -156,7 +156,7 @@ Ekleme özelliği kullanıldığında çağırılan fonksiyon:
 Güncelleme özelliği kullanıldığında çağırılan fonksiyon:
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/20.jpg
+.. figure:: emre/20.jpg
    :figclass: align-center
    
    Resim 15: friend_update fonksiyonu 
@@ -165,7 +165,7 @@ Güncelleme özelliği kullanıldığında çağırılan fonksiyon:
    Silme özelliği kullanıldığında çağırılan fonksiyon:
  
 
-.. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/21.jpg
+.. figure:: emre/21.jpg
    :figclass: align-center
    
    Resim 16: friend_delete fonksiyonu 
