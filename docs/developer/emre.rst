@@ -1,8 +1,8 @@
 Parts Implemented by Emre KÖSE
 ================================
 
-**2.     ARKADAŞLIK BÖLÜMÜ KODLAMA DETAYLARI**
-----------------------------------------------
+**2.ARKADAŞLIK BÖLÜMÜ KODLAMA DETAYLARI**
+------------------------------------------
 
 **Bölümde kullanılan veritabanı fonksiyonları**
 
@@ -12,7 +12,7 @@ Parts Implemented by Emre KÖSE
 
 Arkadaşlar bölümünde üç farklı tablo kullanılmıştır. Bu tablolar:
 
--	     PERSONFRIENDS tablosu kişilerin kullanıcıadı, isim, soyisim ve takma isim özelliklerini tutar. Kullanıcı adı uygulamaya girişte(login) alınan username e dış anahtarlama ile bağlıdır.
+-	     PERSONFRIENDS tablosu kişilerin kullanıcıadı, isim, soyisim ve takma isim özelliklerini tutar. Kullanıcı adı uygulamaya girişte(login) alınan username e dış anahtarlama ile bağlıdır.Giriş yapıldıktan sonra nickname özelliği otomatik olarak eklenir. 
  
 .. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/7.jpg
    :figclass: align-center
@@ -130,7 +130,10 @@ c- Tablolarda bulunan bilgileri elde etmek için oluşturulan fonksiyonlar:
 
   Bu fonksiyonlar page_handlers.py içerisinde bulunur. Connect_db.py dosyasındaki sql komutlarının çağırıldığı ve arkadas.html sayfasında değişikliğin gerçekleşmesini sağlayan fonksiyonlardır. Bunlardan gonder_fr fonksiyonu uygulamada session olarak tutulan username i alarak daha sonrasında, arkadaşlar bölümüne gidilmek istendiğinde çağırılır ve bu sayfada kullanılacak bilgiler connect_db.py  fonksiyonları ile içerisinde çağırılarak elde edilir ve yansıtılır.
  
-
+ gonder_fr fonksiyonunda connect_db.py dan çağırılan fonksiyonlar aşağıdaki resimde gözükmektedir.
+ Burada da görüldüğü gibi myinfo kullanıcının kendi bilgilerini sayfaya yansıtır.
+ tumu  o kullanıcının arkadaş bilgilerini sayfaya yansıtır.
+ toplamarkadas toplam arkadaş sayısını ve de yakin_arkileri_al fonksiyonu connect_db.py dan çalışarak olası arkdaş bilgilerini sayfaya    yansıtır.
 .. figure:: https://github.com/itucsdb1608/itucsdb1608/blob/master/docs/user/emre/19.jpg
    :figclass: align-center
    
