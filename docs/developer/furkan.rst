@@ -7,7 +7,7 @@ Parts Implemented by Furkan Artunç
     Bu bölümde yazılım geliştiriciler ve uygulamanın yazılım kısmıyla da ilgilenenler için, uygulamanın zaman tüneli kısmında kullanılan yazılımsal sistemle ilgili ayrıntılara yer verilecektir. Arka planda çalışan python kodları ve database sorguları gösterilecek .
   
 .. figure::  1.png
-   :figclass: align-center 
+  :figclass: align-center 
   
   Resim 1: Mesaj Sınıfı Tanımlaması
   
