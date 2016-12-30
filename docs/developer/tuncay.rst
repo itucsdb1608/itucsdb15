@@ -179,4 +179,128 @@ bilgileri alınıp ACCOUNT tablosuna insert ediliyor. Böylelikle ilgili kullan�
         
 Insert ile ilgili kod kısmından Görüldüğü üzere sisteme üye olan kullanıcının sırayla
 * user_name
-bilgisi alınıp ACCPERSONAL UNT tablosuna insert ediliyor. Böylelikle ilgili kullanıcıya ait bölüm oluşturulmuş olundu.        
+bilgisi alınıp ACCPERSONAL tablosuna insert ediliyor. Böylelikle ilgili kullanıcıya ait bölüm oluşturulmuş olundu. 
+
+Kullanıcıya ait oluşan bu iki tablo bundan sonra hep güncelleme işlemini gerçekleştirecek, Sırayla açıklamak gerekirse:
+
+* Kişisel bilgiler menüsü kod kısmı
+
+Kullanıcı kendi kişisel bilgilerini **User Guide** kısmında anlattığım şekilde, Profili düzenle kısmından yönetim paneline girip kişisel bilgilerini güncelleyecektir.
+
+Kullanıcın HTML formlarına gerekli bilgileri girmesinin ardından ve sonra Güncelle butonuna basmasıyla
+aşağıdaki ilgili kod parçacığı çalıştırılacaktır.
+
+.. code-block:: python
+
+   @site.route('/admin/kisisel',methods=['GET','POST'])
+   def admin_kisisel():
+    if request.method == 'GET':
+        profile_account = get_account_from_table(session['name'])
+        profile_university = get_university_from_table()
+        profile_city = get_city_from_table()
+        return render_template('admin/kisisel.html', profile_account = profile_account, profile_university= profile_university, profile_city=profile_city)
+    else:
+       ## usr_session = session['name']
+            username    = request.form['username']
+            ad          = request.form['ad']
+            soyad       = request.form['soyad']
+            resim       = request.form['resim']
+            cinsiyet    = request.form['cinsiyet']
+            universite  = request.form['universite']
+            bolum       = request.form['bolum']
+            giris       = request.form['giris']
+            bitis       = request.form['bitis']
+            dogum       = request.form['dogum']
+            sehir       = request.form['sehir']
+            eposta      = request.form['eposta']
+            web         = request.form['web']
+            update_account_from_table(username,ad,soyad,resim,cinsiyet,universite,bolum,giris,bitis,dogum,sehir,eposta,web)
+            return redirect(url_for('site.admin_kisisel'))
+            
+Yukarıdaki kod parçacığında kullanıcın HTML formlarına girdiği bilgiler **request.form** ile alınıp bir değişkene atanıp fonksiyon aracılığıyla  **update_account_from_table** 'e gönderilir bilgiler.
+
+**update_account_from_table Kod bloğu**
+
+.. code-block:: python
+
+   def update_account_from_table (username,ad,soyad,resim,cinsiyet,universite,bolum,giris,bitis,dogum,sehir,eposta,web):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE ACCOUNT SET
+        USER_IMAGE=%s, NAME=%s, SURNAME=%s, GENDER=%s, UNIVERSITY_ID=%s, DEPARTMENT=%s, INITIAL_YEAR=%s,
+        END_YEAR=%s, BIRTHYEAR=%s, CITY_ID=%s , EMAIL=%s , WEBSITE=%s
+        WHERE USER_NAME=%s"""
+        cursor.execute(query,(resim,ad,soyad,cinsiyet,universite,bolum,giris,bitis,dogum,sehir,eposta,web,username))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+update_account_from_table kod bloğunda görmüş olduğunuz üzere, fonksiyon aracağıyla gönderilen bilgiler, UPDATE sql komutuna işletilip, güncelleme işlemi gerçekleştiriliyor.
+
+
+* Tanıt Kendini menüsü kod kısmı
+
+Kullanıcı kendi kişisel bilgilerini **User Guide** kısmında anlattığım şekilde, Profili düzenle kısmından yönetim paneline girip kişisel bilgilerini güncelleyecektir.
+
+Kullanıcın HTML formlarına gerekli bilgileri girmesinin ardından ve sonra Güncelle butonuna basmasıyla
+aşağıdaki ilgili kod parçacığı çalıştırılacaktır.
+
+.. code-block:: python
+
+   @site.route('/admin/kisiselekbilgi',methods=['GET','POST'])
+   def admin_tanitma():
+    if request.method == 'GET':
+        profile_account = get_accountpersonal_from_table(session['name'])
+        return render_template('admin/tanitma.html',  profile_account = profile_account)
+    else:
+        username    = request.form['username']
+        hakkimda    = request.form['hakkimda']
+        kod         = request.form['kod']
+        sum1         = request.form['sum1']
+        sum2        = request.form['sum2']
+        sum3         = request.form['sum3']
+        soz         = request.form['soz']
+        lise         = request.form['lise']
+        ort         = request.form['ort']
+        update_accountpersonal_from_table(username,hakkimda,kod,sum1,sum2,sum3,soz,lise,ort)
+        return redirect(url_for('site.admin_tanitma'))
+            
+Yukarıdaki kod parçacığında kullanıcın HTML formlarına girdiği bilgiler **request.form** ile alınıp bir değişkene atanıp fonksiyon aracılığıyla  **update_accountpersonal_from_table** 'e gönderilir bilgiler.
+
+**update_accountpersonal_from_table Kod bloğu**
+
+.. code-block:: python
+
+   def update_accountpersonal_from_table(username,hakkimda,kod,sum1,sum2,sum3,soz,lise,ort):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """UPDATE ACCPERSONAL SET
+        ABOUTME=%s , CODE=%s, SUM1=%s, SUM2=%s, SUM3=%s, WORD=%s, SCHOOL=%s, SCHOOL_GRADE=%s
+        WHERE USER_NAME=%s"""
+        cursor.execute(query,(hakkimda,kod,sum1,sum2,sum3,soz,lise,ort,username))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+update_accountpersonal_from_table kod bloğunda görmüş olduğunuz üzere, fonksiyon aracağıyla gönderilen bilgiler, UPDATE sql komutuna işletilip, güncelleme işlemi gerçekleştiriliyor.
+
+
+gerekli güncelleme işlemleri sonrası veritabanında ACCOUNT ve ACCPERSONAL tablolarının kayıt görünümü şöyle olacaktır sırayla:
+
+.. figure:: tuncay/4.PNG
+   :figclass: align-center
+   
+   Resim 2: ACCOUNT Tablosundaki kayıtlar
+   
+.. figure:: tuncay/5.PNG
+   :figclass: align-center
+   
+   Resim 2: ACCPERSONAL Tablosundaki kayıtlar   
+   
+   
