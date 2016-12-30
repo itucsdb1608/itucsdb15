@@ -1,4 +1,4 @@
-Parts Implemented by Hayati Enes Basat
+Hayati Enes Basat Tarafından Tamamlanan Kısımlar
 ======================================
 
 Yönetici Paneli, Giriş ve Kaydol Sayfası
