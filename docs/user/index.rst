@@ -6,7 +6,7 @@ User Guide
 
 Beelink sitemizin Anasayfa görünümü alttadır.
 
-.. figure:: tuncay/anasayfa.png
+.. figure:: tuncay/anasayfa.PNG
       :alt: map to buried treasure
       :figclass: align-center
 
