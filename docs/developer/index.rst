@@ -17,4 +17,3 @@ Her developerin kod kısmı kendi bölümünde açıklanmıştır.
    tuncay
    emre
    furkan
-   member5
