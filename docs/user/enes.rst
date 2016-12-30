@@ -26,7 +26,7 @@ Yönetici Girişi
 -------
 Yönetici paneline erişebilmek için, giriş yap sayfasından kullanıcı adı ve parolasını girilmelidir. Ardından giriş yap butonuna tıklanır. Girilen bilgiler veri tabanındaki bilgilerle karşılaştırılır. Girilen bilgilere göre; bilgilerin yanlış olması durumunda hata sayfasına yönlendirilir. Girilen bilgiler normal yetkili kullanıcıya ait ise BeeLink Sosyal Platformuna geçerek ana sayfasına yönlendirilir. Girilen bilgiler yönetici yetkisinde kullanıcıya ait ise yönetici paneline yönlendirilir. Yönetici yetkisinde olmayan kullanıcılar yönetici paneline erişimi yoktur.
 
-.. figure:: enes/1.PNG
+.. figure:: enes/1.png
    :figclass: align-center
    
    Giriş sayfasından yönetici girişi
@@ -35,7 +35,7 @@ Yönetici Ana Sayfa
 -------
 Yönetici giriş yaptıktan sonra yönetici paneli ana sayfasına yönlendirilir. İsterse yönetici hiçbir işlem yapmadan BeeLink Sosyal Platformuna kendi profiline geç butonuna basarak geçebilir veya çıkış yap butonuna basarak oturumu kapatabilir. Yönetici ana sayfasında site üzerinde kayıtlı tüm kullanıcıları, kullanıcıların bilgilerini ve kullanıcıların yetkilerini görebilir. Burada tüm kullanıcıları veri tabanından silebilme ve tüm kullanıcıların bilgilerini güncelleme yetkisine sahiptir. Yönetici, delete butonuna basarak seçtiği kullanıcıyı veri tabanından silebilir ve update butonuna basarak seçtiği kullanıcının bilgilerini güncelleyebilir. Eğer yönetici kendi üzerinde silme veya güncelleme işlemi yaparsa işlem yapılır ve oturum kapanarak giriş sayfasına yönlendirilir.
 
-.. figure:: enes/2.PNG
+.. figure:: enes/2.png
    :figclass: align-center
    
    Yönetici paneli ana sayfa
@@ -44,14 +44,14 @@ Kullanıcı Ekleme
 -------
 Yönetici, yönetici ana sayfasından kullanıcı ekle butonuna basarak bu sayfaya geçiş yapar. Kullanıcı ekle butonuna basarak ekleme sayfasına geçebilir. Bu sayfa üzerinde ekleyeceği kullanıcının bilgilerini girerek sisteme yeni bir kullanıcı ekleyebilir.
 
-.. figure:: enes/3.PNG
+.. figure:: enes/3.png
    :figclass: align-center
    
    Yönetici panelinden kullanıcı ekleme sayfası
  
  Burada, yönetici ekleyeceği kullanıcının yetkisini seçer. Ekleyeceği kullanıcı yönetici veya normal kullanıcı yetkisinde olabilir. Bu buton üzerinde değişiklik yapılmazsa varsayılan olarak kullanıcı olarak eklenir. Eğer ekleyeceği kullanıcının yetkisinde değişiklik yapmak istiyorsa üzerine tıklar.
  
-.. figure:: enes/4.PNG
+.. figure:: enes/4.png
    :figclass: align-center
    
    Yönetici panelinden eklenecek kullanıcının yetkisini ayarlama
@@ -62,7 +62,7 @@ Kullanıcı Güncelleme
 -------
 Yönetici, yönetici ana sayfasından istediği kullanıcı üzerinde güncelleme işlemi yapabilir. Seçtiği kullanıcının yanındaki update butonuna basarak güncelleme sayfasına yönlendirilir.
 
-.. figure:: enes/5.PNG
+.. figure:: enes/5.png
    :figclass: align-center
    
    Yönetici panelinden kullanıcı güncelleme
@@ -73,21 +73,21 @@ Yönetici Notları
 -------
 Yönetici sayfa üzerinden notlarım butonuna basarak notlarını görüntüleyebilir veya not ekle butonuna basarak yeni not ekleyebilir. Fakat yönetici sadece kendi yönetici notları üzerinde yetkisi vardır. Diğer yöneticilerin notlarını göremez ve üzerlerinde herhangi bir işlem yetkisine sahip değildir. Burada yönetici delete butonuna basarak notlarından birini seçerek silebilir veya update butonuna basarak notlarından birini seçerek güncelleyebilir.
 
-.. figure:: enes/6.PNG
+.. figure:: enes/6.png
    :figclass: align-center
    
    Yönetici paneli üzerindeki notlar 
    
 Yönetici not eklemek istiyorsa not ekle butonuna basarak not ekleme sayfasına yönlendirilir. Yönetici eklemek istediği notu girerek kaydet butonuna basarak işlem tamamlanır, veri tabanında güncellenir ve notlarım sayfasına yönlendirilir.
 
-.. figure:: enes/7.PNG
+.. figure:: enes/7.png
    :figclass: align-center
    
    Yönetici panelinden not ekleme
 
 Yönetici notunu güncellemek istiyorsa notlarım sayfasındaki seçtiği bir not üzerinde update butonuna basarak not güncelleme sayfasına yönlendirilir. Ardından girdiği bilgileri kaydet butonuna basarak güncelleme işlemi tamamlanmış olur.
 
-.. figure:: enes/8.PNG
+.. figure:: enes/8.png
    :figclass: align-center
    
    Yönetici panelinden not güncelleme
@@ -99,14 +99,14 @@ Kaydol
 -------
 Kullanıcı, BeeLink ana sayfası üzerinden kaydol butonuna basarak kaydolma işlemini başlatabilir.
 
-.. figure:: enes/9.PNG
+.. figure:: enes/9.png
    :figclass: align-center
    
    BeeLink ana sayfası ve kaydol butonu
 
 Bu sayfa üzerinde bilgilerini girerek kaydolabilir. İsim, soyisim, e-posta adresi, kullanıcı adı ve parola parametrelerini girildikten sonra, kaydol butonuna basarak kayıt tamamlanır ve BeeLink ana sayfasına yönlendirilir.
 
-.. figure:: enes/10.PNG
+.. figure:: enes/10.png
    :figclass: align-center
    
    BeeLink kaydol sayfası
@@ -117,7 +117,7 @@ Kullanıcı BeeLink ana sayfası üzerinde giriş yap butonuna basarak giriş ya
 
 Sosyal platforma erişebilmek için, giriş yap sayfasından kullanıcı adı ve parolasını girilmelidir. Ardından giriş yap butonuna tıklanır. Girilen bilgiler veri tabanındaki bilgilerle karşılaştırılır. Girilen bilgilere göre; bilgilerin yanlış olması durumunda hata sayfasına yönlendirilir. Girilen bilgiler ait ise BeeLink Sosyal Platformuna geçerek ana sayfasına yönlendirilir.
 
-.. figure:: enes/11.PNG
+.. figure:: enes/11.png
    :figclass: align-center
    
    Giriş sayfasından kullanıcı girişi
