@@ -457,3 +457,239 @@ Aşağıda belirtilen 4 varlık ile ilgili bilgiler verilecektir.
 
 bu 4 temel varlık profil sayfasına kullanıcın hobi ve ilgi alanları eklemesi veya bu ilgi alanları ve hobi listesindeki verilere yeni veriler eklemesi silmesi güncellemesini içerir.
 
+Öncelikle bu 4 varlığın CREATE edilme komutu sırayla şöyledir:
+
+**HOBBY Tablosu**
+
+.. code-block:: python
+
+        cursor.execute("DROP TABLE IF EXISTS HOBBY CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS HOBBY
+                (
+                    HOBBY_ID SERIAL PRIMARY KEY,
+                    HOBBY_NAME TEXT
+                )"""
+        cursor.execute(query)
+        
+.. figure:: tuncay/7.PNG
+   :figclass: align-center
+   
+   Resim 7: HOBBY tablosu genel görünümü
+
+**INTEREST Tablosu**
+
+.. code-block:: python
+
+        cursor.execute("DROP TABLE IF EXISTS INTEREST CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS INTEREST
+                (
+                    INTEREST_ID SERIAL PRIMARY KEY,
+                    INTEREST_NAME TEXT
+                )"""
+        cursor.execute(query)
+
+.. figure:: tuncay/8.PNG
+   :figclass: align-center
+   
+   Resim 8: INTEREST tablosu genel görünümü
+
+
+**HOBBYALL Tablosu**
+
+.. code-block:: python
+
+        cursor.execute("DROP TABLE IF EXISTS HOBBYALL CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS HOBBYALL
+                (
+                    ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80),
+                    HOBBY_ID INTEGER,
+                    ORD INTEGER,
+                    FOREIGN KEY (USER_NAME)  REFERENCES ACCPERSONAL(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (HOBBY_ID)  REFERENCES HOBBY(HOBBY_ID) ON DELETE CASCADE ON UPDATE CASCADE
+                )"""
+        cursor.execute(query)
+        
+.. figure:: tuncay/9.PNG
+   :figclass: align-center
+   
+   Resim 9: HOBBYALL tablosu genel görünümü
+
+**INTERESTALL Tablosu**
+
+.. code-block:: python
+
+        cursor.execute("DROP TABLE IF EXISTS INTERESTALL CASCADE;")
+        query = """CREATE TABLE IF NOT EXISTS INTERESTALL
+                (
+                    ID SERIAL PRIMARY KEY,
+                    USER_NAME VARCHAR(80),
+                    INTEREST_ID INTEGER,
+                    ORD INTEGER,
+                    FOREIGN KEY (USER_NAME)  REFERENCES ACCPERSONAL(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (INTEREST_ID)  REFERENCES INTEREST(INTEREST_ID) ON DELETE CASCADE ON UPDATE CASCADE
+                )"""
+        cursor.execute(query)
+        
+.. figure:: tuncay/10.PNG
+   :figclass: align-center
+   
+   Resim 10: INTERESTALL tablosu genel görünümü
+        
+        
+proje çalıştırıldığı gibi **server.py** de init_profile_table komutu işletilir ve tüm tablolar başlangıçta CREATE edilir.
+
+Yukarıdaki kod dilimlerinde tablolar oluşturulmuştur. Bu tablolar daha önce oluşturulduysa o tablo silinir ve sıfırdan yeni tablo oluşturulur. Kodun bu partında birincil anahtar ve dış anahtarlar da belirlenmiştir. Bağlı olduğu diğer tablolardaki değişikliklerden etkilenme biçimleri de (ON DELETE CASCADE , ON UPDATE CASCADE) yine bu kısımda belirtilmiştir. 
+
+
+**Başlangıç Eklemeleri**
+
+.. code-block:: python
+
+        cursor.execute(query)
+        query="""
+        INSERT INTO HOBBY(HOBBY_NAME) VALUES
+        ('Kitap okumak'),
+        ('Müzik dinlemek'),
+        ('Futbol oynamak'),
+        ('Sinemaya gitmek'),
+        ('Uyumak :)'),
+        ('Yüzmek'),
+        ('Tenis oynamak'),
+        ('Fotoğraf çekmek');
+        """
+        cursor.execute(query)
+
+        query="""
+        INSERT INTO INTEREST(INTEREST_NAME) VALUES
+        ('İnternet'),
+        ('Bilgisayar'),
+        ('Seyehat'),
+        ('Veri Madenciliği'),
+        ('Yemek'),
+        ('Kahve'),
+        ('Çay'),
+        ('Programlama');
+        """
+        cursor.execute(query)
+        db_connection.commit()
+        
+Hobby ve interest tabloları için başlangıçta kayıtlar eklenmiştir.
+*Kullanıcı bu kayıtlara yeni kayıtlar ekleyebilir, silebilir, güncelleyebilir.*
+
+HOBBYALL ve INTERESTALL tabloları, profil sayfasına kullanıcın hobi ve ilgi alanı eklemesi için yapılmıştır.
+Kullanıcı bu tablolara ekleme ve silme işlemini yapabilir.
+
+Sırayla Ekleme ve Silme işlemleri göstermem gerekirse:
+
+**HOBBYALL**
+.. code-block:: python
+
+   def add_hobbyall_to_table(userid,hobi,ord):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO HOBBYALL (USER_NAME, HOBBY_ID, ORD) VALUES (%s,%s,%s) """
+        cursor.execute(query,(userid, hobi, ord))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+.. code-block:: python
+
+   def get_hobbyall_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT HOBBYALL.ORD, HOBBY.HOBBY_NAME, HOBBYALL.ID FROM HOBBYALL, HOBBY
+        WHERE (HOBBYALL.HOBBY_ID = HOBBY.HOBBY_ID) AND (USER_NAME = %s) ORDER BY HOBBYALL.ORD"""
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+.. code-block:: python
+
+   def remove_hobbyall_from_table(hobbyall_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM HOBBYALL WHERE ID = %s"""
+        cursor.execute(query,(hobbyall_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+Yukarıda görülen 3 temel kod Seçme, Ekleme ve silme işlemleri Hobbyall tablosu için.
+Kullanıcı bu tablo aracılığıyla profil sayfasına hobi ekler.
+burada hobi_id , hobby tablosundaki hobby_id ile ilişkilidir. Foreign key yapılmıştır zaten tüm tablolarda.
+
+
+**INTERESTALL**
+.. code-block:: python
+
+   def add_ilgiall_to_table(userid,ilgi,ord):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """INSERT INTO INTERESTALL (USER_NAME, INTEREST_ID, ORD) VALUES (%s,%s,%s) """
+        cursor.execute(query,(userid, ilgi, ord))
+        db_connection.commit()
+        db_connection.close()
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+.. code-block:: python
+
+   def get_ilgiall_from_table(asd):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """SELECT INTERESTALL.ORD, INTEREST.INTEREST_NAME, INTERESTALL.ID FROM INTERESTALL, INTEREST
+        WHERE (INTERESTALL.INTEREST_ID = INTEREST.INTEREST_ID) AND (USER_NAME = %s) ORDER BY INTERESTALL.ORD"""
+        cursor.execute(query,[asd])
+        fetchedData = cursor.fetchall()
+        db_connection.commit()
+        db_connection.close()
+        return fetchedData;
+
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+.. code-block:: python
+
+   def remove_ilgiall_from_table(hobbyall_id):
+    try:
+        dsn = connect()
+        db_connection = dbapi2.connect(dsn)
+        cursor = db_connection.cursor()
+        query = """DELETE FROM INTERESTALL WHERE ID = %s"""
+        cursor.execute(query,(hobbyall_id,))
+        db_connection.commit()
+        db_connection.close()
+    except dbapi2.DatabaseError as error:
+        print("Error %s" % error)
+        
+Yukarıda görülen 3 temel kod Seçme, Ekleme ve silme işlemleri INTERESTALL tablosu için.
+Kullanıcı bu tablo aracılığıyla profil sayfasına ilgi alanı ekler.
+burada ID , ilgi tablosundaki INTEREST_ID ile ilişkilidir. Foreign key yapılmıştır zaten tüm tablolarda.
+
+CRUD işlemleri başarılı bir şekilde yapılmakta olup, tablolar dinamiktir.
+
+**4. CITY ve UNIVERSITY Tabloları**
+----------
+
+Burada tanımladığım city ve university tablolarını açıklayacağım.
