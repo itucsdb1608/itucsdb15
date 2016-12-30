@@ -14,9 +14,9 @@ screenshots whereever appropriate**
 
 .. toctree::
 
-   member1
-   member2
-   member3
-   member4
+   enes
+   tuncay
+   emre
+   furkan
    member5
    
