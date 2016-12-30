@@ -98,7 +98,7 @@ Ana sayfadan kaydol butonuna basıldığında get methodu ve boş metin kutular�
 
 Kullanıcı Ekleme Fonksiyonu
 ---------------------------
-Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve Person sınıfı yardımı ile yeni kayıt oluşturulur. Oluşturulan kayıt add_to_login fonksiyonuna yönlendirilir.
+Fonksiyon aktif hale getirildiği zaman get methodu ile çalışır. Sonra giris.htmlden aldığı verileri post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve Person sınıfı yardımı ile yeni kayıt oluşturulur. Oluşturulan kayıt add_to_login fonksiyonuna yönlendirilir.Kullanıcı eklendikten sonra BeeLink anasayfasına geri döner.
 
 .. code-block:: python
 
@@ -195,7 +195,7 @@ Yönetici panelindeki kullanıcı ekle butonuna basıldığında, boş metin kut
             
 Yönetici Panelinden Kullanıcı Ekleme Fonksiyonu
 -----------------------------------------------           
-Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve Person sınıfı yardımı ve yetki türü ile yeni kayıt oluşturulur. Oluşturulan kayıt add_from_admin fonksiyonuna yönlendirilir.
+Post methodundaki formun bilgileri request.form aracılığı ile aktarılır ve Person sınıfı yardımı ve yetki türü ile yeni kayıt oluşturulur. Oluşturulan kayıt add_from_admin fonksiyonuna yönlendirilir. Ardından yönetici paneli anasayfasına geri döner.
 
 .. code-block:: python
             
@@ -245,7 +245,7 @@ Yönetici Panelinden Kullanıcı Görüntüleme, Güncelleme ve Silme İşlemler
 
 Kullanıcı Görüntüleme Sayfası
 -----------------------------
-Yönetici panelinden tüm kullanıcılar görüntülenebilir.
+Yönetici panelinden tüm kullanıcılar görüntülenebilir. Silme fonksiyonu post methodu ile aktif hale gelir, gönderilecek değer "user_id" değerine eşittir. Güncelleme fonksiyonu get methodu ile aktif hale gelir, gönderilecek değer "user_id" değerine eşittir.
 
 .. code-block:: html
 
@@ -286,6 +286,7 @@ Yönetici panelinden tüm kullanıcılar görüntülenebilir.
 
 Kullanıcı Görüntüleme Fonksiyonu
 --------------------------------
+Tüm kullanıcıları "SELECT" fonksiyonu ile veritabanından çekilir ve bu kayıtlar records adı altında fonksiyonun çağrıldığı yere geri gönderilir.
 
 .. code-block:: python
 
@@ -303,6 +304,7 @@ Kullanıcı Görüntüleme Fonksiyonu
           
 Kullanıcı Güncelleme Sayfası
 ----------------------------
+Yönetici, bu sayfadaki boş metinlere güncellemek istediği kaydın bilgilerini girerek post methodu ile gönderir.
 
 .. code-block:: html
 
@@ -331,6 +333,7 @@ Kullanıcı Güncelleme Sayfası
   
 Kullanıcı Güncelleme Fonksiyonu
 -------------------------------
+Güncelleme işlemi get methodu ile başlar, update.html sayfasından alınan bilgiler ile post methodunda alınan bilgiler request.form da tutulur ve yeni kullanıcı sınıfı oluşturulur. Person sınıfı kayıtları ile id değeri veritabanına güncelleme fonksiyonuna giderek güncelleme işlemi yapılır. Ardından, records_from_login fonksiyonu ile tüm güncel kayıtları alarak yönetici anasayfasına yönlendirilir.
 
 .. code-block:: python
 
@@ -351,6 +354,7 @@ Kullanıcı Güncelleme Fonksiyonu
           
 Veritabanında Kullanıcı Güncelleme Fonksiyonu
 ---------------------------------------------
+Kullanıcı bilgileri u_person sınıfı içerisinde saklanır ve user_id değeri ile fonksiyon çağrılır. Fonksiyon user_id nin eşit olduğu kaydı bulur ve "UPDATE" fonksiyonu gerçekleşerek kayıt güncellenir.
 
 .. code-block:: python
 
@@ -372,6 +376,7 @@ Veritabanında Kullanıcı Güncelleme Fonksiyonu
         
 Kullanıcı Silme Fonksiyonu
 --------------------------
+İlk önce yönetici ana sayfasına yönlendirilir. Ardından butona tıklanarak post methodu ile tıklandığı kaydın user_id si request.formdan alınır. Eğer yönetici kendi kaydını silmek istiyorsa bu kontrol edilir ve eğer kendini silecekse silme işlemi user_id değerini alarak silme fonksiyonuna yönlendirir ve kayıt veritabanından silinir ardından oturum kapanır ve BeeLink anasayfasına yönlendirilir. Yönetici eğer kendini silmek istemiyorsa silme işlemi user_id değerini alarak silme fonksiyonuna yönlendirir, kayıt veritabanından silinir ve ardından yönetici anasayfasına yönlendirilir.
 
 .. code-block:: python
 
@@ -394,6 +399,7 @@ Kullanıcı Silme Fonksiyonu
               
 Veritabanından Kullanıcı Silme Fonksiyonu
 -----------------------------------------
+User_id değerine sahip kayıt "DELETE" fonksiyonu ile aranarak veritabanından silinir.
 
 .. code-block:: python
 
@@ -469,6 +475,7 @@ Signin fonksiyonu post methodu ile gelen kullanıcı adı ve parolayı sorgular.
 
 Hatalı Giriş Sayfası
 --------------------
+Kullanıcı veya yönetici, siteye giriş yaparken eksik veya yanlış bir değer girdiğinde yönlendirileceği sayfadır. Alert fonksiyonu ile geçersiz değer girildiğini belirtilir.
 
   .. code-block:: html
 
@@ -484,6 +491,7 @@ Hatalı Giriş Sayfası
   
 Yönetici Sayfasına Giriş Fonksiyonu
 -----------------------------------
+Yönetici sayfasına yönlendirilerek veya tarayıcıda beelink platformunun sonuna /administrator yazılarak girilebilir fakat girilmesi için oturum açılması gerekir. Oturum açan yönetici veya kullanıcı olabilir. Bu sayfaya her gelindiğinde bu fonksiyon kullanıcının veya yöneticinin oturum açıp açmadığını session ile kontrol eder ve oturum açıldıysa yönetici olup olmadığını search_admin fonksiyonu ve kullanıcı adı parameterleri ile kontrol eder. Eğer yönetici sayfaya girmek istiyorsa tüm kayıtlar veritabanından çekilir ve yönetici ana sayfasına yönlendirilir. Fakat kullanıcı sayfaya erişmek istiyorsa BeeLink platformunun ana sayfasına yönlendirilir.
 
 .. code-block:: python
 
@@ -502,6 +510,7 @@ Yönetici Sayfasına Giriş Fonksiyonu
 
 Kullanıcı Platformuna Giriş Fonksiyonu
 --------------------------------------
+Kullanıcı giriş yaptıktan sonra yönlendirileceği sayfadır, session ile oturum açılır, projenin diğer kısımları çalışmaya başlar.
 
 .. code-block:: python
  
@@ -518,6 +527,7 @@ Kullanıcı Platformuna Giriş Fonksiyonu
              
 Yönetici Platformundan Çıkış Fonksiyonu
 ---------------------------------------
+Yönetici çıkış yapmak istediğinde session değeri "" değerini alır ve oturum kapanır, ardından BeeLink anasayfasına yönlendirilir.
 
 .. code-block:: python 
 
@@ -530,6 +540,7 @@ Giriş ve Giriş Sorgulama
 -------------------------
 Giriş
 ------
+Bu tablo giriş işlemleri için tasarlanmıştır ve 2 tane dış anahtarı vardır ve "LOGIN" tablosundan bu değerleri silme ve güncelleme izinli işlemler yapılabilir. id SERIAL ve birincil anahtardır.
 
 .. code-block:: python
 
@@ -549,6 +560,7 @@ Giriş
           
 Giriş Sorgulama İşlemleri
 -------------------------
+Kullanıcı veya yönetici, kullanıcı adını ve parolasını girdikten sonra bu değerler "USERSIGNUP" tablosunda sorgulanır. Girilen değerler veritabanıyla uyuşuyorsa yönetici olup olmadığı sorgulanır. Eğer yönetici giriş yapmışsa 2 değeri geri gönderilerek yönetici ana sayfasına yönlendirilir. Kullanıcı giriş yaptıysa 1 değerini alır ve platforma geçer. Girilen değerler veritabanıyla uyuşmuyorsa 0 değerini geri göndererek hata sayfasına yönlendirilir.
 
 .. code-block:: python
 
@@ -584,6 +596,7 @@ Giriş Sorgulama İşlemleri
           
 Yönetici Sorgulama Fonksiyonu
 -----------------------------
+Username parametresi ve "SELECT" fonksiyonu ile veritabanında sorgulanır. Eğer kayıt varsa bu kaydın yönetici olup olmadığına göre farklı değerler gönderilir. 
 
 .. code-block:: python
 
@@ -606,26 +619,25 @@ Yönetici Sorgulama Fonksiyonu
 
 Yönetici Not İşlemleri  
 ----------------------
+Yönetici not işlemleri için tanımlanan tablodur. Tabloda "note" kaydolacak metinleri içerir. "id" SERIAL ve birincil anahtardır. Dış anahtar ile LOGIN tablosundan kullanıcı adı güncelleme ve silme izinli alınır.
 
 .. code-block:: python
 
-   cursor.execute("DROP TABLE IF EXISTS USERSIGNUP CASCADE;")
-        operate = """CREATE TABLE IF NOT EXISTS USERSIGNUP(
+   cursor.execute("DROP TABLE IF EXISTS ADMINNOTES CASCADE;")
+        operate = """CREATE TABLE IF NOT EXISTS ADMINNOTES(
                         id SERIAL NOT NULL PRIMARY KEY,
-                        password VARCHAR(32),
+                        note VARCHAR(200),
                         user_name VARCHAR(32),
-                        FOREIGN KEY (password) REFERENCES LOGIN(password) ON DELETE CASCADE ON UPDATE CASCADE,
                         FOREIGN KEY (user_name) REFERENCES LOGIN(user_name) ON DELETE CASCADE ON UPDATE CASCADE
                   )"""
         cursor.execute(operate)
-
-        operate = """INSERT INTO USERSIGNUP(user_name, password) VALUES('admin', 'admin123')"""
-
-        cursor.execute(operate)
+        db.commit()
+        db.close()
 
 
 Notları Görüntüleme Sayfası
 ---------------------------
+Sayfada tüm notlar görüntülenir ve silme işleminde post methodu ile id alınarak silme fonksiyonu çalışır. Güncelleme işleminde ise get methodu ile id alınarak güncelleme fonksiyonuna gider.
 
 .. code-block:: html
 
@@ -657,6 +669,7 @@ Notları Görüntüleme Sayfası
   
 Notları Görüntüleme Fonksiyonu
 ------------------------------
+Yönetici sadece kendi notlarını görebildiği ve işlem yapabildiği için oturum bilgileri alınır ve sadece kendi notları sorgulanarak alınır. Ve not sayfasına eşleşen notlar gönderilir.
 
 .. code-block:: python
 
@@ -668,6 +681,7 @@ Notları Görüntüleme Fonksiyonu
       
 Veritabanından Notları Görüntüleme
 ----------------------------------
+Username parametresi ile çalışır. "SELECT" fonksiyonu ile ADMINNOTES ve LOGIN tablosundan eşleştiği yerde parametrede ikisiyle eşleşiyorsa, eşleşen notlar alınır ve notes üzerinden gönderilir.
 
 .. code-block:: python
 
@@ -689,6 +703,7 @@ Veritabanından Notları Görüntüleme
 
 Notları Güncelleme Sayfası
 --------------------------
+Yönetici, kendi notunu boş olan yazı kutusu üzerine yazarak güncelleyebilir. Method post yöntemidir ve yazılan yazı form ile gönderilir.
 
 .. code-block:: html
 
@@ -708,6 +723,7 @@ Notları Güncelleme Sayfası
   
 Notları Güncelleme Fonksiyonu
 -----------------------------
+Update.htmlden gelen bilgiler, post methodu ile request.form verileri ile çekilir ve id değeri ile güncelleme fonksiyonuna yönlendirilir. Ardından oturum bilgilerinden kullanıcı adı alınır ve ona ait notlar notes.html sayfasına gönderilir.
 
 .. code-block:: python
 
@@ -724,6 +740,7 @@ Notları Güncelleme Fonksiyonu
           
 Veritabanında Notları Güncelleme Fonksiyonu
 -------------------------------------------
+Veri tabanına note değeri ile id değeri gelerek sorgulanır. Id değerinin uyduğu kayıtta güncelleme yapılır.
 
 .. code-block:: python
 
@@ -743,6 +760,7 @@ Veritabanında Notları Güncelleme Fonksiyonu
 
 Notları Ekleme Sayfası
 ----------------------
+Yönetici boş olan text kutusuna girmek istediği notu girerek post methodu ile kaydeder.
 
 .. code-block:: html
 
@@ -761,6 +779,7 @@ Notları Ekleme Sayfası
   
 Notları Ekleme Fonksiyonu
 -------------------------
+Post methodu ile gelen veri, oturum ile gelen kullanıcı adı ile birlikte addnote_from_admin fonksiyonuna yönlendirerek veri tabanına ekleme işlemi yapılır. Ardından, yönetici not sayfasına yönlendirilir.
 
 .. code-block:: python
 
@@ -776,6 +795,7 @@ Notları Ekleme Fonksiyonu
       
 Veritabanına Notları Ekleme Fonksiyonu
 --------------------------------------
+Note değeri ve username parametreleri ile gelerek, "INSERT" fonksiyonu ile tabloya kayıt eklenir.
 
 .. code-block:: python
 
@@ -795,6 +815,7 @@ Veritabanına Notları Ekleme Fonksiyonu
 
 Notları Silme Fonksiyonu
 ------------------------
+Get methodu ile gelen silme fonksiyonu tekrar aynı sayfaya yönlendirir, bu sefer butona tıklanıldığında post methodu ile yollanır ve tıklanıldığı notun id değerini request.formdan alarak işlem yapılır. Sonra oturum bilgisi alınır ve o yöneticiye ait notların sıralandığı notes.html sayfasına yönlendirilir.
 
 .. code-block:: python
 
@@ -811,6 +832,7 @@ Notları Silme Fonksiyonu
 
 Veritabanından Notları Silme
 ----------------------------
+Id parametresini alan remove_adminnote veritabanından id sorgulanarak eğer doğru sonuç verdiyse veritabanından kayıt silinir.
 
 .. code-block:: python
 
