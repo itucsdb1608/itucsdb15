@@ -17,6 +17,12 @@ Bu projede sorumlu olduğum kısım için sırayla:
 
 olmak üzere 9 tane varlık geliştirdim. 
 Ayrıca bu varlıklar için aşağıda tanımadığım fonksiyonları geliştirdim.
+Tüm varlıklar birbiriyle ilişkişi olup, dinamik tablolar oluşturulmuştur.
+
+.. figure:: tuncay/1.PNG
+   :figclass: align-center
+   
+   Resim 1: Veritabanı genel görünümü, tablolar
 
 Operasyonlar
 ------------
@@ -34,3 +40,5 @@ Operasyonlar
  Bu işlemde belirli bir özelliğe göre tablodan elemanları aramamız için kullanılıyor. 
  
  tablolarının içerikleri ve yeni çoklu ekleme, varolan çokluyu silme, güncelleme arama gibi veritabanı işlemleri bu kısımda açıklanmıştır.
+ 
+ 
