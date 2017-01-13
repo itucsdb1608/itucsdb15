@@ -38,5 +38,4 @@ Anasayfaya bağlantılı olan sayfalar:
    tuncay
    emre
    furkan
-   member5
    
