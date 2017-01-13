@@ -636,6 +636,7 @@ burada hobi_id , hobby tablosundaki hobby_id ile ilişkilidir. Foreign key yapı
 
 
 **INTERESTALL**
+
 .. code-block:: python
 
    def add_ilgiall_to_table(userid,ilgi,ord):
